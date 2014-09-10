@@ -14,6 +14,8 @@ namespace Munchkin_Online.Models
         public States State { get; set; }
 
         public Player? Winner { get; set; }
+
+        public BoardState? BoardState { get; set; } 
     }
 
     enum States

@@ -132,6 +132,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Battle.cs" />
+    <Compile Include="Models\BoardState.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Mechanic.cs" />
