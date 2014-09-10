@@ -6,7 +6,7 @@ HTML, BODY
 
 BODY
 {
-    background: url(/Content/img/main-block.png) 50% 90px no-repeat;
+    background: url(/Content/img/main.jpg) 50% 114px no-repeat;
 }
 
 HEADER
@@ -14,7 +14,8 @@ HEADER
     height: 90px;
     padding: 10px;
     display: table;
-    width: 100%;
+    width: 990px;
+    margin: auto;
 }
 
 HEADER > H1
@@ -104,13 +105,22 @@ ASIDE
 {
     float: left;
     width: 690px;
-    min-height: 550px;
+    min-height: 480px;
     padding: 100px 80px 0px 20px;
 }
 
 FOOTER {
     clear: both;
-    height: 90px;
+    height: 60px;
+    padding-top: 30px;
     margin: 0;
     text-align: center;
+    text-shadow: 1px 1px 1px black;
+    color: white;
+}
+
+FOOTER > .small
+{
+    color: gray;
+    font-size: 12px;
 }

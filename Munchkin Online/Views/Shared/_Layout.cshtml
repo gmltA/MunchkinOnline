@@ -8,9 +8,9 @@
         <title>@ViewBag.Title</title>
     </head>
     <body>
-        <header style="background-color: gray;">
+        <header>
             <h1>Manchkin!</h1>
-            <div class="moto">Воруй, убивай<br>еби гусей!</div>
+            <div class="moto">Воруй гусей<br>убивай друзей!</div>
             <div class="auth-bar-container">
                 <div class="auth-bar">
                     <a href>Auth</a> / <a href>Register</a>
@@ -29,8 +29,11 @@
             <div class="main-block">
                 @RenderBody()
             </div>
-            <footer style="background-color: gray;">
-                Все права защищены шариатом
+            <footer>
+                Все права защищены шариатом <br/>
+                <span class="small">
+                    Товарный знак "Мамка Влада" принадлежит соответствующим владельцам.
+                </span>
             </footer>
         </div>
         @Scripts.Render("~/bundles/jquery")
