@@ -47,7 +47,10 @@ namespace Munchkin_Online.Models
             Monster,
             Spell,
             Class,
-            Race
+            Race,
+            Headgear,
+            Footgear,
+            Armor
         }
     }
 }

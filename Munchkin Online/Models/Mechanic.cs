@@ -15,7 +15,7 @@ namespace Munchkin_Online.Models
 
         public Targets Target { get; set; }
 
-
+        public Conditions Condition { get; set; }
     }
 
 
@@ -24,19 +24,72 @@ namespace Munchkin_Online.Models
     {
         AddLevel,
         RemoveLevel,
-        GetShmotkaFromHand,
-        GetShmotkaFromBoard,
-        GetFromSbros,
+
+        GetItemFromHand,
+        GetItemFromBoard,
+        GetItemFromSbros,
+        LoseItemsFromHand,
+        LoseItemsFromTable,
+        LoseAllItems,
+        GiveItemsToHighestLevelPlayers,
+        LoseSmallItem,
+        LoseBigItem,
+        LoseFootgear,
+        LoseBestItem,
+        LoseArmor,
+        LoseHeadgear,
+
+
         BonusToSide,
-        AddToSmyvka,
-        Autosmyvka,
+
+        MinusFromEscaping,
+        AddToEscaping,
+        AutoEscape,
+        InstantEscape,
+        NoEscape,
+
         RollDiceAgain,
+
         Hireling,
         KillHireing,
+
+        NoBattleWithLevelsLess,
+        NoBattle,
+        BattleOnlyWithHufflings,
         TransferralBattle,
         EndBattle,
-        InstantSmyvka,
-        TakeTreasure
+        BonusesOnly,
+        LevelOnly,
+        AddToMonster,
+        MinusFromMonster,
+        AdditionalLevel,
+        ExchangeMonster,
+        DoubleMonster,
+        GiveTreasuresToCleric,
+        AloneInTheBattle,
+        BonusTreasure,
+
+        TakeTreasure,
+        
+        Cheat,
+        ProtectionFromCurse,
+       
+        Supermunchkin,
+        Halfblooded,
+
+        ChangeSex,
+        ChangeRace,
+        ChangeClass,
+        LoseClass,
+        LoseRace,
+
+        BonusAgainstClerics,
+        BonusAgainstDwarfs,
+        BonusAgainstElfs,
+        BonusAgainstWizards,
+        BonusAgainstHufflings,
+
+        Killing
     }
 
     public enum Targets
@@ -46,13 +99,32 @@ namespace Munchkin_Online.Models
         NotYou,
         Males,
         Females,
+        Men,
         Hufflings,
-        Cheat,
+        NotHufflings,
         Thiefs,
+        NotThiefs,
         Wisards,
         NotWizards,
         Warriors,
+        NotWarriors,
         Clerics,
-        Dwarfs
+        NotClerics,
+        Dwarfs,
+        NotDwarfs
+    }
+
+    public enum Conditions
+    {
+        Instant,
+        AfterBattle,
+        InBattle,
+        AfterSuccessfullEscape,
+        IfHirelingIsHere,
+        AfterDiceRoll,
+        IfElfsInBattle,
+        WithoutSupport,
+        WhenEscaped,
+
     }
 }
