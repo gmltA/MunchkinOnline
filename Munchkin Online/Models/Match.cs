@@ -18,7 +18,7 @@ namespace Munchkin_Online.Models
         public BoardState BoardState { get; set; } 
     }
 
-    enum States
+    public enum States
     {
         Lobby,
         InGame,

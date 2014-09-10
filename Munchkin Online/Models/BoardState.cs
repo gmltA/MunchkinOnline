@@ -22,7 +22,7 @@ namespace Munchkin_Online.Models
         public Battle Battle { get; set; }
     }
 
-    enum TurnSteps
+    public enum TurnSteps
     {
         Inital,
         Battle,

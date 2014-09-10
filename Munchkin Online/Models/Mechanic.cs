@@ -20,7 +20,7 @@ namespace Munchkin_Online.Models
 
 
 
-    enum Actions
+    public enum Actions
     {
         AddLevel,
         RemoveLevel,
@@ -39,7 +39,7 @@ namespace Munchkin_Online.Models
         TakeTreasure
     }
 
-    enum Targets
+    public enum Targets
     {
         All,
         You,

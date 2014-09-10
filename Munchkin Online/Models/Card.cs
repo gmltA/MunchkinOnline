@@ -35,13 +35,13 @@ namespace Munchkin_Online.Models
 
         public virtual ICollection<Mechanic> Mechanics { get; set; }
 
-        enum CardTypes
+        public enum CardTypes
         {
             Dungeon,
             Treasure
         }
 
-        enum CardClasses
+        public enum CardClasses
         {
             Item,
             Monster,

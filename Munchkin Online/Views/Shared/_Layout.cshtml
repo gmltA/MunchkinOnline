@@ -1,16 +1,39 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    @RenderBody()
-
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <header style="background-color: gray;">
+            <h1>Manchkin!</h1>
+            <div class="moto">Воруй, убивай<br>еби гусей!</div>
+            <div class="auth-bar-container">
+                <div class="auth-bar">
+                    <a href>Auth</a> / <a href>Register</a>
+                </div>
+            </div>
+        </header>
+        <div class="wrapper">
+            <aside>
+                <ul class="nav">
+                    <li><a class="current" href="">Main page</a>
+                    <li><a href="">Game rules</a>
+                    <li><a href="">Find game</a>
+                    <li><a href="">Create lobby</a>
+                </ul>
+            </aside>
+            <div class="main-block">
+                @RenderBody()
+            </div>
+            <footer style="background-color: gray;">
+                Все права защищены шариатом
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
 </html>

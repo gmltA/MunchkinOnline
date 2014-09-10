@@ -26,13 +26,13 @@ namespace Munchkin_Online.Models
         public virtual ICollection<User> Friends { get; set; }
      }
 
-    enum Roles
+    public enum Roles
     {
         Admin,
         Player
     }
 
-    enum Sexes
+    public enum Sexes
     {
         Male,
         Female
