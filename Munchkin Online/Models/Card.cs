@@ -25,7 +25,7 @@ namespace Munchkin_Online.Models
 
         public bool IsCheated { get; set; }
 
-        public bool IsOnceUsing { get; set; }
+        public bool IsUsableOnce { get; set; }
 
         public int Cost { get; set; }
 

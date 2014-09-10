@@ -17,7 +17,7 @@ namespace Munchkin_Online.Models
 
         public int Wins { get; set; }
 
-        public Sexes Sex { get; set; }
+        public Genders Gender { get; set; }
 
         public Roles Role { get; set; }
 
@@ -32,7 +32,7 @@ namespace Munchkin_Online.Models
         Player
     }
 
-    public enum Sexes
+    public enum Genders
     {
         Male,
         Female

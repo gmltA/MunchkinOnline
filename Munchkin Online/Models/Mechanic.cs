@@ -27,7 +27,7 @@ namespace Munchkin_Online.Models
 
         GetItemFromHand,
         GetItemFromBoard,
-        GetItemFromSbros,
+        GetItemFromTrash,
         LoseItemsFromHand,
         LoseItemsFromTable,
         LoseAllItems,
@@ -77,7 +77,7 @@ namespace Munchkin_Online.Models
         Supermunchkin,
         Halfblooded,
 
-        ChangeSex,
+        ChangeGender,
         ChangeRace,
         ChangeClass,
         LoseClass,
@@ -95,8 +95,8 @@ namespace Munchkin_Online.Models
     public enum Targets
     {
         All,
-        You,
-        NotYou,
+        Self,
+        NotSelf,
         Males,
         Females,
         Men,
