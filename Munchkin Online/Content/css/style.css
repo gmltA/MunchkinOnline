@@ -1,0 +1,116 @@
+HTML, BODY
+{
+    margin: 0;
+    padding: 0;
+}
+
+BODY
+{
+    background: url(/Content/img/main-block.png) 50% 90px no-repeat;
+}
+
+HEADER
+{
+    height: 90px;
+    padding: 10px;
+    display: table;
+    width: 100%;
+}
+
+HEADER > H1
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+HEADER > .moto
+{
+    display: table-cell;
+    margin-right: 100px;
+    vertical-align: middle;
+}
+
+HEADER > .auth-bar-container
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+HEADER .auth-bar
+{
+    box-shadow: 0 0 10px black;
+    border-radius: 5px;
+    margin: 0;
+    padding: 5px;
+    max-width: 200px;
+    text-align: center;
+}
+
+.wrapper
+{
+    width: 990px;
+    margin: auto;
+}
+
+.clearfix:after
+{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.nav
+{
+    list-style: none;
+    padding: 0;
+    margin: 90px 0 10px 10px;
+}
+
+.nav > LI
+{
+    min-height: 66px;
+}
+
+.nav > LI > A
+{
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 23px 0 23px 60px;
+    background: url(/Content/img/tab.png) 0% 0%;
+}
+
+ .nav .current, .nav .current:hover
+{
+    margin-left: 10px;
+    background: url(/Content/img/tab-current.png);
+    padding-top: 30px;
+}
+
+.nav > LI > A:hover
+{
+    background-position: 0% 66px;
+}
+
+ASIDE
+{
+    float: left;
+    width: 200px;
+}
+
+.main-block
+{
+    float: left;
+    width: 690px;
+    min-height: 550px;
+    padding: 100px 80px 0px 20px;
+}
+
+FOOTER {
+    clear: both;
+    height: 90px;
+    margin: 0;
+    text-align: center;
+}
