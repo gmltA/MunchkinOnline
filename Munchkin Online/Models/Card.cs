@@ -27,7 +27,11 @@ namespace Munchkin_Online.Models
 
         public bool IsOnceUsing { get; set; }
 
-        public int Cost { get; set; } 
+        public int Cost { get; set; }
+
+        public int Treasures { get; set; }
+
+        public int Levels { get; set; }
 
         public virtual ICollection<Mechanic> Mechanics { get; set; }
 
@@ -39,7 +43,7 @@ namespace Munchkin_Online.Models
 
         enum CardClasses
         {
-            Shmoka,
+            Item,
             Monster,
             Spell,
             Class,
