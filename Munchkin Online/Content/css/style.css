@@ -90,8 +90,9 @@ HEADER .auth-bar > A
     display: block;
     text-decoration: none;
     color: black;
-    padding: 23px 0 23px 15px;
+    padding: 23px 40px 23px 15px;
     background: url(/Content/img/tab.png) 0% 0%;
+    text-align: center;
 }
 
  .nav .current, .nav .current:hover
