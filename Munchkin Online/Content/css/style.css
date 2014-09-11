@@ -39,12 +39,20 @@ HEADER > .auth-bar-container
 
 HEADER .auth-bar
 {
-    box-shadow: 0 0 10px black;
-    border-radius: 5px;
-    margin: 0;
-    padding: 5px;
-    max-width: 200px;
+    background: url(/Content/img/authbar-ribbon.png) no-repeat;
+    max-width: 300px;
+    width: 300px;
+    margin-right: -200px;
     text-align: center;
+    height: 49px;
+    padding-top: 10px;
+    font-family: 'Windlass';
+    font-size: 12px;
+}
+
+HEADER .auth-bar > A
+{
+    color: black;
 }
 
 .wrapper
@@ -66,12 +74,15 @@ HEADER .auth-bar
 {
     list-style: none;
     padding: 0;
-    margin: 90px 0 10px 10px;
+    margin: 90px 0 10px 46px;
+    font-family: 'Windlass';
+    font-size: 14px;
 }
 
 .nav > LI
 {
     min-height: 66px;
+    max-width: 160px;
 }
 
 .nav > LI > A
@@ -79,15 +90,17 @@ HEADER .auth-bar
     display: block;
     text-decoration: none;
     color: black;
-    padding: 23px 0 23px 60px;
+    padding: 23px 0 23px 15px;
     background: url(/Content/img/tab.png) 0% 0%;
 }
 
  .nav .current, .nav .current:hover
 {
-    margin-left: 10px;
     background: url(/Content/img/tab-current.png);
     padding-top: 30px;
+    padding-left: 45px;
+    margin-left: -9px;
+    font-weight: 600;
 }
 
 .nav > LI > A:hover
@@ -108,6 +121,27 @@ ASIDE
     height: 380px;
     margin: 100px 80px 100px 20px;
     overflow-y: auto;
+    font-family: 'Windlass';
+}
+
+.main-block > P
+{
+    margin: 5px 0 5px 0;
+}
+
+.main-block > P:first-letter
+{
+    color: red;
+    font-size: 20px;
+    text-shadow: 1px 1px 1px black;
+}
+
+.main-block > P.small, .main-block > P.small::first-letter
+{
+    margin: 0;
+    font-size: 14px;
+    color: inherit;
+    font-weight: 400;
 }
 
 FOOTER {
@@ -124,4 +158,9 @@ FOOTER > .small
 {
     color: gray;
     font-size: 12px;
+}
+
+@font-face {
+    font-family: 'Windlass';
+    src: url(/Content/fonts/Windlass.ttf);
 }
