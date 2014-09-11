@@ -129,8 +129,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Core\Longpool\AsyncMessage.cs" />
+    <Compile Include="Core\Longpool\ClientState.cs" />
+    <Compile Include="Core\Longpool\Longpool.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="LongPoolHandler.ashx.cs">
+      <DependentUpon>LongPoolHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\Battle.cs" />
     <Compile Include="Models\BoardState.cs" />
@@ -147,6 +154,7 @@
     <Content Include="Content\img\main-block.png" />
     <Content Include="Content\img\tab-current.png" />
     <Content Include="Content\img\tab.png" />
+    <Content Include="Content\js\LongPool.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -203,6 +211,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LongPoolHandler.ashx" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -231,10 +240,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Rules\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Core\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
