@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DebugController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Core\LayoutDefines.cs" />
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
     <Compile Include="Core\Longpool\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
@@ -156,6 +157,7 @@
     <Content Include="Content\img\main-block.png" />
     <Content Include="Content\img\tab-current.png" />
     <Content Include="Content\img\tab.png" />
+    <Content Include="Content\js\Core.js" />
     <Content Include="Content\js\LongPool.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />

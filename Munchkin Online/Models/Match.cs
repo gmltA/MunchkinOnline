@@ -11,14 +11,14 @@ namespace Munchkin_Online.Models
 
         public virtual ICollection<Player> Players { get; set; }
 
-        public States State { get; set; }
+        public State State { get; set; }
 
         public Player Winner { get; set; }
 
         public BoardState BoardState { get; set; } 
     }
 
-    public enum States
+    public enum State
     {
         Lobby,
         InGame,

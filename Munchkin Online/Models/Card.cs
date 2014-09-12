@@ -13,9 +13,9 @@ namespace Munchkin_Online.Models
 
         public string Description { get; set; }
 
-        public CardTypes Type { get; set; }
+        public CardType Type { get; set; }
 
-        public CardClasses Class { get; set; }
+        public CardClass Class { get; set; }
 
         public bool IsBig { get; set; }
 
@@ -35,13 +35,13 @@ namespace Munchkin_Online.Models
 
         public virtual ICollection<Mechanic> Mechanics { get; set; }
 
-        public enum CardTypes
+        public enum CardType
         {
             Dungeon,
             Treasure
         }
 
-        public enum CardClasses
+        public enum CardClass
         {
             Item,
             Monster,

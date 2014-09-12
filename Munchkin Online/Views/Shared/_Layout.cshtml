@@ -15,15 +15,35 @@
                 <div class="auth-bar">
                     <a href>Auth</a> / <a href>Register</a>
                 </div>
+                <div class="auth">
+                    <div class="container">
+                        <input type="text" placeholder="Username"/>
+                        <input type="password" placeholder="Password"/>
+                        <a href="">Login</a>
+                    </div>
+                    <div class="control"></div>
+                </div>
+                <div class="friends" hidden>
+                    <div class="container">
+                        <p>Friend 1</p>
+                        <p>Friend 2</p>
+                        <p class="offline">Friend 3</p>
+                        <p class="offline">Friend 4</p>
+                        <p>Friend 5</p>
+                        <p>Friend 6</p>
+                        <p>Friend 7</p>
+                    </div>
+                    <div class="control"></div>
+                </div>
             </div>
         </header>
         <div class="wrapper">
             <aside>
                 <ul class="nav">
-                    <li><a class="current" href="/">Main page</a>
-                    <li><a href="/Rules/">Game&nbsp;rules</a>
-                    <li><a href="">Find&nbsp;game</a>
-                    <li><a href="">Create&nbsp;lobby</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_MAIN ? "class=current" : "") href="/">Main page</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_RULES ? "class=current" : "") href="/rules/">Game&nbsp;rules</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_FIND_GAME ? "class=current" : "") href="">Find&nbsp;game</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_CREATE_LOBBY ? "class=current" : "") href="">Create&nbsp;lobby</a>
                 </ul>
             </aside>
             <div class="main-block">
@@ -36,8 +56,15 @@
                 </span>
             </footer>
         </div>
+        <div class="notification">
+            <p></p>
+            <div class="scroll left"></div>
+            <div class="scroll center"></div>
+            <div class="scroll right"></div>
+        </div>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/js/LongPool")
+        @Scripts.Render("~/js/Core")
         @RenderSection("scripts", required: false)
     </body>
 </html>

@@ -1,3 +1,6 @@
+* { outline: none; }
+A { text-decoration: none; }
+
 HTML, BODY
 {
     margin: 0;
@@ -35,6 +38,83 @@ HEADER > .auth-bar-container
 {
     display: table-cell;
     vertical-align: middle;
+}
+
+HEADER .friends, HEADER .auth
+{
+    width: 110px;
+    position: absolute;
+    margin-left: 65px;
+    margin-top: -33px;
+}
+
+HEADER .auth .container
+{
+    padding: 10px 30px 0 30px;
+    background: url(/Content/img/login.png) 50% 0% no-repeat;
+    width: 110px;
+    height: 84px;
+    text-align: center;
+}
+
+HEADER .auth .container INPUT
+{
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: 110px;
+    color: white;
+    text-align: center;
+    margin-bottom: 11px;
+}
+
+HEADER .auth .container A
+{
+    color: black;
+    font-family: 'Windlass';
+    font-size: 14px;
+}
+
+HEADER .auth .container A:hover
+{
+}
+
+HEADER .friends .container
+{
+    padding: 10px 30px 0 30px;
+    background: url(/Content/img/friends.png) 50% 0% no-repeat;
+    width: 110px;
+    padding-bottom: 10px;
+}
+
+HEADER .friends P
+{
+    margin: 0 0 8px 0;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+    font-family: 'Windlass';
+    font-size: 12px;
+}
+
+HEADER .friends P.offline
+{
+    color: gray;
+}
+
+HEADER .control
+{
+    background: url(/Content/img/friends-control.png) 50% 100% no-repeat;
+    width: 170px;
+    height: 34px;
+    margin-top: -19px;
+    cursor: pointer;
+}
+
+HEADER .control.down
+{
+    background-position: 100% 0%;
 }
 
 HEADER .auth-bar
@@ -88,7 +168,6 @@ HEADER .auth-bar > A
 .nav > LI > A
 {
     display: block;
-    text-decoration: none;
     color: black;
     padding: 23px 40px 23px 15px;
     background: url(/Content/img/tab.png) 0% 0%;
@@ -164,4 +243,58 @@ FOOTER > .small
 @font-face {
     font-family: 'Windlass';
     src: url(/Content/fonts/Windlass.ttf);
+}
+
+.notification
+{
+    background: url(/Content/img/notification.png) 50% 100% no-repeat;
+    width: 200px;
+    height: 100px;
+    position: fixed;
+    bottom: -200px;
+    right: 0;
+    padding: 25px 50px 25px 55px;
+    -webkit-filter : drop-shadow(0px 0px 10px black);
+    z-index: 999;
+}
+
+.notification.anim
+{
+    background: none;
+    padding: 0;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+    letter-spacing: -4px;
+}
+
+.notification > P
+{
+    text-align: center;
+    font-family: 'Windlass';
+}
+
+.notification.anim > P
+{
+    display: none;
+}
+
+.notification > .scroll
+{
+    background: url(/Content/img/notification.png) no-repeat;
+    width: 55px;
+    height: 150px;
+    display: inline-block;
+    margin: 0;
+}
+
+.notification > .scroll.center
+{
+    background-position: 50% 100%;
+    width: 0;
+}
+
+.notification > .scroll.right
+{
+    background-position: 100% 100%;
 }

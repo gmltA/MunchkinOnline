@@ -13,6 +13,7 @@ namespace Munchkin_Online.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.pageID = Core.PageID.PAGE_MAIN;
             return View();
         }
 

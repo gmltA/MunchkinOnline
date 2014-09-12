@@ -61,7 +61,7 @@ namespace Munchkin_Online
                     state.CompleteRequest();
                     break;
                 case "FindMatch":
-                    NewFinder(Longpool.GetUserByGuid(guid), null);
+                    NewFinder(Longpool.Instance.GetUserByGuid(guid), null);
                     state.CompleteRequest();
                     break;
                 default:

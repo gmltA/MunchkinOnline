@@ -17,22 +17,22 @@ namespace Munchkin_Online.Models
 
         public int Wins { get; set; }
 
-        public Genders Gender { get; set; }
+        public Gender Gender { get; set; }
 
-        public Roles Role { get; set; }
+        public Role Role { get; set; }
 
         public DateTime LastActivity { get; set; }
 
         public virtual ICollection<User> Friends { get; set; }
      }
 
-    public enum Roles
+    public enum Role
     {
         Admin,
         Player
     }
 
-    public enum Genders
+    public enum Gender
     {
         Male,
         Female
