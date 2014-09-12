@@ -18,11 +18,11 @@ namespace Munchkin_Online.Models
         public int CurrentPlayerId { get; set; }
         public List<Player> Players { get; set; }
 
-        public TurnSteps TurnStep { get; set; }
+        public TurnStep TurnStep { get; set; }
         public Battle Battle { get; set; }
     }
 
-    public enum TurnSteps
+    public enum TurnStep
     {
         Inital,
         Battle,

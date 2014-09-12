@@ -9,18 +9,18 @@ namespace Munchkin_Online.Models
     {
         public Guid Id { get; set; }
 
-        public Actions Action { get; set; }
+        public Action Action { get; set; }
 
         public int Value { get; set; }
 
-        public Targets Target { get; set; }
+        public Target Target { get; set; }
 
-        public Conditions Condition { get; set; }
+        public Condition Condition { get; set; }
     }
 
 
 
-    public enum Actions
+    public enum Action
     {
         AddLevel,
         RemoveLevel,
@@ -92,7 +92,7 @@ namespace Munchkin_Online.Models
         Killing
     }
 
-    public enum Targets
+    public enum Target
     {
         All,
         Self,
@@ -114,7 +114,7 @@ namespace Munchkin_Online.Models
         NotDwarfs
     }
 
-    public enum Conditions
+    public enum Condition
     {
         Instant,
         AfterBattle,
