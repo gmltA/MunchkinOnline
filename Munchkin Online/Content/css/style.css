@@ -1,3 +1,6 @@
+* { outline: none; }
+A { text-decoration: none; }
+
 HTML, BODY
 {
     margin: 0;
@@ -37,13 +40,44 @@ HEADER > .auth-bar-container
     vertical-align: middle;
 }
 
-HEADER .friends
+HEADER .friends, HEADER .auth
 {
     width: 110px;
-    height: 190px;
     position: absolute;
     margin-left: 65px;
     margin-top: -33px;
+}
+
+HEADER .auth .container
+{
+    padding: 10px 30px 0 30px;
+    background: url(/Content/img/login.png) 50% 0% no-repeat;
+    width: 110px;
+    height: 84px;
+    text-align: center;
+}
+
+HEADER .auth .container INPUT
+{
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: 110px;
+    color: white;
+    text-align: center;
+    margin-bottom: 11px;
+}
+
+HEADER .auth .container A
+{
+    color: black;
+    font-family: 'Windlass';
+    font-size: 14px;
+}
+
+HEADER .auth .container A:hover
+{
 }
 
 HEADER .friends .container
@@ -69,7 +103,7 @@ HEADER .friends P.offline
     color: gray;
 }
 
-HEADER .friends .control
+HEADER .control
 {
     background: url(/Content/img/friends-control.png) 50% 100% no-repeat;
     width: 170px;
@@ -78,7 +112,7 @@ HEADER .friends .control
     cursor: pointer;
 }
 
-HEADER .friends .control.down
+HEADER .control.down
 {
     background-position: 100% 0%;
 }
@@ -134,7 +168,6 @@ HEADER .auth-bar > A
 .nav > LI > A
 {
     display: block;
-    text-decoration: none;
     color: black;
     padding: 23px 40px 23px 15px;
     background: url(/Content/img/tab.png) 0% 0%;

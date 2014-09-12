@@ -19,11 +19,11 @@
 
 function toggleFriendsBar(controlButton) {
     if ($(controlButton).hasClass("down")) {
-        $(".friends .container").slideDown();
+        $(controlButton).parent().find(".container").slideDown();
         $(controlButton).animate({ marginTop: "-19px" }, "fast");
     }
     else {
-        $(".friends .container").slideUp();
+        $(controlButton).parent().find(".container").slideUp();
         $(controlButton).animate({ marginTop: "0px" }, "fast");
     }
     $(controlButton).toggleClass("down");
@@ -32,7 +32,7 @@ function toggleFriendsBar(controlButton) {
 $(document).ready(function () {
     showNotification("Kyky!");
 
-    $(".friends .control").live("click", function () {
+    $("HEADER .control").live("click", function () {
         toggleFriendsBar(this);
     });
 });
