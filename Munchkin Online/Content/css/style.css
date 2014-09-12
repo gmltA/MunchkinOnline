@@ -165,3 +165,56 @@ FOOTER > .small
     font-family: 'Windlass';
     src: url(/Content/fonts/Windlass.ttf);
 }
+.notification
+{
+    background: url(/Content/img/notification.png) 50% 100% no-repeat;
+    width: 200px;
+    height: 100px;
+    position: fixed;
+    bottom: -200px;
+    right: 0;
+    padding: 25px 50px 25px 55px;
+    -webkit-filter : drop-shadow(0px 0px 10px black);
+    z-index: 999;
+}
+
+.notification.anim
+{
+    background: none;
+    padding: 0;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+    letter-spacing: -4px;
+}
+
+.notification > P
+{
+    text-align: center;
+    font-family: 'Windlass';
+}
+
+.notification.anim > P
+{
+    display: none;
+}
+
+.notification > .scroll
+{
+    background: url(/Content/img/notification.png) no-repeat;
+    width: 55px;
+    height: 150px;
+    display: inline-block;
+    margin: 0;
+}
+
+.notification > .scroll.center
+{
+    background-position: 50% 100%;
+    width: 0;
+}
+
+.notification > .scroll.right
+{
+    background-position: 100% 100%;
+}

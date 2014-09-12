@@ -36,8 +36,15 @@
                 </span>
             </footer>
         </div>
+        <div class="notification">
+            <p></p>
+            <div class="scroll left"></div>
+            <div class="scroll center"></div>
+            <div class="scroll right"></div>
+        </div>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/js/LongPool")
+        @Scripts.Render("~/js/Core")
         @RenderSection("scripts", required: false)
     </body>
 </html>
