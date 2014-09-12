@@ -134,6 +134,7 @@
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
     <Compile Include="Core\Longpool\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
+    <Compile Include="Core\Matchmaking\Matchmaking.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

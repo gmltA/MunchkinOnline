@@ -13,6 +13,8 @@ namespace Munchkin_Online
     /// </summary>
     public class LongPoolHandler : IHttpAsyncHandler, IRequiresSessionState
     {
+        public static event EventHandler<NewFinderArgs> NewFinder = delegate { };
+
         #region IHttpAsyncHandler Members
 
         public IAsyncResult BeginProcessRequest(HttpContext ctx,
@@ -51,11 +53,15 @@ namespace Munchkin_Online
                 case "register":
                     Longpool.Instance.RegicterClient(state);
                     state.CurrentContext.Response.Write(
-                      state.ClientGuid.ToString());
+                    state.ClientGuid.ToString());
                     state.CompleteRequest();
                     break;
                 case "unregister":
                     Longpool.Instance.UnregisterClient(state);
+                    state.CompleteRequest();
+                    break;
+                case "FindMatch":
+                    NewFinder(Longpool.GetUserByGuid(guid), null);
                     state.CompleteRequest();
                     break;
                 default:
@@ -84,4 +90,10 @@ namespace Munchkin_Online
 
         #endregion  
     }
+
+    public class NewFinderArgs : EventArgs
+    {
+
+    }
+
 }

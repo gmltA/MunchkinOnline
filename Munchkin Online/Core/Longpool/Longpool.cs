@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Munchkin_Online.Core.Matchmaking;
 
 namespace Munchkin_Online.Core.Longpool
 {
     public class Longpool
     {
+
+        
         /// <summary>
         /// Singleton
         /// </summary>
@@ -26,6 +29,17 @@ namespace Munchkin_Online.Core.Longpool
             {
                 return _clientStateList;
             }
+        }
+
+        public Longpool()
+        {
+            Matchmaking.Matchmaking.Instance.MatchCreated += OnMatchCreated;
+
+        }
+
+        public void OnMatchCreated(object sender, MatchCreatedArgs e)
+        {
+
         }
 
         /// <summary>
@@ -90,6 +104,11 @@ namespace Munchkin_Online.Core.Longpool
             {
                 _clientStateList.Remove(state);
             }
+        }
+
+        public object GetUserByGuid(string guid)
+        {
+            return Clients.Where(x => x.ClientGuid == guid).ToArray()[0];
         }
     }
 }

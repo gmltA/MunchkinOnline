@@ -50,6 +50,6 @@ function OnConnected(transport) {
 }  
       
 function ConnectionRefused() {  
-    $("#content").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
+    $("body").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
     setTimeout(Connect(), 3000);  
 }  
