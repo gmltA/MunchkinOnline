@@ -20,10 +20,10 @@
         <div class="wrapper">
             <aside>
                 <ul class="nav">
-                    <li><a class="current" href="/">Main page</a>
-                    <li><a href="/Rules/">Game&nbsp;rules</a>
-                    <li><a href="">Find&nbsp;game</a>
-                    <li><a href="">Create&nbsp;lobby</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_MAIN ? "class=current" : "") href="/">Main page</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_RULES ? "class=current" : "") href="/rules/">Game&nbsp;rules</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_FIND_GAME ? "class=current" : "") href="">Find&nbsp;game</a>
+                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_CREATE_LOBBY ? "class=current" : "") href="">Create&nbsp;lobby</a>
                 </ul>
             </aside>
             <div class="main-block">

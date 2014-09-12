@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DebugController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Core\LayoutDefines.cs" />
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
     <Compile Include="Core\Longpool\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
