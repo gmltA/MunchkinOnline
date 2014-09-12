@@ -67,5 +67,21 @@ namespace Munchkin_Online
 
             }
         }
+
+        #region IHttpHandler Members
+
+        public bool IsReusable
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public void ProcessRequest(HttpContext context)
+        {
+        }
+
+        #endregion  
     }
 }

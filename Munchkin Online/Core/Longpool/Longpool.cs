@@ -17,8 +17,16 @@ namespace Munchkin_Online.Core.Longpool
         /// <summary>
         /// Clients.
         /// </summary>
-        private static List<ClientState> _clientStateList =
+        private List<ClientState> _clientStateList =
           new List<ClientState>();
+
+        public List<ClientState> Clients
+        {
+            get
+            {
+                return _clientStateList;
+            }
+        }
 
         /// <summary>
         /// Send message to all clients

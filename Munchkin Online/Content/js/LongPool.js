@@ -39,9 +39,8 @@ function Disconnect() {
       
  
 function ProcessResponse(transport) {  
-    eval('var d=' + transport + ';');  
-    document.getElementById("body").innerHTML +=  
-       ' <strong>' + d.user + '</strong> : "' + d.message + '"<br/>';  
+    document.getElementsByTagName("body")[0].innerHTML +=  
+       ' <strong>' + transport + '</strong> : <br/>';  
     SendRequest();  
 }  
       

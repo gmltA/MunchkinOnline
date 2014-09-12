@@ -8,8 +8,9 @@ namespace Munchkin_Online.Core.Longpool
     public class AsyncMessage
     {
         public MessageType Type { get; set; }
+        
 
-        AsyncMessage(MessageType t)
+        public AsyncMessage(MessageType t)
         {
             Type = t;
         }
