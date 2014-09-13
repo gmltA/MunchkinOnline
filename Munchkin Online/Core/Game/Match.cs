@@ -8,6 +8,9 @@ namespace Munchkin_Online.Core.Game
 {
     public class Match
     {
+        public event EventHandler MatchEnded = delegate { };
+
+
         public Guid Id { get; set; }
 
         public virtual List<Player> Players { get; set; }

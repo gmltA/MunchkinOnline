@@ -18,24 +18,24 @@ namespace Munchkin_Online.Core.Matchmaking
         /// </summary>
         public event EventHandler<MatchCreatedArgs> MatchCreated = delegate { };
 
-        public event EventHandler MatchEnded = delegate { };
-
+        /// <summary>
+        /// Время, через которое будет принудительно создана игра при отсутствии новых игроков
+        /// </summary>
+        public const int CREATE_INTERVAL = 120000;
         
         public static readonly Matchmaking Instance = new Matchmaking();
 
         public List<User> Users { get; set; }
         public List<Match> Matches { get; set; }
-        public DateTime LastFinder { get; set; }
         public int LastCount { get; set; }
+        public Timer Timer { get; set; }
 
         Matchmaking()
         {
             LastCount = 0;
             Users = new List<User>();
-            LongPoolHandler.NewFinder += OnNewFinder;
-            Timer t = new Timer(120000);
-            t.AutoReset = true;
-            t.Elapsed += (x, y) => CalculateMatches();
+            LongPoolHandler.NewSearcher += OnNewSearcher;
+            ResetTimer();
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace Munchkin_Online.Core.Matchmaking
         /// </summary>
         /// <param name="sender">Собственно User</param>
         /// <param name="e">//TODO: </param>
-        public void OnNewFinder(object sender, NewFinderArgs e)
+        public void OnNewSearcher(object sender, NewFinderArgs e)
         {
             Users.Add(sender as User);
-            LastFinder = DateTime.Now;
+            ResetTimer();
             CalculateMatches();
         }
 
@@ -59,22 +59,64 @@ namespace Munchkin_Online.Core.Matchmaking
             if (LastCount == Users.Count)
             {
                 var UsersForMatch = Users.Take(4);
-                List<Player> Players = new List<Player>();
-                foreach (var i in UsersForMatch)
-                {
-                    Players.Add(new Player(i));
-                }
-                Match match = new Match();
-
-
+                CreateMatch(UsersForMatch);
             }
             else
             {
-
+                var dict = Users.GroupBy(x => x.Games);
+                foreach (var key in dict)
+                {
+                    if (key.Count() > 4)
+                        CreateMatch(key.Take(4));
+                }
             }
-           
+            LastCount = Users.Count;
+        }
+
+
+        /// <summary>
+        /// Перезагрузка будильника
+        /// </summary>
+        void ResetTimer()
+        {
+            Timer.Stop();
+            Timer.Close();
+            Timer = new Timer(CREATE_INTERVAL);
+            Timer.AutoReset = false;
+            Timer.Elapsed += (x, y) => CalculateMatches();
+            Timer.Start();
+        }
+
+        void CreateMatch(IEnumerable<User> UsersForMatch)
+        {
+            List<Player> Players = new List<Player>();
+            foreach (var i in UsersForMatch)
+            {
+                Players.Add(new Player(i));
+                Users.Remove(i);
+            }
+            Match match = new Match();
+            match.Players = Players;
+            match.MatchEnded += OnMatchEnded;
+            Matches.Add(match);
+            MatchCreated(this, new MatchCreatedArgs());
+        }
+
+        void OnMatchEnded(object sender, EventArgs e)
+        {
+            Match m = sender as Match;
+            m.State = State.Ended;
+            foreach (var p in m.Players)
+            {
+                ///TODO: User.Games++;
+            }
+            ///TODO: Winner.Wins++;
+            ///TODO: Add stats to db(optionally);
+            Matches.Remove(m);
         }
     }
+
+ 
 
     public class MatchCreatedArgs : EventArgs
     {

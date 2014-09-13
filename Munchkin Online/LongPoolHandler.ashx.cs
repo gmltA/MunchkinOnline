@@ -13,7 +13,7 @@ namespace Munchkin_Online
     /// </summary>
     public class LongPoolHandler : IHttpAsyncHandler, IRequiresSessionState
     {
-        public static event EventHandler<NewFinderArgs> NewFinder = delegate { };
+        public static event EventHandler<NewFinderArgs> NewSearcher = delegate { };
 
         #region IHttpAsyncHandler Members
 
@@ -61,7 +61,7 @@ namespace Munchkin_Online
                     state.CompleteRequest();
                     break;
                 case "FindMatch":
-                    NewFinder(Longpool.Instance.GetUserByGuid(guid), null);
+                    NewSearcher(Longpool.Instance.GetUserByGuid(guid), null);
                     state.CompleteRequest();
                     break;
                 default:
