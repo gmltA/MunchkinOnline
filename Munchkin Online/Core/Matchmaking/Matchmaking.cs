@@ -18,9 +18,13 @@ namespace Munchkin_Online.Core.Matchmaking
         /// </summary>
         public event EventHandler<MatchCreatedArgs> MatchCreated = delegate { };
 
+        public event EventHandler MatchEnded = delegate { };
+
+        
         public static readonly Matchmaking Instance = new Matchmaking();
 
         public List<User> Users { get; set; }
+        public List<Match> Matches { get; set; }
         public DateTime LastFinder { get; set; }
         public int LastCount { get; set; }
 
@@ -61,6 +65,8 @@ namespace Munchkin_Online.Core.Matchmaking
                     Players.Add(new Player(i));
                 }
                 Match match = new Match();
+
+
             }
             else
             {

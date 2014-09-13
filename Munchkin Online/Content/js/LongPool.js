@@ -39,9 +39,10 @@ function Disconnect() {
       
  
 function ProcessResponse(transport) {  
-    switch(transport.Type)
+    transport = JSON.parse(transport);
+    switch (transport.Type)
     {
-        case 5: addNotification(transport.Message); break;
+        case 5: notificationMgr.addNotification(transport.Message); break;
     } 
     SendRequest();  
 }  

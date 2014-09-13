@@ -3,6 +3,7 @@
     this.isNotificationActive = false;
 }
 
+
 NotificationMgr.prototype.addNotification = function (message) {
     this.notificationQueue.push(message);
     if (this.isNotificationActive == false)
