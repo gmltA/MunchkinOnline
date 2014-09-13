@@ -50,10 +50,10 @@ HEADER .friends, HEADER .auth
 
 HEADER .auth .container
 {
-    padding: 10px 30px 0 30px;
+    padding: 7px 30px 0 30px;
     background: url(/Content/img/login.png) 50% 0% no-repeat;
     width: 110px;
-    height: 84px;
+    height: 88px;
     text-align: center;
 }
 
@@ -170,13 +170,13 @@ HEADER .auth-bar > A
     display: block;
     color: black;
     padding: 23px 40px 23px 15px;
-    background: url(/Content/img/tab.png) 0% 0% no-repeat;
+    background: url(/Content/img/tab.png) 0% 0%;
     text-align: center;
 }
 
  .nav .current, .nav .current:hover
 {
-    background: url(/Content/img/tab-current.png);
+    background: url(/Content/img/tab-current.png) no-repeat;
     padding-top: 30px;
     padding-left: 45px;
     margin-left: -9px;
