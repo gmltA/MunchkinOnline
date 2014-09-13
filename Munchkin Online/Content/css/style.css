@@ -170,7 +170,7 @@ HEADER .auth-bar > A
     display: block;
     color: black;
     padding: 23px 40px 23px 15px;
-    background: url(/Content/img/tab.png) 0% 0%;
+    background: url(/Content/img/tab.png) 0% 0% no-repeat;
     text-align: center;
 }
 
