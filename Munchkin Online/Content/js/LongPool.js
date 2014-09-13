@@ -13,7 +13,7 @@ function SendRequest() {
     $.ajax({  
         type: "POST",  
         url: url,  
-        success: ProcessResponse,  
+        success: ProcessResponse,
         error: SendRequest  
     });  
 }  
@@ -39,8 +39,10 @@ function Disconnect() {
       
  
 function ProcessResponse(transport) {  
-    document.getElementsByTagName("body")[0].innerHTML +=  
-       ' <strong>' + transport + '</strong> : <br/>';  
+    switch(transport.Type)
+    {
+        case 5: addNotification(transport.Message); break;
+    } 
     SendRequest();  
 }  
       

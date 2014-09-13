@@ -142,12 +142,12 @@
     <Compile Include="LongPoolHandler.ashx.cs">
       <DependentUpon>LongPoolHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Battle.cs" />
-    <Compile Include="Models\BoardState.cs" />
+    <Compile Include="Core\Game\Battle.cs" />
+    <Compile Include="Core\Game\BoardState.cs" />
     <Compile Include="Models\Card.cs" />
-    <Compile Include="Models\Match.cs" />
+    <Compile Include="Core\Game\Match.cs" />
     <Compile Include="Models\Mechanic.cs" />
-    <Compile Include="Models\Player.cs" />
+    <Compile Include="Core\Game\Player.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -255,6 +255,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

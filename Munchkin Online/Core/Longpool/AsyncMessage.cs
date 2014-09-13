@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace Munchkin_Online.Core.Longpool
 {
     public class AsyncMessage
     {
         public MessageType Type { get; set; }
-        
+        public string Message { get; set; }
 
         public AsyncMessage(MessageType t)
         {
@@ -17,7 +18,7 @@ namespace Munchkin_Online.Core.Longpool
 
         public override string ToString()
         {
-            return "{ Type:" + Enum.GetName(typeof(MessageType), Type) + " }"; 
+            return new JavaScriptSerializer().Serialize(this); 
         }
     }
 
@@ -27,6 +28,7 @@ namespace Munchkin_Online.Core.Longpool
         ERROR,
         NewLobby,
         FindedMatch,
-        Invite
+        Invite,
+        Notification
     }
 }

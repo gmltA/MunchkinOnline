@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Munchkin_Online.Models;
 
-namespace Munchkin_Online.Models
+namespace Munchkin_Online.Core.Game
 {
     public class Battle
     {

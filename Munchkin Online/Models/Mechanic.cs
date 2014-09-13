@@ -18,8 +18,6 @@ namespace Munchkin_Online.Models
         public Condition Condition { get; set; }
     }
 
-
-
     public enum Action
     {
         AddLevel,

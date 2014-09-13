@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 using System.Web;
+using Munchkin_Online.Core.Game;
 using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Matchmaking
@@ -53,7 +54,13 @@ namespace Munchkin_Online.Core.Matchmaking
 
             if (LastCount == Users.Count)
             {
-
+                var UsersForMatch = Users.Take(4);
+                List<Player> Players = new List<Player>();
+                foreach (var i in UsersForMatch)
+                {
+                    Players.Add(new Player(i));
+                }
+                Match match = new Match();
             }
             else
             {

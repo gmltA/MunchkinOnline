@@ -23,7 +23,9 @@ namespace Munchkin_Online.Controllers
 
         public void NotifyAll()
         {
-            Longpool.Instance.PushMessage(new AsyncMessage(MessageType.OK));
+            AsyncMessage m = new AsyncMessage(MessageType.Notification);
+            m.Message = "Hello!";
+            Longpool.Instance.PushMessage(m);
         }
 
     }
