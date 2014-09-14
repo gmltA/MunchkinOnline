@@ -34,7 +34,6 @@ namespace Munchkin_Online.Core.Longpool
         public Longpool()
         {
             Matchmaking.Matchmaking.Instance.MatchCreated += OnMatchCreated;
-
         }
 
         public void OnMatchCreated(object sender, MatchCreatedArgs e)

@@ -35,6 +35,7 @@ namespace Munchkin_Online.Core.Matchmaking
             LastCount = 0;
             Users = new List<User>();
             LongPoolHandler.NewSearcher += OnNewSearcher;
+            Timer = new Timer(CREATE_INTERVAL);
             ResetTimer();
         }
 
@@ -50,6 +51,9 @@ namespace Munchkin_Online.Core.Matchmaking
             CalculateMatches();
         }
 
+        /// <summary>
+        /// Метод, распределяющий игроков по матчам
+        /// </summary>
         void CalculateMatches()
         {
 
@@ -102,6 +106,11 @@ namespace Munchkin_Online.Core.Matchmaking
             MatchCreated(this, new MatchCreatedArgs());
         }
 
+        /// <summary>
+        /// Обработчик конца матча
+        /// </summary>
+        /// <param name="sender">Матч, который завершился.</param>
+        /// <param name="e">Пустой параметр</param>
         void OnMatchEnded(object sender, EventArgs e)
         {
             Match m = sender as Match;
