@@ -6,7 +6,6 @@ HTML, BODY
     margin: 0;
     padding: 0;
     height: 100%;
-    min-height: 100%; /* for firefox */
 }
 
 BODY
@@ -21,6 +20,7 @@ HEADER
     display: table;
     width: 990px;
     margin: auto;
+    color: white;
 }
 
 HEADER > H1
@@ -40,6 +40,7 @@ HEADER > .auth-bar-container
 {
     display: table-cell;
     vertical-align: middle;
+    color: black;
 }
 
 HEADER .friends, HEADER .auth
@@ -69,6 +70,7 @@ HEADER .auth .container INPUT
     color: white;
     text-align: center;
     margin-bottom: 11px;
+    height: 15px;
 }
 
 HEADER .auth .container A
@@ -140,7 +142,11 @@ HEADER .auth-bar > A
 .wrapper
 {
     width: 990px;
-    margin: auto;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -122px;
+    position: relative;
 }
 
 .clearfix:after
@@ -228,12 +234,14 @@ ASIDE
 
 FOOTER {
     clear: both;
-    height: 60px;
-    padding-top: 30px;
-    margin: 0;
+    height: 72px;
+    padding-top: 50px;
     text-align: center;
     text-shadow: 1px 1px 1px black;
     color: white;
+    width: 100%;
+    background: url(/Content/img/footer.png) 50% 0% no-repeat;
+    position: relative;
 }
 
 FOOTER > .small

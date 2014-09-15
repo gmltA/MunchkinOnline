@@ -8,36 +8,36 @@
         <title>@ViewBag.Title</title>
     </head>
     <body>
-        <header>
-            <h1>Manchkin!</h1>
-            <div class="moto">Воруй гусей<br>убивай друзей!</div>
-            <div class="auth-bar-container">
-                <div class="auth-bar">
-                    <a href>Auth</a> / @Html.ActionLink("Регистрация", "Register", "Accounts")
-                </div>
-                <div class="auth">
-                    <div class="container">
-                        <input type="text" placeholder="Username"/>
-                        <input type="password" placeholder="Password"/>
-                        <a href="">Login</a>
-                    </div>
-                    <div class="control"></div>
-                </div>
-                <div class="friends" hidden>
-                    <div class="container">
-                        <p>Friend 1</p>
-                        <p>Friend 2</p>
-                        <p class="offline">Friend 3</p>
-                        <p class="offline">Friend 4</p>
-                        <p>Friend 5</p>
-                        <p>Friend 6</p>
-                        <p>Friend 7</p>
-                    </div>
-                    <div class="control"></div>
-                </div>
-            </div>
-        </header>
         <div class="wrapper">
+            <header>
+                <h1>Munchkin!</h1>
+                <div class="moto">Убивай гусей<br>подставляй друзей!</div>
+                <div class="auth-bar-container">
+                    <div class="auth-bar">
+                        <a href>Auth</a> / @Html.ActionLink("Регистрация", "Register", "Accounts")
+                    </div>
+                    <div class="auth">
+                        <div class="container">
+                            <input type="text" placeholder="Username"/>
+                            <input type="password" placeholder="Password"/>
+                            <a href="">Login</a>
+                        </div>
+                        <div class="control"></div>
+                    </div>
+                    <div class="friends" hidden>
+                        <div class="container">
+                            <p>Friend 1</p>
+                            <p>Friend 2</p>
+                            <p class="offline">Friend 3</p>
+                            <p class="offline">Friend 4</p>
+                            <p>Friend 5</p>
+                            <p>Friend 6</p>
+                            <p>Friend 7</p>
+                        </div>
+                        <div class="control"></div>
+                    </div>
+                </div>
+            </header>
             <aside>
                 <ul class="nav">
                     <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_MAIN ? "class=current" : "") href="/">Main&nbsp;page</a>
@@ -49,13 +49,13 @@
             <div class="main-block">
                 @RenderBody()
             </div>
-            <footer>
-                Все права защищены шариатом <br/>
-                <span class="small">
-                    Товарный знак "Мамка Влада" принадлежит соответствующим владельцам.
-                </span>
-            </footer>
         </div>
+        <footer>
+            Все права защищены шариатом <br/>
+            <span class="small">
+                Товарный знак "Мамка Влада" принадлежит соответствующим владельцам.
+            </span>
+        </footer>
         <div class="notification">
             <p></p>
             <div class="scroll left"></div>
