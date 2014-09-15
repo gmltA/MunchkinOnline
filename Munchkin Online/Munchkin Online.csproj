@@ -15,7 +15,7 @@
     <AssemblyName>Munchkin Online</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -131,9 +131,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\DebugController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
+    <Compile Include="Core\Auth\AuthHttpModule.cs" />
+    <Compile Include="Core\Auth\CurrentUser.cs" />
+    <Compile Include="Core\Auth\CustomAuthentication.cs" />
+    <Compile Include="Core\Auth\UserIdentity.cs" />
+    <Compile Include="Core\Auth\UserProvider.cs" />
     <Compile Include="Core\Database\UserRepository.cs" />
     <Compile Include="Core\Database\MainContext.cs" />
     <Compile Include="Core\LayoutDefines.cs" />
@@ -151,6 +157,7 @@
     <Compile Include="Core\Game\BoardState.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
+    <Compile Include="Models\GameLogEntry.cs" />
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Core\Game\Player.cs" />
     <Compile Include="Models\User.cs" />
@@ -251,6 +258,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Rules\Index.cshtml" />
     <Content Include="Views\Debug\LongPool.cshtml" />
+    <Content Include="Views\Accounts\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,16 +286,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>13194</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49544/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

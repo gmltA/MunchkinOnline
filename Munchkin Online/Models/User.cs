@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,7 @@ namespace Munchkin_Online.Models
         /// Username for authentication.
         /// Should not be displayed or changed after registration for security reasons.
         /// </summary>
+       [Display(Name="Логин", Description="Ваш логин, который вы будете использовать для входа на сайт")]
         public string Username { get; set; }
 
         /// <summary>
@@ -24,9 +26,23 @@ namespace Munchkin_Online.Models
         /// <summary>
         /// TODO: It's better to store pass hash instead of password itself to keep it in secret.
         /// </summary>
+        [MinLength(6)]
         public string Password { get; set; }
 
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string VkId { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string VkHash { get; set; }
+
+        [ScaffoldColumn(false)]
+        public uint GamesPlayed { get; set; }
+
+        [ScaffoldColumn(false)]
+        public uint GamesWon { get; set; }
 
         public State State { get; set; }
 
@@ -34,11 +50,11 @@ namespace Munchkin_Online.Models
 
         public Role Role { get; set; }
 
-        public GameStats GameStats { get; set; }
-
+        [ScaffoldColumn(false)]
         public DateTime LastActivity { get; set; }
 
         public virtual ICollection<User> Friends { get; set; }
+        public virtual ICollection<GameLogEntry> Games { get; set; }
      }
 
     public enum Role
@@ -55,14 +71,9 @@ namespace Munchkin_Online.Models
 
     public enum State
     {
+        Offline,
         Idle,
         InLobby,
         InGame
-    }
-
-    public struct GameStats
-    {
-        public uint played;
-        public uint won;
     }
 }

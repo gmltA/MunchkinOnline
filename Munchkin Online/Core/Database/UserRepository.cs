@@ -32,5 +32,16 @@ namespace Munchkin_Online.Core.Database
             }
         }
 
+
+        public User Login(string email, string pass)
+        {
+            return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0 && string.Compare(p.Password, pass, false) == 0);
+        }
+
+
+        public User GetUser(string email)
+        {
+            return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0);
+        }
     }
 }

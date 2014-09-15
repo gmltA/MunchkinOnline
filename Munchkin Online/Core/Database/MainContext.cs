@@ -10,7 +10,7 @@ namespace Munchkin_Online.Core.Database
     public class MainContext : DbContext
     {
         public MainContext()
-            : base("DBModelContainer")
+            : base("MyConnection")
         { }
 
         public DbSet<User> Users { get; set; }

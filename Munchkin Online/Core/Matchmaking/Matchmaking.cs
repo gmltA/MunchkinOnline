@@ -67,7 +67,7 @@ namespace Munchkin_Online.Core.Matchmaking
             }
             else
             {
-                var dict = Users.GroupBy(x => x.GameStats.played);
+                var dict = Users.GroupBy(x => x.GamesPlayed);
                 foreach (var key in dict)
                 {
                     if (key.Count() > 4)
@@ -114,12 +114,12 @@ namespace Munchkin_Online.Core.Matchmaking
         void OnMatchEnded(object sender, EventArgs e)
         {
             Match m = sender as Match;
-            m.State = State.Ended;
+            m.State = Game.State.Ended;
             foreach (var p in m.Players)
             {
-                ///TODO: User.Games++;
+                ///TODO: User.GamesPlayed++;
             }
-            ///TODO: Winner.Wins++;
+            ///TODO: Winner.GamesWon++;
             ///TODO: Add stats to db(optionally);
             Matches.Remove(m);
         }
