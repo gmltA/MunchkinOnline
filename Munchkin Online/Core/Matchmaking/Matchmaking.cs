@@ -67,7 +67,7 @@ namespace Munchkin_Online.Core.Matchmaking
             }
             else
             {
-                var dict = Users.GroupBy(x => x.Games);
+                var dict = Users.GroupBy(x => x.GameStats.played);
                 foreach (var key in dict)
                 {
                     if (key.Count() > 4)
