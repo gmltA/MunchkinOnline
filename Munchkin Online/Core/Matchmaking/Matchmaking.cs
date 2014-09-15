@@ -42,7 +42,7 @@ namespace Munchkin_Online.Core.Matchmaking
         /// <summary>
         /// Обработчик события появления нового человека в поиске
         /// </summary>
-        /// <param name="sender">Собственно User</param>
+        /// <param name="sender">Собственно User(будет, а пока ClientState)</param>
         /// <param name="e">//TODO: </param>
         public void OnNewSearcher(object sender, NewFinderArgs e)
         {

@@ -8,8 +8,6 @@ namespace Munchkin_Online.Core.Longpool
 {
     public class Longpool
     {
-
-        
         /// <summary>
         /// Singleton
         /// </summary>
