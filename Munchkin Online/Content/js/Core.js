@@ -1,15 +1,26 @@
-﻿function NotificationMgr() {
+﻿/**
+ * Notification manager class.
+ * Requires special markup (.notification div).
+ */
+function NotificationMgr() {
     this.notificationQueue = [];
     this.isNotificationActive = false;
 }
 
-
+/**
+ * Adds notification to the queue.
+ * Use it in code to init notification.
+ */
 NotificationMgr.prototype.addNotification = function (message) {
     this.notificationQueue.push(message);
     if (this.isNotificationActive == false)
         this.displayNextNotification();
 }
 
+/**
+ * Displays notification.
+ * Internal function. DO NOT USE IT DIRECTLY.
+ */
 NotificationMgr.prototype.showNotification = function (message) {
     this.isNotificationActive = true;
     $(".notification").addClass("anim");
@@ -34,6 +45,10 @@ NotificationMgr.prototype.showNotification = function (message) {
     }, 1000);
 }
 
+/**
+ * Pops next notification and displays it.
+ * Internal function. DO NOT USE IT DIRECTLY.
+ */
 NotificationMgr.prototype.displayNextNotification = function () {
     if (this.notificationQueue.length == 0)
         return;
@@ -47,10 +62,12 @@ function toggleFriendsBar(controlButton) {
     if ($(controlButton).hasClass("down")) {
         $(controlButton).parent().find(".container").slideDown();
         $(controlButton).animate({ marginTop: "-19px" }, "fast");
+        $(controlButton).parent().find(".social").slideDown();
     }
     else {
         $(controlButton).parent().find(".container").slideUp();
         $(controlButton).animate({ marginTop: "0px" }, "fast");
+        $(controlButton).parent().find(".social").slideUp();
     }
     $(controlButton).toggleClass("down");
 }

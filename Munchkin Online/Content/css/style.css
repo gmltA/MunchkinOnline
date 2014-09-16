@@ -1,18 +1,37 @@
 * { outline: none; }
 A { text-decoration: none; }
 
+@font-face {
+    font-family: 'Windlass';
+    src: url(/Content/fonts/Windlass.ttf);
+}
+
+@font-face {
+    font-family: 'Munchkin_Cyr';
+    src: url(/Content/fonts/Munchkin_Cyr.ttf);
+}
+
 HTML, BODY
 {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: 'Munchkin_Cyr';
 }
 
 BODY
 {
-    background: url(/Content/img/main.jpg) 50% 114px no-repeat;
+    background: url(/Content/img/main.jpg)  50% 114px no-repeat black;
+    height: 100%;
 }
 
+@media (max-width: 1000px)
+{
+    BODY
+    {
+        background-position: -813px 114px;
+    }
+}
 HEADER
 {
     height: 90px;
@@ -81,8 +100,6 @@ HEADER .auth .container INPUT[type="submit"]
 HEADER .auth .container A
 {
     color: black;
-    font-family: 'Windlass';
-    font-size: 14px;
 }
 
 HEADER .auth .container A:hover
@@ -99,11 +116,10 @@ HEADER .friends .container
 
 HEADER .friends P
 {
-    margin: 0 0 8px 0;
+    margin: 0 0 12px 0;
     color: white;
     text-shadow: 1px 1px 1px black;
     text-align: center;
-    font-family: 'Windlass';
     font-size: 12px;
 }
 
@@ -112,13 +128,61 @@ HEADER .friends P.offline
     color: gray;
 }
 
-HEADER .control
+HEADER .control, HEADER .social
 {
     background: url(/Content/img/friends-control.png) 50% 100% no-repeat;
     width: 170px;
     height: 34px;
     margin-top: -19px;
+    display: block;
+}
+
+HEADER .control
+{
     cursor: pointer;
+}
+
+HEADER .social
+{
+    background: url(/Content/img/authbar-tile.png) no-repeat;
+    margin-bottom: 11px;
+    text-align: center;
+    padding-top: 10px;
+    height: 24px;
+}
+
+HEADER .social > SPAN
+{
+    padding: 0 10px;
+}
+
+HEADER .social > A
+{
+    display: inline-block;
+    background: url(/Content/img/sprites.png) no-repeat;
+    width: 25px;
+    height: 16px;
+    cursor: pointer;
+}
+
+HEADER .social > .vk
+{
+    background-position: 0% 0%;
+}
+
+HEADER .social > .vk:hover
+{
+    background-position: 0% 100%;
+}
+
+HEADER .social > .twitter
+{
+    background-position: 100% 0%;
+}
+
+HEADER .social > .twitter:hover
+{
+    background-position: 100% 100%;
 }
 
 HEADER .control.down
@@ -133,10 +197,9 @@ HEADER .auth-bar
     width: 300px;
     margin-right: -200px;
     text-align: center;
-    height: 49px;
-    padding-top: 10px;
-    font-family: 'Windlass';
-    font-size: 12px;
+    height: 47px;
+    padding-top: 12px;
+    font-size: 14px;
 }
 
 HEADER .auth-bar > A
@@ -168,8 +231,6 @@ HEADER .auth-bar > A
     list-style: none;
     padding: 0;
     margin: 90px 0 10px 46px;
-    font-family: 'Windlass';
-    font-size: 14px;
 }
 
 .nav > LI
@@ -214,25 +275,25 @@ ASIDE
     height: 380px;
     margin: 100px 80px 100px 20px;
     overflow-y: auto;
-    font-family: 'Windlass';
 }
 
 .main-block > P
 {
     margin: 5px 0 5px 0;
+    font-size: 18px;
 }
 
 .main-block > P:first-letter
 {
     color: red;
-    font-size: 20px;
+    font-size: 24px;
     text-shadow: 1px 1px 1px black;
 }
 
 .main-block > P.small, .main-block > P.small::first-letter
 {
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     color: inherit;
     font-weight: 400;
 }
@@ -253,16 +314,6 @@ FOOTER > .small
 {
     color: gray;
     font-size: 12px;
-}
-
-@font-face {
-    font-family: 'Windlass';
-    src: url(/Content/fonts/Windlass.ttf);
-}
-
-@font-face {
-    font-family: 'Munchkin_Cyr';
-    src: url(/Content/fonts/Munchkin_Cyr.ttf);
 }
 
 .notification
@@ -291,7 +342,6 @@ FOOTER > .small
 .notification > P
 {
     text-align: center;
-    font-family: 'Windlass';
 }
 
 .notification.anim > P
