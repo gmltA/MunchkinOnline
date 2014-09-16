@@ -18,11 +18,11 @@
                         <div class="auth-bar">
                             @if(!Request.IsAuthenticated)
                             {
-                                <a href>Auth</a> @(" / ") @Html.ActionLink("Регистрация", "Register", "Accounts")
+                                @Html.ActionLink("Регистрация", "Register", "Accounts")
                             }
                             else
                             {
-                                @("Привет, " + CurrentUser.Instance.Current.Nickname)
+                                @("Привет, " + CurrentUser.Instance.Current.Nickname + " / ")@Html.ActionLink("Выход", "Logout", "Accounts")
                             }                        
                         </div>
                     @if(!Request.IsAuthenticated)
@@ -34,7 +34,7 @@
                                     <input type="text" name="Email" placeholder="Email"/>
                                     <input type="password" name="Password" placeholder="Password"/>
                                     <!-- <a href="">Login</a> -->
-                                    <input type="submit" />
+                                    <input type="submit" value="Вход"/>
                                 }
                             </div>
                             <div class="control"></div>

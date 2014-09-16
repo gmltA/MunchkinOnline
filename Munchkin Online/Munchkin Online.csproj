@@ -290,6 +290,7 @@
     <Content Include="Views\Rules\Index.cshtml" />
     <Content Include="Views\Debug\LongPool.cshtml" />
     <Content Include="Views\Accounts\Register.cshtml" />
+    <Content Include="Views\Accounts\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

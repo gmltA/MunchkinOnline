@@ -60,6 +60,18 @@ namespace Munchkin_Online.Controllers
                 return RedirectPermanent("/");
         }
 
+        public ActionResult Logout()
+        {
+            Auth.LogOut();
+            return RedirectPermanent("/");
+        }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(LoginModel m)
         {

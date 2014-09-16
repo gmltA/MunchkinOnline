@@ -73,6 +73,11 @@ HEADER .auth .container INPUT
     height: 15px;
 }
 
+HEADER .auth .container INPUT[type="submit"]
+{
+    color: rgb(0, 0, 0);
+    font-family: "Munchkin_Cyr";
+}
 HEADER .auth .container A
 {
     color: black;
