@@ -255,6 +255,11 @@ FOOTER > .small
     src: url(/Content/fonts/Windlass.ttf);
 }
 
+@font-face {
+    font-family: 'Munchkin_Cyr';
+    src: url(/Content/fonts/Munchkin_Cyr.ttf);
+}
+
 .notification
 {
     background: url(/Content/img/notification.png) 50% 100% no-repeat;
