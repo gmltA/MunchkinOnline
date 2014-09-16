@@ -18,16 +18,16 @@
                 <h1>Munchkin!</h1>
                 <div class="moto">Убивай гусей<br>подставляй друзей!</div>
                 <div class="auth-bar-container">
-                        <div class="auth-bar">
-                            @if(!Request.IsAuthenticated)
-                            {
-                                @Html.ActionLink("Регистрация", "Register", "Accounts")
-                            }
-                            else
-                            {
-                                @("Привет, " + CurrentUser.Instance.Current.Nickname + " / ")@Html.ActionLink("Выход", "Logout", "Accounts")
-                            }                        
-                        </div>
+                    <div class="auth-bar">
+                        @if(!Request.IsAuthenticated)
+                        {
+                            @Html.ActionLink("Регистрация", "Register", "Accounts")
+                        }
+                        else
+                        {
+                            @("Привет, " + CurrentUser.Instance.Current.Nickname + " / ")@Html.ActionLink("Выход", "Logout", "Accounts")
+                        }
+                    </div>
                     @if(!Request.IsAuthenticated)
                     {
                         <div class="auth">
@@ -40,9 +40,15 @@
                                     <input type="submit" value="Вход"/>
                                 }
                             </div>
+                            <div class="social">
+                                <a class="vk"></a>
+                                <span>Connect!</span>
+                                <a class="twitter"></a>
+                            </div>
                             <div class="control"></div>
                         </div>
-                    } else
+                    }
+                    else
                     {
                         <div class="friends">
                             <div class="container">
