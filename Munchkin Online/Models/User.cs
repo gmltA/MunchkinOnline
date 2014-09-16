@@ -11,13 +11,6 @@ namespace Munchkin_Online.Models
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Username for authentication.
-        /// Should not be displayed or changed after registration for security reasons.
-        /// </summary>
-       [Display(Name="Логин", Description="Ваш логин, который вы будете использовать для входа на сайт")]
-        public string Username { get; set; }
-
-        /// <summary>
         /// User display name.
         /// Can be changed at any moment.
         /// </summary>

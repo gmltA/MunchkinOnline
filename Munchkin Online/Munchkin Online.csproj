@@ -47,6 +47,19 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web">
+      <HintPath>..\packages\Ninject.Web.3.2.1.0\lib\net40-full\Ninject.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.Common.3.2.2.0\lib\net40-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc">
+      <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net40-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -117,6 +130,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
@@ -129,15 +145,20 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWeb.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\DebugController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Core\Auth\AuthHttpModule.cs" />
     <Compile Include="Core\Auth\CurrentUser.cs" />
     <Compile Include="Core\Auth\CustomAuthentication.cs" />
+    <Compile Include="Core\Auth\IAuthentication.cs" />
+    <Compile Include="Core\Auth\PasswordCryptor.cs" />
     <Compile Include="Core\Auth\UserIdentity.cs" />
     <Compile Include="Core\Auth\UserProvider.cs" />
     <Compile Include="Core\Database\UserRepository.cs" />
@@ -155,9 +176,19 @@
     </Compile>
     <Compile Include="Core\Game\Battle.cs" />
     <Compile Include="Core\Game\BoardState.cs" />
+    <Compile Include="Migrations\201409151700124_InitialCreate.cs" />
+    <Compile Include="Migrations\201409151700124_InitialCreate.Designer.cs">
+      <DependentUpon>201409151700124_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409160534170_UsernameRemoved.cs" />
+    <Compile Include="Migrations\201409160534170_UsernameRemoved.Designer.cs">
+      <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
     <Compile Include="Models\GameLogEntry.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Core\Game\Player.cs" />
     <Compile Include="Models\User.cs" />
@@ -271,6 +302,14 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409151700124_InitialCreate.resx">
+      <DependentUpon>201409151700124_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409160534170_UsernameRemoved.resx">
+      <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

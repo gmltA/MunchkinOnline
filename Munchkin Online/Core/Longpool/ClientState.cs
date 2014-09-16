@@ -3,19 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using Munchkin_Online.Core.Auth;
+using Munchkin_Online.Models;
+using Ninject;
 
 namespace Munchkin_Online.Core.Longpool
 {
     /// <summary>
     /// Класс, характеризующий подключенный клиент/
-    /// TODO: Cвязать с Models.User, после того, как мамка Влада его отпустит("-А Влад выйдет? -Нет. -А скиньте код") 
     /// </summary>
     public class ClientState : IAsyncResult
     {
-        public HttpContext CurrentContext;
-        public AsyncCallback AsyncCallback;
-        public object ExtraData;
-        public string ClientGuid;
+        /*[Inject]
+        IAuthentication Auth { get; set; }
+
+        User CurrentUser
+        {
+            get
+            {
+                return ((UserIndentity)(Auth.CurrentUser.Identity)).User;
+            }
+        }*/
+
+        public HttpContext CurrentContext { get; set; }
+        public AsyncCallback AsyncCallback { get; set; }
+        public User User { get; set; }
+        public object ExtraData { get; set; }
+        public string ClientGuid { get; set; }
+
         private Boolean _isCompleted;
 
         public ClientState(HttpContext context,
@@ -25,6 +40,7 @@ namespace Munchkin_Online.Core.Longpool
             AsyncCallback = callback;
             ExtraData = data;
             _isCompleted = false;
+            //User = CurrentUser;
         }
 
         public void CompleteRequest()

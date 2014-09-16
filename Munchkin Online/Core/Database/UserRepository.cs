@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Database
@@ -22,6 +23,8 @@ namespace Munchkin_Online.Core.Database
         {
             try
             {
+                instance.Id = Guid.NewGuid();
+                instance.Password = PasswordCryptor.Crypt(instance.Password);
                 DB.Users.Add(instance);
                 DB.SaveChanges();
                 return true;

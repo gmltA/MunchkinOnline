@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Munchkin_Online.Core.Auth
+
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -13,29 +15,45 @@
                 <h1>Munchkin!</h1>
                 <div class="moto">Убивай гусей<br>подставляй друзей!</div>
                 <div class="auth-bar-container">
-                    <div class="auth-bar">
-                        <a href>Auth</a> / @Html.ActionLink("Регистрация", "Register", "Accounts")
-                    </div>
-                    <div class="auth">
-                        <div class="container">
-                            <input type="text" placeholder="Username"/>
-                            <input type="password" placeholder="Password"/>
-                            <a href="">Login</a>
+                        <div class="auth-bar">
+                            @if(!Request.IsAuthenticated)
+                            {
+                                <a href>Auth</a> @("/" + Html.ActionLink("Регистрация", "Register", "Accounts"))
+                            }
+                            else
+                            {
+                                @("Привет, " + CurrentUser.Instance.Current.Nickname)
+                            }                        
                         </div>
-                        <div class="control"></div>
-                    </div>
-                    <div class="friends" hidden>
-                        <div class="container">
-                            <p>Friend 1</p>
-                            <p>Friend 2</p>
-                            <p class="offline">Friend 3</p>
-                            <p class="offline">Friend 4</p>
-                            <p>Friend 5</p>
-                            <p>Friend 6</p>
-                            <p>Friend 7</p>
+                    @if(!Request.IsAuthenticated)
+                    {
+                        <div class="auth">
+                            <div class="container">
+                                @using (Html.BeginForm("Login", "Accounts"))
+                                {
+                                    <input type="text" name="Email" placeholder="Email"/>
+                                    <input type="password" name="Password" placeholder="Password"/>
+                                    <!-- <a href="">Login</a> -->
+                                    <input type="submit" />
+                                }
+                            </div>
+                            <div class="control"></div>
                         </div>
-                        <div class="control"></div>
-                    </div>
+                    } else
+                    {
+                        <div class="friends">
+                            <div class="container">
+                                <p>Friend 1</p>
+                                <p>Friend 2</p>
+                                <p class="offline">Friend 3</p>
+                                <p class="offline">Friend 4</p>
+                                <p>Friend 5</p>
+                                <p>Friend 6</p>
+                                <p>Friend 7</p>
+                            </div>
+                            <div class="control"></div>
+                        </div>
+                    }
                 </div>
             </header>
             <aside>

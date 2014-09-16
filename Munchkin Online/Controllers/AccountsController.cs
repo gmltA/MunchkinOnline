@@ -6,11 +6,22 @@ using System.Web.Mvc;
 using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Database;
 using Munchkin_Online.Models;
+using Ninject;
 
 namespace Munchkin_Online.Controllers
 {
     public class AccountsController : Controller
     {
+        [Inject]
+        public IAuthentication Auth { get; set; }
+
+        public User CurrentUser
+        {
+            get
+            {
+                return ((UserIndentity)(Auth.CurrentUser.Identity)).User;
+            }
+        }
 
         UserRepository Users = new UserRepository();
 
@@ -24,7 +35,7 @@ namespace Munchkin_Online.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if(CurrentUser.Get == null) return View();
+            if(CurrentUser == null) return View();
                 else
             return RedirectPermanent("/");
         }
@@ -32,12 +43,12 @@ namespace Munchkin_Online.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
-            if (CurrentUser.Get == null)
+            if (CurrentUser == null)
             {
                 if (ModelState.IsValid)
                 {
                     user.LastActivity = DateTime.Now;
-                    if (Users.Add(user) == null)
+                    if (Users.Add(user) == false)
                         return View(user);
                     else
                         return RedirectPermanent("/");
@@ -47,6 +58,21 @@ namespace Munchkin_Online.Controllers
             }
             else
                 return RedirectPermanent("/");
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Auth.Login(m.Email, m.Password) != null)
+                    return RedirectPermanent("/");
+                else
+                    return View();
+            }
+            else
+                return View();
+
         }
 
         

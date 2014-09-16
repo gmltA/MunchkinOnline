@@ -9,7 +9,7 @@ using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Auth
 {
-    public class CustomAuthentication
+    public class CustomAuthentication : IAuthentication
     {
         private const string cookieName = "__AUTH_COOKIE";
 
@@ -19,13 +19,14 @@ namespace Munchkin_Online.Core.Auth
 
         #region IAuthentication Members
 
-        public User Login(string userName, string Password)
+        public User Login(string email, string Password)
         {
+            string CryptoPass = PasswordCryptor.Crypt(Password);
             bool isPersistent = true;
-            User retUser = Repository.Login(userName, Password);
+            User retUser = Repository.Login(email, CryptoPass);
             if (retUser != null)
             {
-                CreateCookie(userName, isPersistent);
+                CreateCookie(email, isPersistent);
             }
             return retUser;
         }
@@ -40,11 +41,11 @@ namespace Munchkin_Online.Core.Auth
             return retUser;
         }
 
-        private void CreateCookie(string userName, bool isPersistent = false)
+        private void CreateCookie(string email, bool isPersistent = false)
         {
             var ticket = new FormsAuthenticationTicket(
                   1,
-                  userName,
+                  email,
                   DateTime.Now,
                   DateTime.Now.Add(FormsAuthentication.Timeout),
                   isPersistent,

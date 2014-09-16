@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Ninject;
 
 namespace Munchkin_Online.Core.Auth
 {
     public class AuthHttpModule : IHttpModule
     {
+        //[Inject]
+        //public IAuthentication auth { get; set; }
+
         public void Init(HttpApplication context)
         {
             context.AuthenticateRequest += new EventHandler(this.Authenticate);
@@ -18,9 +22,10 @@ namespace Munchkin_Online.Core.Auth
             HttpApplication app = (HttpApplication)source;
             HttpContext context = app.Context;
 
-            var auth = new CustomAuthentication();
+            var auth = DependencyResolver.Current.GetService<IAuthentication>();
             auth.HttpContext = context;
             context.User = auth.CurrentUser;
+            CurrentUser.Instance.Current = ((UserIndentity)auth.CurrentUser.Identity).User;
         }
 
         public void Dispose()
