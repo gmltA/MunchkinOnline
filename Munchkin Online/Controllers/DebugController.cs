@@ -7,6 +7,7 @@ using Munchkin_Online.Core.Longpool;
 
 namespace Munchkin_Online.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class DebugController : Controller
     {
         //

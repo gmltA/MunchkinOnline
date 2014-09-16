@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Munchkin_Online.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
         public ActionResult Index()

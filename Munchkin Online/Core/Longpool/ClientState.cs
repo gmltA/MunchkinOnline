@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using Munchkin_Online.Core.Auth;
+using Munchkin_Online.Core.Database;
 using Munchkin_Online.Models;
 using Ninject;
 
@@ -40,7 +41,7 @@ namespace Munchkin_Online.Core.Longpool
             AsyncCallback = callback;
             ExtraData = data;
             _isCompleted = false;
-            //User = CurrentUser;
+            User = ((UserIndentity)context.User.Identity).User;
         }
 
         public void CompleteRequest()
