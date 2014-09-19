@@ -1,4 +1,5 @@
 ﻿@using Munchkin_Online.Core.Auth
+@using Munchkin_Online.Models
 
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,6 @@
                                 {
                                     <input type="text" name="Email" placeholder="Email"/>
                                     <input type="password" name="Password" placeholder="Password"/>
-                                    <!-- <a href="">Login</a> -->
                                     <input type="submit" value="Вход"/>
                                 }
                             </div>
@@ -51,16 +51,21 @@
                     else
                     {
                         <div class="friends">
-                            <div class="container">
-                                <p>Friend 1</p>
-                                <p>Friend 2</p>
-                                <p class="offline">Friend 3</p>
-                                <p class="offline">Friend 4</p>
-                                <p>Friend 5</p>
-                                <p>Friend 6</p>
-                                <p>Friend 7</p>
+                            <div class="container" hidden>
+                            @if (CurrentUser.Instance.Current.Friends.Count != 0)
+                            {
+                                foreach (User friend in CurrentUser.Instance.Current.Friends)
+                                {
+                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>
+                                }
+                            }
+                            else
+                            {
+                                <p>No friends</p>
+                                <p>Cry</p>
+                            }
                             </div>
-                            <div class="control"></div>
+                            <div class="control down"></div>
                         </div>
                     }
                 </div>

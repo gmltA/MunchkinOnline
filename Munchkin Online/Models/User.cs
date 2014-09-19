@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -16,20 +17,17 @@ namespace Munchkin_Online.Models
         /// </summary>
         public string Nickname { get; set; }
 
-        /// <summary>
-        /// TODO: It's better to store pass hash instead of password itself to keep it in secret.
-        /// </summary>
         [MinLength(6)]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [ScaffoldColumn(false)]
-        public string VkId { get; set; }
+        public uint VkId { get; set; }
 
         [ScaffoldColumn(false)]
-        public string VkHash { get; set; }
+        public string VkAccessToken { get; set; }
 
         [ScaffoldColumn(false)]
         public uint GamesPlayed { get; set; }
@@ -37,6 +35,7 @@ namespace Munchkin_Online.Models
         [ScaffoldColumn(false)]
         public uint GamesWon { get; set; }
 
+        [NotMapped]
         public State State { get; set; }
 
         public Gender Gender { get; set; }
