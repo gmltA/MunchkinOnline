@@ -51,8 +51,8 @@ namespace Munchkin_Online.Models
 
     public enum Role
     {
-        Admin,
-        Player
+        Player = 0,
+        Admin
     }
 
     public enum Gender
