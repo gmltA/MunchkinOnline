@@ -1,15 +1,21 @@
-﻿var clientGuid  
-      
+﻿   
 $(document).ready(function() {  
-    Connect();  
+    if (typeof currAction === 'undefined') {
+        currAction = '';
+    }
+    Connect();
+    //window.onbeforeunload = confirmExit;
+    //function confirmExit() {
+    //    alert("confirm exit is being called");
+    //   return false;
 });  
       
 $(window).unload(function() {  
-    Disconnect();  
+    //Disconnect();  
 });  
       
 function SendRequest() {  
-    var url = '/LongPoolHandler.ashx?guid=' + clientGuid;
+    var url = '/LongPoolHandler.ashx';
     $.ajax({  
         type: "POST",  
         url: url,  
@@ -19,7 +25,7 @@ function SendRequest() {
 }  
       
 function Connect() {  
-    var url = '/LongPoolHandler.ashx?cmd=register';
+    var url = '/LongPoolHandler.ashx?cmd='+currAction;
     $.ajax({  
         type: "POST",  
         url: url,  
@@ -48,7 +54,7 @@ function ProcessResponse(transport) {
 }  
       
 function OnConnected(transport) {  
-    clientGuid = transport;  
+    //clientGuid = transport;  
     SendRequest();  
 }  
       

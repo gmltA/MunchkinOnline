@@ -16,11 +16,8 @@ namespace Munchkin_Online.Models
         /// </summary>
         public string Nickname { get; set; }
 
-        /// <summary>
-        /// TODO: It's better to store pass hash instead of password itself to keep it in secret.
-        /// </summary>
         [MinLength(6)]
-        public string Password { get; set; }
+        public string PassHash { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201409160534170_UsernameRemoved.Designer.cs">
       <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409190926134_PassHash.cs" />
+    <Compile Include="Migrations\201409190926134_PassHash.Designer.cs">
+      <DependentUpon>201409190926134_PassHash.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
@@ -311,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409160534170_UsernameRemoved.resx">
       <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409190926134_PassHash.resx">
+      <DependentUpon>201409190926134_PassHash.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

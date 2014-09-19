@@ -46,6 +46,8 @@ namespace Munchkin_Online.Core.Matchmaking
         /// <param name="e">//TODO: </param>
         public void OnNewSearcher(object sender, NewFinderArgs e)
         {
+            if (Users.Where(x => x.Id == ((User)sender).Id).Count() != 0)
+                return;
             Users.Add(sender as User);
             ResetTimer();
             CalculateMatches();
@@ -133,7 +135,7 @@ namespace Munchkin_Online.Core.Matchmaking
 
         public MatchCreatedArgs()
         {
-            
+
         }
 
 

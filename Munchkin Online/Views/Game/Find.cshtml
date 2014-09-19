@@ -2,18 +2,6 @@
     ViewBag.Title = "Find";
 }
 <script>
-    $(document).ready(function () {
-        var url = '/LongPoolHandler.ashx?guid=' + clientGuid + '&cmd=FindMatch';
-        $("#message").val('FINDING');
-        $.ajax({
-            type: "POST",
-            url: url,
-            success: function (data) { $("#message").val('OK'); },
-            error: function (data) { $("#message").val('ERROR'); }
-        });
-
-    });
-
-
+    var currAction = 'FindMatch';
 </script>
 <h2 id="message">Find</h2>

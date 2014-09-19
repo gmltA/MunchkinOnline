@@ -63,12 +63,11 @@ namespace Munchkin_Online.Core.Longpool
         /// </summary>
         /// <param name="state"></param>
         /// <param name="guid"></param>
-        public void UpdateClient(ClientState state, String guid)
+        public void UpdateClient(ClientState state)
         {
             lock (_lock)
             {
-                ClientState clientState = _clientStateList.Find(s => s.ClientGuid
-                  == guid);
+                ClientState clientState = _clientStateList.Find(s => s.User == state.User);
                 if (clientState != null)
                 { 
                     clientState.CurrentContext = state.CurrentContext;
@@ -84,6 +83,12 @@ namespace Munchkin_Online.Core.Longpool
         /// <param name="state">Состояние</param>
         public void RegicterClient(ClientState state)
         {
+            if (_clientStateList.Where(x => x.User == state.User).Count() != 0)
+            {
+                UpdateClient(state);
+                return;
+            }
+               
             lock (_lock)
             {
                 state.ClientGuid = Guid.NewGuid().ToString("N");

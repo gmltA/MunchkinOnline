@@ -45,30 +45,21 @@ namespace Munchkin_Online
 
             string command =
               state.CurrentContext.Request.QueryString["cmd"];
-            string guid =
-              state.CurrentContext.Request.QueryString["guid"];
+
+            Longpool.Instance.RegicterClient(state);
 
             switch (command)
             {
-                case "register":
-                    Longpool.Instance.RegicterClient(state);
-                    state.CurrentContext.Response.Write(
-                    state.ClientGuid.ToString());
-                    state.CompleteRequest();
-                    break;
                 case "unregister":
                     Longpool.Instance.UnregisterClient(state);
                     state.CompleteRequest();
                     break;
                 case "FindMatch":
-                    NewSearcher(Longpool.Instance.GetUserByGuid(guid), null);
-                    state.CompleteRequest();
+                    Longpool.Instance.RegicterClient(state);
+                    NewSearcher(state.User, null);
+                    //state.CompleteRequest();
                     break;
                 default:
-                    if (guid != null)
-                    {
-                        Longpool.Instance.UpdateClient(state, guid);
-                    }
                     break;
 
             }
