@@ -33,6 +33,7 @@ namespace Munchkin_Online.Controllers
             return View();
         }
 
+
         [HttpGet]
         public ActionResult Register()
         {
@@ -42,20 +43,24 @@ namespace Munchkin_Online.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public ActionResult Register(RegisterModel reg)
         {
             if (CurrentUser == null)
             {
                 if (ModelState.IsValid)
                 {
+                    var user = new User();
+                    user.Email = reg.Email;
+                    user.Nickname = reg.Nickname;
+                    user.PasswordHash = reg.Password;
                     user.LastActivity = DateTime.Now;
                     if (Users.Add(user) == false)
-                        return View(user);
+                        return View(reg);
                     else
                         return RedirectPermanent("/");
                 }
                 else
-                    return View(user);
+                    return View(reg);
             }
             else
                 return RedirectPermanent("/");

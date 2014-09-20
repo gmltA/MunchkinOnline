@@ -4,10 +4,6 @@ $(document).ready(function() {
         currAction = '';
     }
     Connect();
-    //window.onbeforeunload = confirmExit;
-    //function confirmExit() {
-    //    alert("confirm exit is being called");
-    //   return false;
 });  
       
 $(window).unload(function() {  
@@ -59,6 +55,6 @@ function OnConnected(transport) {
 }  
       
 function ConnectionRefused() {  
-    $("body").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
-    setTimeout(Connect(), 3000);  
+    //$("body").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
+    //setTimeout(Connect(), 3000);  
 }  

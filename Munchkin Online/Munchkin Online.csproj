@@ -209,6 +209,10 @@
     <Compile Include="Migrations\201409190814009_ChangeVKUserData.Designer.cs">
       <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409201027193_User.cs" />
+    <Compile Include="Migrations\201409201027193_User.Designer.cs">
+      <DependentUpon>201409201027193_User.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Core\Game\Player.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -339,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409190814009_ChangeVKUserData.resx">
       <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409201027193_User.resx">
+      <DependentUpon>201409201027193_User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
