@@ -16,7 +16,7 @@ HTML, BODY
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: 'Munchkin_Cyr';
+    font-family: Munchkin_Cyr;
 }
 
 BODY
@@ -92,18 +92,11 @@ HEADER .auth .container INPUT
     height: 15px;
 }
 
-HEADER .auth .container INPUT[type="submit"]
-{
-    color: rgb(0, 0, 0);
-    font-family: "Munchkin_Cyr";
-}
-HEADER .auth .container A
+HEADER .auth .container A, HEADER .auth .container INPUT[type="submit"]
 {
     color: black;
-}
-
-HEADER .auth .container A:hover
-{
+    font-family: "Munchkin_Cyr";
+    cursor: pointer;
 }
 
 HEADER .friends .container
@@ -116,11 +109,12 @@ HEADER .friends .container
 
 HEADER .friends P
 {
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     color: white;
     text-shadow: 1px 1px 1px black;
     text-align: center;
     font-size: 12px;
+    height: 15px;
 }
 
 HEADER .friends P.offline
@@ -188,6 +182,7 @@ HEADER .social > .twitter:hover
 HEADER .control.down
 {
     background-position: 100% 0%;
+    margin-top: 0px;
 }
 
 HEADER .auth-bar

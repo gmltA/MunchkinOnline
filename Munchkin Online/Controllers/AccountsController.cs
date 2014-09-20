@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Web.WebPages.OAuth;
 using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Database;
 using Munchkin_Online.Models;
@@ -88,6 +89,36 @@ namespace Munchkin_Online.Controllers
 
         }
 
-        
+        [AllowAnonymous]
+        public void VKLogin()
+        {
+            OAuthWebSecurity.RequestAuthentication("VK", Url.Action("AuthenticationCallback"));
+        }
+
+        [AllowAnonymous]
+        public ActionResult AuthenticationCallback()
+        {
+            var result = OAuthWebSecurity.VerifyAuthentication();
+            if (result.IsSuccessful)
+            {
+                var uniqueUserID = uint.Parse(result.ProviderUserId);
+                if (Users.GetUserByVkId(uniqueUserID) == null)
+                {
+                    User newUser = new User();
+                    newUser.LastActivity = DateTime.Now;
+                    newUser.Nickname = result.UserName;
+                    newUser.VkId = uniqueUserID;
+                    newUser.VkAccessToken = result.ExtraData["accessToken"];
+                    newUser.Role = Role.Player;
+                    if (Users.Add(newUser) == false)
+                    {
+                        return RedirectPermanent("/rules/");
+                    }
+                    else
+                        return RedirectPermanent("/");
+                }
+            }
+            return RedirectPermanent("/");
+        }
     }
 }

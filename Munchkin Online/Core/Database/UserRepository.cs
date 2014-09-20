@@ -24,7 +24,7 @@ namespace Munchkin_Online.Core.Database
             try
             {
                 instance.Id = Guid.NewGuid();
-                instance.PassHash = PasswordCryptor.Crypt(instance.PassHash);
+                instance.PasswordHash = PasswordCryptor.Crypt(instance.PasswordHash);
                 DB.Users.Add(instance);
                 DB.SaveChanges();
                 return true;
@@ -38,13 +38,18 @@ namespace Munchkin_Online.Core.Database
 
         public User Login(string email, string pass)
         {
-            return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0 && string.Compare(p.PassHash, pass, false) == 0);
+            return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0 && string.Compare(p.PasswordHash, pass, false) == 0);
         }
 
 
         public User GetUser(string email)
         {
             return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0);
+        }
+
+        public User GetUserByVkId(uint vkId)
+        {
+            return DB.Users.FirstOrDefault(p => p.VkId == vkId);
         }
     }
 }
