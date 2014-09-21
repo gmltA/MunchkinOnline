@@ -4,6 +4,7 @@ using System.Linq;
 using System.Timers;
 using System.Web;
 using Munchkin_Online.Core.Game;
+using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Matchmaking
@@ -22,10 +23,11 @@ namespace Munchkin_Online.Core.Matchmaking
         /// Время, через которое будет принудительно создана игра при отсутствии новых игроков
         /// </summary>
         public const int CREATE_INTERVAL = 120000;
-        
+        public const int CONFIRM_WAIT_INTERVAL = 10000;
+
         public static readonly Matchmaking Instance = new Matchmaking();
 
-        public List<User> Users { get; set; }
+        public List<Player> Players { get; set; }
         public List<Match> Matches { get; set; }
         public int LastCount { get; set; }
         public Timer Timer { get; set; }
@@ -33,8 +35,10 @@ namespace Munchkin_Online.Core.Matchmaking
         Matchmaking()
         {
             LastCount = 0;
-            Users = new List<User>();
+            Players = new List<Player>();
+            Matches = new List<Match>();
             LongPoolHandler.NewSearcher += OnNewSearcher;
+            LongPoolHandler.MatchConfirmation += OnMatchConfirmation;
             Timer = new Timer(CREATE_INTERVAL);
             ResetTimer();
         }
@@ -46,9 +50,10 @@ namespace Munchkin_Online.Core.Matchmaking
         /// <param name="e">//TODO: </param>
         public void OnNewSearcher(object sender, NewFinderArgs e)
         {
-            if (Users.Where(x => x.Id == ((User)sender).Id).Count() != 0)
+            Player player = new Player(sender as User);
+            if (Players.Where(x => x.UserId == player.UserId).Count() != 0)
                 return;
-            Users.Add(sender as User);
+            Players.Add(player);
             ResetTimer();
             CalculateMatches();
         }
@@ -59,24 +64,24 @@ namespace Munchkin_Online.Core.Matchmaking
         void CalculateMatches()
         {
 
-            if (Users.Count < 4)
+            if (Players.Count < 4)
                 return;
 
-            if (LastCount == Users.Count)
+            if (LastCount == Players.Count)
             {
-                var UsersForMatch = Users.Take(4);
-                CreateMatch(UsersForMatch);
+                var PlayersForMatch = Players.Take(4);
+                PrepareMatch(PlayersForMatch);
             }
             else
             {
-                var dict = Users.GroupBy(x => x.GamesPlayed);
+                var dict = Players.GroupBy(x => x.GamesPlayed);
                 foreach (var key in dict)
                 {
                     if (key.Count() > 4)
-                        CreateMatch(key.Take(4));
+                        PrepareMatch(key.Take(4));
                 }
             }
-            LastCount = Users.Count;
+            LastCount = Players.Count;
         }
 
 
@@ -93,16 +98,44 @@ namespace Munchkin_Online.Core.Matchmaking
             Timer.Start();
         }
 
-        void CreateMatch(IEnumerable<User> UsersForMatch)
+        public void OnMatchConfirmation(object sender, EventArgs e)
         {
-            List<Player> Players = new List<Player>();
-            foreach (var i in UsersForMatch)
+            var player = Players.FirstOrDefault(x => x.UserId == ((User)sender).Id);
+            if (player != null)
+                player.IsConfirmed = true;
+        }
+
+        void PrepareMatch(IEnumerable<Player> PlayersForMatch)
+        {
+            foreach (var Player in PlayersForMatch)
             {
-                Players.Add(new Player(i));
-                Users.Remove(i);
+                Longpool.Longpool.Instance.PushMessageToUser(Player.UserId, new AsyncMessage(MessageType.FindedMatch));
+            }
+            Timer timer = new Timer(CONFIRM_WAIT_INTERVAL);
+            timer.AutoReset = false;
+            timer.Elapsed += delegate
+            {
+                if (PlayersForMatch.All(x => x.IsConfirmed == true))
+                    CreateMatch(PlayersForMatch);
+                else
+                    foreach (var player in PlayersForMatch)
+                    {
+                        player.IsConfirmed = false;
+                        Longpool.Longpool.Instance.PushMessageToUser(player.UserId, new AsyncMessage(MessageType.NoConfirm));
+                    }
+            };
+        }
+
+        void CreateMatch(IEnumerable<Player> PlayersForMatch)
+        {
+            List<Player> players = new List<Player>();
+            foreach (var i in PlayersForMatch)
+            {
+                players.Add(i);
+                Players.Remove(i);
             }
             Match match = new Match();
-            match.Players = Players;
+            match.Players = players;
             match.MatchEnded += OnMatchEnded;
             Matches.Add(match);
             MatchCreated(this, new MatchCreatedArgs());

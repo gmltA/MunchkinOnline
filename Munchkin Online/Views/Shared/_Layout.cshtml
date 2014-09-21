@@ -55,7 +55,7 @@
                             {
                                 foreach (User friend in CurrentUser.Instance.Current.Friends)
                                 {
-                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>
+                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>  
                                 }
                             }
                             else

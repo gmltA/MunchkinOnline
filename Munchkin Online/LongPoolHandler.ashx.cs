@@ -15,6 +15,8 @@ namespace Munchkin_Online
     {
         public static event EventHandler<NewFinderArgs> NewSearcher = delegate { };
 
+        public static event EventHandler MatchConfirmation = delegate { };
+
         #region IHttpAsyncHandler Members
 
         public IAsyncResult BeginProcessRequest(HttpContext ctx,
@@ -46,6 +48,11 @@ namespace Munchkin_Online
             string command =
               state.CurrentContext.Request.QueryString["cmd"];
 
+            if (state.User == null)
+            {  
+                state.CompleteRequest();
+                return;
+            }
             Longpool.Instance.RegicterClient(state);
 
             switch (command)
@@ -53,6 +60,9 @@ namespace Munchkin_Online
                 case "unregister":
                     Longpool.Instance.UnregisterClient(state);
                     state.CompleteRequest();
+                    break;
+                case "MatchConfirmation":
+                    MatchConfirmation(state.User, null);
                     break;
                 case "FindMatch":
                     Longpool.Instance.RegicterClient(state);

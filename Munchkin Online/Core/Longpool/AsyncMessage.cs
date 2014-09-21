@@ -29,6 +29,7 @@ namespace Munchkin_Online.Core.Longpool
         NewLobby,
         FindedMatch,
         Invite,
-        Notification
+        Notification,
+        NoConfirm
     }
 }

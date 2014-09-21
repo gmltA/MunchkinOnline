@@ -44,7 +44,9 @@ function ProcessResponse(transport) {
     transport = JSON.parse(transport);
     switch (transport.Type)
     {
+        case 3: $(".find").html("<a>Принять</a>"); break; //Матч найден, требуется подтверждение
         case 5: notificationMgr.addNotification(transport.Message); break;
+        case 6: break; //Не все подтвердили
     } 
     SendRequest();  
 }  
