@@ -224,6 +224,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Core\Game\Player.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
