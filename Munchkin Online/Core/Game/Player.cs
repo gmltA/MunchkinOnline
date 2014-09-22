@@ -11,9 +11,12 @@ namespace Munchkin_Online.Core.Game
         public Guid UserId { get; set; }
 
         public int Level { get; set; }
+        public int GamesPlayed { get; set; }
 
         public List<Card> Hand { get; set; }
         public List<Card> Board { get; set; }
+
+        public bool IsConfirmed { get; set; }
 
         public Player()
         {
@@ -25,7 +28,8 @@ namespace Munchkin_Online.Core.Game
         public Player(User user) : this()
         {
             UserId = user.Id;
-            
+            IsConfirmed = false;
+            GamesPlayed = (int)user.GamesPlayed;
         }
     }
 }

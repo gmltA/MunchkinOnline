@@ -33,39 +33,43 @@ namespace Munchkin_Online.Controllers
             return View();
         }
 
+
         [HttpGet]
         public ActionResult Register()
         {
             if(CurrentUser == null) return View();
                 else
-            return RedirectPermanent("/");
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
-        public ActionResult Register(User user)
+        public ActionResult Register(RegisterModel reg)
         {
             if (CurrentUser == null)
             {
                 if (ModelState.IsValid)
                 {
+                    var user = new User();
+                    user.Email = reg.Email;
+                    user.Nickname = reg.Nickname;
+                    user.PasswordHash = reg.Password;
                     user.LastActivity = DateTime.Now;
                     if (Users.Add(user) == false)
-                        return View(user);
+                        return View(reg);
                     else
-                        return RedirectPermanent("/");
+                        return RedirectToAction("Index", "Home");
                 }
                 else
-                    return View(user);
+                    return View(reg);
             }
             else
-                return RedirectPermanent("/");
+                return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
         public ActionResult Logout()
         {
             Auth.LogOut();
-            return RedirectPermanent("/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -80,7 +84,7 @@ namespace Munchkin_Online.Controllers
             if (ModelState.IsValid)
             {
                 if (Auth.Login(m.Email, m.Password) != null)
-                    return RedirectPermanent("/");
+                    return RedirectToAction("Index", "Home");
                 else
                     return View();
             }
@@ -113,19 +117,19 @@ namespace Munchkin_Online.Controllers
                     newUser.VkAccessToken = result.ExtraData["accessToken"];
                     if (Users.Add(newUser) == false)
                     {
-                        return RedirectPermanent("/");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                         Auth.Login(uniqueUserID, result.ExtraData["email"]);
                 }
                 else if (Auth.Login(uniqueUserID, result.ExtraData["email"]) != null)
                 {
-                    return RedirectPermanent("/");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
-                    return RedirectPermanent("/");
+                    return RedirectToAction("Index", "Home");
             }
-            return RedirectPermanent("/");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,19 +1,9 @@
 ﻿@{
     ViewBag.Title = "Find";
+    ViewBag.pageID = Munchkin_Online.Core.PageID.PAGE_FIND_GAME;
 }
 <script>
-    $(document).ready(function () {
-        var url = '/LongPoolHandler.ashx?guid=' + clientGuid + '&cmd=FindMatch';
-        $("#message").val('FINDING');
-        $.ajax({
-            type: "POST",
-            url: url,
-            success: function (data) { $("#message").val('OK'); },
-            error: function (data) { $("#message").val('ERROR'); }
-        });
-
-    });
-
-
+    var currAction = 'FindMatch';
 </script>
+<div id="find"></div>
 <h2 id="message">Find</h2>

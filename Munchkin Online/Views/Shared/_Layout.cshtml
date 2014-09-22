@@ -6,10 +6,10 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
+        <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/js/LongPool")
         @Scripts.Render("~/js/Core")
         <title>@ViewBag.Title</title>
     </head>
@@ -93,7 +93,8 @@
             <div class="scroll left"></div>
             <div class="scroll center"></div>
             <div class="scroll right"></div>
-        </div>        
+        </div>
+        @Scripts.Render("~/js/LongPool")        
         @RenderSection("scripts", required: false)
     </body>
 </html>

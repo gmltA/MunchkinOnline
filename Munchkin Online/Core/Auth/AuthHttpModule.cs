@@ -9,9 +9,6 @@ namespace Munchkin_Online.Core.Auth
 {
     public class AuthHttpModule : IHttpModule
     {
-        //[Inject]
-        //public IAuthentication auth { get; set; }
-
         public void Init(HttpApplication context)
         {
             context.AuthenticateRequest += new EventHandler(this.Authenticate);

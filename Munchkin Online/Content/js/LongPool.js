@@ -1,15 +1,17 @@
-﻿var clientGuid  
-      
+﻿   
 $(document).ready(function() {  
-    Connect();  
+    if (typeof currAction === 'undefined') {
+        currAction = '';
+    }
+    Connect();
 });  
       
 $(window).unload(function() {  
-    Disconnect();  
+    //Disconnect();  
 });  
       
 function SendRequest() {  
-    var url = '/LongPoolHandler.ashx?guid=' + clientGuid;
+    var url = '/LongPoolHandler.ashx';
     $.ajax({  
         type: "POST",  
         url: url,  
@@ -19,7 +21,7 @@ function SendRequest() {
 }  
       
 function Connect() {  
-    var url = '/LongPoolHandler.ashx?cmd=register';
+    var url = '/LongPoolHandler.ashx?cmd='+currAction;
     $.ajax({  
         type: "POST",  
         url: url,  
@@ -42,17 +44,19 @@ function ProcessResponse(transport) {
     transport = JSON.parse(transport);
     switch (transport.Type)
     {
+        case 3: $(".find").html("<a>Принять</a>"); break; //Матч найден, требуется подтверждение
         case 5: notificationMgr.addNotification(transport.Message); break;
+        case 6: break; //Не все подтвердили
     } 
     SendRequest();  
 }  
       
 function OnConnected(transport) {  
-    clientGuid = transport;  
+    //clientGuid = transport;  
     SendRequest();  
 }  
       
 function ConnectionRefused() {  
-    $("body").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
-    setTimeout(Connect(), 3000);  
+    //$("body").html("не удалось подключиться к серверу.Попробуем через 3 секунды...");  
+    //setTimeout(Connect(), 3000);  
 }  
