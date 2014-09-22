@@ -32,7 +32,7 @@ namespace Munchkin_Online.Core.Auth
             var APP_ID = this.appId;
             this.redirectUri = context.Server.UrlEncode(returnUrl.ToString());
             var address = String.Format(
-                    "https://oauth.vk.com/authorize?client_id={0}&redirect_uri={1}&response_type=code",
+                    "https://oauth.vk.com/authorize?client_id={0}&redirect_uri={1}&response_type=code&scope=friends,email",
                     APP_ID, this.redirectUri
                 );
 
@@ -43,6 +43,7 @@ namespace Munchkin_Online.Core.Auth
         {
             public string access_token = null;
             public string user_id = null;
+            public string email = null;
         }
 
         class UserData
@@ -81,6 +82,7 @@ namespace Munchkin_Online.Core.Auth
 
                 var extraData = new Dictionary<string, string>();
                 extraData.Add("accessToken", accessToken.access_token);
+                extraData.Add("email", accessToken.email);
 
                 return new AuthenticationResult(
                     true, (this as IAuthenticationClient).ProviderName, accessToken.user_id,

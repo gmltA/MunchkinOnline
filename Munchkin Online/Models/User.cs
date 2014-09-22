@@ -24,7 +24,7 @@ namespace Munchkin_Online.Models
         public string Email { get; set; }
 
         [ScaffoldColumn(false)]
-        public uint VkId { get; set; }
+        public int VkId { get; set; }
 
         [ScaffoldColumn(false)]
         public string VkAccessToken { get; set; }

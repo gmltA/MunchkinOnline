@@ -209,6 +209,14 @@
     <Compile Include="Migrations\201409190814009_ChangeVKUserData.Designer.cs">
       <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409191002445_UpdateUserModelStructure.cs" />
+    <Compile Include="Migrations\201409191002445_UpdateUserModelStructure.Designer.cs">
+      <DependentUpon>201409191002445_UpdateUserModelStructure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409191924388_UInt-to-Int.cs" />
+    <Compile Include="Migrations\201409191924388_UInt-to-Int.Designer.cs">
+      <DependentUpon>201409191924388_UInt-to-Int.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
@@ -339,6 +347,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201409190814009_ChangeVKUserData.resx">
       <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409191002445_UpdateUserModelStructure.resx">
+      <DependentUpon>201409191002445_UpdateUserModelStructure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409191924388_UInt-to-Int.resx">
+      <DependentUpon>201409191924388_UInt-to-Int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

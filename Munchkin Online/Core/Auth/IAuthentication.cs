@@ -16,6 +16,14 @@ namespace Munchkin_Online.Core.Auth
 
         User Login(string login, string password);
 
+        /// <summary>
+        /// Auth method for VK
+        /// </summary>
+        /// <param name="id">VKontakte unique user ID</param>
+        /// <param name="email">User email adress from VK</param>
+        /// <returns></returns>
+        User Login(int id, string email);
+
         User Login(string login);
 
         void LogOut();

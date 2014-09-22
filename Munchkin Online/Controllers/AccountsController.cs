@@ -101,22 +101,29 @@ namespace Munchkin_Online.Controllers
             var result = OAuthWebSecurity.VerifyAuthentication();
             if (result.IsSuccessful)
             {
-                var uniqueUserID = uint.Parse(result.ProviderUserId);
+                int uniqueUserID = int.Parse(result.ProviderUserId);
                 if (Users.GetUserByVkId(uniqueUserID) == null)
                 {
                     User newUser = new User();
+                    newUser.PasswordHash = null;
+                    newUser.Email = result.ExtraData["email"];
                     newUser.LastActivity = DateTime.Now;
                     newUser.Nickname = result.UserName;
                     newUser.VkId = uniqueUserID;
                     newUser.VkAccessToken = result.ExtraData["accessToken"];
-                    newUser.Role = Role.Player;
                     if (Users.Add(newUser) == false)
                     {
-                        return RedirectPermanent("/rules/");
+                        return RedirectPermanent("/");
                     }
                     else
-                        return RedirectPermanent("/");
+                        Auth.Login(uniqueUserID, result.ExtraData["email"]);
                 }
+                else if (Auth.Login(uniqueUserID, result.ExtraData["email"]) != null)
+                {
+                    return RedirectPermanent("/");
+                }
+                else
+                    return RedirectPermanent("/");
             }
             return RedirectPermanent("/");
         }

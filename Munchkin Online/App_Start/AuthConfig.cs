@@ -13,7 +13,7 @@ namespace Munchkin_Online
         {
             OAuthWebSecurity.RegisterClient(
                    client: new VKAuthClient(
-                          "4550448", "a5oDRnliLHMVK1GGDs5I"),
+                          "4551784", "eBso2kOrsWVZuYqQ8AGW"),
                    displayName: "ВКонтакте",
                    extraData: null);
         }

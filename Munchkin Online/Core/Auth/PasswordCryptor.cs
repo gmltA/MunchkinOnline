@@ -11,7 +11,7 @@ namespace Munchkin_Online.Core.Auth
     {
         public static string Crypt(string password)
         {
-            return Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
+            return password == null ? null : Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(password)));
         }
     }
 }

@@ -31,6 +31,17 @@ namespace Munchkin_Online.Core.Auth
             return retUser;
         }
 
+        public User Login(int vkId, string email)
+        {
+            bool isPersistent = true;
+            User retUser = Repository.Login(vkId, email);
+            if (retUser != null)
+            {
+                CreateCookie(retUser.Email, isPersistent);
+            }
+            return retUser;
+        }
+
         public User Login(string userName)
         {
             User retUser = Repository.Accounts.FirstOrDefault(p => string.Compare(p.Email, userName, true) == 0);
