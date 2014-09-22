@@ -39,7 +39,7 @@ namespace Munchkin_Online.Controllers
         {
             if(CurrentUser == null) return View();
                 else
-            return RedirectPermanent("/");
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -57,13 +57,13 @@ namespace Munchkin_Online.Controllers
                     if (Users.Add(user) == false)
                         return View(reg);
                     else
-                        return RedirectPermanent("/");
+                        return RedirectToAction("Index", "Home");
                 }
                 else
                     return View(reg);
             }
             else
-                return RedirectPermanent("/");
+                return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout()
@@ -84,7 +84,7 @@ namespace Munchkin_Online.Controllers
             if (ModelState.IsValid)
             {
                 if (Auth.Login(m.Email, m.Password) != null)
-                    return RedirectPermanent("/");
+                    return RedirectToAction("Index", "Home");
                 else
                     return View();
             }
@@ -116,13 +116,13 @@ namespace Munchkin_Online.Controllers
                     newUser.Role = Role.Player;
                     if (Users.Add(newUser) == false)
                     {
-                        return RedirectPermanent("/rules/");
+                        return RedirectToAction("Index", "Rules");
                     }
                     else
-                        return RedirectPermanent("/");
+                        return RedirectToAction("Index", "Home");
                 }
             }
-            return RedirectPermanent("/");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
