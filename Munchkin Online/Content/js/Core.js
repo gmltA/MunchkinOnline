@@ -5,14 +5,17 @@
 function NotificationMgr() {
     this.notificationQueue = [];
     this.isNotificationActive = false;
+
+    this.notificationWaitTime = 2000;
 }
 
 /**
  * Adds notification to the queue.
  * Use it in code to init notification.
  */
-NotificationMgr.prototype.addNotification = function (message) {
-    this.notificationQueue.push(message);
+NotificationMgr.prototype.addNotification = function (message, type) {
+    type = type || "";
+    this.notificationQueue.push([message, type]);
     if (this.isNotificationActive == false)
         this.displayNextNotification();
 }
@@ -21,20 +24,22 @@ NotificationMgr.prototype.addNotification = function (message) {
  * Displays notification.
  * Internal function. DO NOT USE IT DIRECTLY.
  */
-NotificationMgr.prototype.showNotification = function (message) {
+NotificationMgr.prototype.showNotification = function (messageObj) {
     this.isNotificationActive = true;
+    $(".notification > .body").addClass(messageObj[1]);
     $(".notification").addClass("anim");
     $(".notification").animate({ bottom: '0' }, 250, "swing", function () {
         $(".notification > .center").animate({ width: '190px' }, 500, "swing", function () {
             $(".notification > .scroll").hide();
             $(".notification").toggleClass("anim");
-            $(".notification > P").text(message);
+            $(".notification > .body > P").text(messageObj[0]);
         })
     });
     var mgr = this;
     setTimeout(function () {
+        $(".notification > .body").toggleClass(messageObj[1]);
         $(".notification").toggleClass("anim");
-        $(".notification > P").text("");
+        $(".notification > .body > P").text("");
         $(".notification > .scroll").show();
         $(".notification > .center").animate({ width: '0px' }, 500, "swing", function () {
             $(".notification").animate({ bottom: '-200px' }, 250, "swing", function () {
@@ -42,7 +47,7 @@ NotificationMgr.prototype.showNotification = function (message) {
                 mgr.displayNextNotification();
             })
         });
-    }, 1000);
+    }, this.notificationWaitTime);
 }
 
 /**
@@ -74,7 +79,7 @@ function toggleFriendsBar(controlButton) {
 
 $(document).ready(function () {
     setTimeout(function () {
-        notificationMgr.addNotification("Kyky1");
+        notificationMgr.addNotification("Kyky1", "error");
         notificationMgr.addNotification("Kyky2");
     }, 1000);
 

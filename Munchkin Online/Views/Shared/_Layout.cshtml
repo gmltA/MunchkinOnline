@@ -89,12 +89,14 @@
             </span>
         </footer>
         <div class="notification">
-            <p></p>
+            <div class="body">
+                <p></p>
+            </div>
             <div class="scroll left"></div>
             <div class="scroll center"></div>
             <div class="scroll right"></div>
         </div>
-        @Scripts.Render("~/js/LongPool")        
+        @Scripts.Render("~/js/LongPool")
         @RenderSection("scripts", required: false)
     </body>
 </html>
