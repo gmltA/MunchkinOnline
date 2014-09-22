@@ -47,6 +47,7 @@ function ProcessResponse(transport) {
         case 3: $(".find").html("<a>Принять</a>"); break; //Матч найден, требуется подтверждение
         case 5: notificationMgr.addNotification(transport.Message); break;
         case 6: break; //Не все подтвердили
+        case 7: $("#QueueStatus").html(transport.Data); break;
     } 
     SendRequest();  
 }  

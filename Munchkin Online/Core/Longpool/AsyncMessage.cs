@@ -9,11 +9,17 @@ namespace Munchkin_Online.Core.Longpool
     public class AsyncMessage
     {
         public MessageType Type { get; set; }
-        public string Message { get; set; }
+        public object Message { get; set; }
 
         public AsyncMessage(MessageType t)
         {
             Type = t;
+        }
+
+        public AsyncMessage(MessageType t, object Data)
+        {
+            Type = t;
+            Message = Data;
         }
 
         public override string ToString()
@@ -30,6 +36,7 @@ namespace Munchkin_Online.Core.Longpool
         FindedMatch,
         Invite,
         Notification,
-        NoConfirm
+        NoConfirm, 
+        QueueStatus
     }
 }

@@ -134,7 +134,7 @@ namespace Munchkin_Online.Core.Longpool
             lock (_lock)
             {
                 var clientState = _clientStateList.FirstOrDefault(x => x.User.Id == Guid);
-                if (clientState != null && clientState.IsCompleted == false)
+                if (clientState != null)
                 {
                     clientState.CurrentContext.Response.Write(asyncMessage.ToString());
                     clientState.CompleteRequest();

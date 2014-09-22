@@ -197,25 +197,9 @@
     </Compile>
     <Compile Include="Core\Game\Battle.cs" />
     <Compile Include="Core\Game\BoardState.cs" />
-    <Compile Include="Migrations\201409151700124_InitialCreate.cs" />
-    <Compile Include="Migrations\201409151700124_InitialCreate.Designer.cs">
-      <DependentUpon>201409151700124_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409160534170_UsernameRemoved.cs" />
-    <Compile Include="Migrations\201409160534170_UsernameRemoved.Designer.cs">
-      <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409190814009_ChangeVKUserData.cs" />
-    <Compile Include="Migrations\201409190814009_ChangeVKUserData.Designer.cs">
-      <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409191002445_UpdateUserModelStructure.cs" />
-    <Compile Include="Migrations\201409191002445_UpdateUserModelStructure.Designer.cs">
-      <DependentUpon>201409191002445_UpdateUserModelStructure.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201409191924388_UInt-to-Int.cs" />
-    <Compile Include="Migrations\201409191924388_UInt-to-Int.Designer.cs">
-      <DependentUpon>201409191924388_UInt-to-Int.cs</DependentUpon>
+    <Compile Include="Migrations\201409221802447_Init.cs" />
+    <Compile Include="Migrations\201409221802447_Init.Designer.cs">
+      <DependentUpon>201409221802447_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
@@ -340,20 +324,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409151700124_InitialCreate.resx">
-      <DependentUpon>201409151700124_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409160534170_UsernameRemoved.resx">
-      <DependentUpon>201409160534170_UsernameRemoved.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409190814009_ChangeVKUserData.resx">
-      <DependentUpon>201409190814009_ChangeVKUserData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409191002445_UpdateUserModelStructure.resx">
-      <DependentUpon>201409191002445_UpdateUserModelStructure.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201409191924388_UInt-to-Int.resx">
-      <DependentUpon>201409191924388_UInt-to-Int.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409221802447_Init.resx">
+      <DependentUpon>201409221802447_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
