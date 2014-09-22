@@ -6,6 +6,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
+        <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
@@ -55,7 +56,7 @@
                             {
                                 foreach (User friend in CurrentUser.Instance.Current.Friends)
                                 {
-                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>  
+                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>
                                 }
                             }
                             else

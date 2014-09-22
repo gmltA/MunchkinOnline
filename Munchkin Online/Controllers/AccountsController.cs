@@ -66,11 +66,10 @@ namespace Munchkin_Online.Controllers
                 return RedirectPermanent("/");
         }
 
-        [Authorize]
         public ActionResult Logout()
         {
             Auth.LogOut();
-            return RedirectPermanent("/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
