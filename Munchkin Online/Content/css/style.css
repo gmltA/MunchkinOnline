@@ -334,12 +334,29 @@ FOOTER > .small
     letter-spacing: -4px;
 }
 
-.notification > P
+.notification > .body
 {
-    text-align: center;
+    height: 100%;
+    padding: 10px 0px 10px 60px;
 }
 
-.notification.anim > P
+.notification .body.warning
+{
+    background: url("/Content/img/icon-warning.png") 0% 50% no-repeat;
+}
+
+.notification .body.error
+{
+    background: url("/Content/img/icon-error.png") 0% 50% no-repeat;
+}
+
+
+.notification > .body > P
+{
+    height: auto;
+}
+
+.notification.anim > .body
 {
     display: none;
 }
