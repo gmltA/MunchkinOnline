@@ -55,7 +55,7 @@ namespace Munchkin_Online.Core.Matchmaking
                 return;
             Players.Add(player);
             foreach (var p in Players)
-                Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.Notification, Players.Count));
+                Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.QueueStatus, Players.Count));
             ResetTimer();
             CalculateMatches();
         }

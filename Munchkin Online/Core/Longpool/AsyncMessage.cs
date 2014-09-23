@@ -9,7 +9,7 @@ namespace Munchkin_Online.Core.Longpool
     public class AsyncMessage
     {
         public MessageType Type { get; set; }
-        public object Message { get; set; }
+        public object Data { get; set; }
 
         public AsyncMessage(MessageType t)
         {
@@ -19,7 +19,7 @@ namespace Munchkin_Online.Core.Longpool
         public AsyncMessage(MessageType t, object Data)
         {
             Type = t;
-            Message = Data;
+            this.Data = Data;
         }
 
         public override string ToString()
