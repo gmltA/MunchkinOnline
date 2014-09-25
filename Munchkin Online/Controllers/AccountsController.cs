@@ -8,6 +8,7 @@ using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Database;
 using Munchkin_Online.Models;
 using Ninject;
+using Munchkin_Online.Core.Notifications;
 
 namespace Munchkin_Online.Controllers
 {
@@ -117,18 +118,23 @@ namespace Munchkin_Online.Controllers
                     newUser.VkAccessToken = result.ExtraData["accessToken"];
                     if (Users.Add(newUser) == false)
                     {
+                        NotificationManager.Instance.Add("Can't add user data to DB", NotificationType.Error);
                         return RedirectToAction("Index", "Home");
                     }
-                    else
-                        Auth.Login(uniqueUserID, result.ExtraData["email"]);
+
                 }
-                else if (Auth.Login(uniqueUserID, result.ExtraData["email"]) != null)
+
+                if (Auth.Login(uniqueUserID, result.ExtraData["email"]) == null)
                 {
+                    NotificationManager.Instance.Add("Can't authenticate user with provided data", NotificationType.Error);
                     return RedirectToAction("Index", "Home");
                 }
                 else
+                {
                     return RedirectToAction("Index", "Home");
+                }
             }
+            NotificationManager.Instance.Add("Can't complete VK authentication", NotificationType.Error);
             return RedirectToAction("Index", "Home");
         }
     }
