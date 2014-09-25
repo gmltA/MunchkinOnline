@@ -10,11 +10,13 @@ namespace Munchkin_Online.Core.Notifications
     {
         public string Message { get; private set; }
         public NotificationType Type { get; private set; }
+        public DateTime Posted { get; private set; }
 
         public Notification(string notificationMessage, NotificationType notificationType)
         {
             Message = notificationMessage;
             Type = notificationType;
+            Posted = DateTime.Now;
         }
     }
 
