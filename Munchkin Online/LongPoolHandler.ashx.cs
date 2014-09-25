@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web;
 using System.Web.SessionState;
 using Munchkin_Online.Core.Longpool;
+using Munchkin_Online.Core;
 
 namespace Munchkin_Online
 {
@@ -19,14 +20,11 @@ namespace Munchkin_Online
 
         #region IHttpAsyncHandler Members
 
-        public IAsyncResult BeginProcessRequest(HttpContext ctx,
-          AsyncCallback cb, Object obj)
+        public IAsyncResult BeginProcessRequest(HttpContext ctx, AsyncCallback cb, Object obj)
         {
-            ClientState currentAsyncState =
-              new ClientState(ctx, cb, obj);
+            ClientState currentAsyncState = new ClientState(ctx, cb, obj);
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(RequestWorker),
-               currentAsyncState);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(RequestWorker), currentAsyncState);
 
             return currentAsyncState;
         }
@@ -53,7 +51,7 @@ namespace Munchkin_Online
                 state.CompleteRequest();
                 return;
             }
-            Longpool.Instance.RegicterClient(state);
+            Longpool.Instance.RegisterClient(state);
 
             switch (command)
             {
@@ -65,7 +63,7 @@ namespace Munchkin_Online
                     MatchConfirmation(state.User, null);
                     break;
                 case "FindMatch":
-                    Longpool.Instance.RegicterClient(state);
+                    Longpool.Instance.RegisterClient(state);
                     NewSearcher(state.User, null);
                     //state.CompleteRequest();
                     break;

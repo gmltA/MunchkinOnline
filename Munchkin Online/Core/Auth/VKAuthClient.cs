@@ -86,7 +86,7 @@ namespace Munchkin_Online.Core.Auth
 
                 return new AuthenticationResult(
                     true, (this as IAuthenticationClient).ProviderName, accessToken.user_id,
-                    userData.first_name + " " + userData.last_name,
+                    userData.first_name,
                     extraData);
             }
             catch (Exception ex)

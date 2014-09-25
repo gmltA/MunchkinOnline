@@ -83,7 +83,7 @@ namespace Munchkin_Online.Core.Longpool
         /// Новый клиент.
         /// </summary>
         /// <param name="state">Состояние</param>
-        public void RegicterClient(ClientState state)
+        public void RegisterClient(ClientState state)
         {
             if (_clientStateList.Where(x => x.User.Id == state.User.Id).Count() != 0)
             {
