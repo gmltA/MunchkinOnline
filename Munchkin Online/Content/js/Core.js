@@ -1,4 +1,12 @@
-﻿/**
+﻿function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+
+/**
  * Notification manager class.
  * Requires special markup (.notification div).
  */
@@ -10,11 +18,62 @@ function NotificationMgr() {
 }
 
 /**
+ * Initial request.
+ * Registers client server-side.
+ */
+NotificationMgr.prototype.init = function () {
+    if (getCookie("__NOTIF_GUID_COOKIE") != undefined && getCookie("__NOTIF_TOKEN_COOKIE") != undefined)
+        return;
+
+    var url = '/NotificationsHandler.ashx';
+    $.ajax({
+        type: "POST",
+        url: url,
+        success: function (response) { },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+}
+
+/**
+ * Get notifications for current user.
+ */
+NotificationMgr.prototype.demandNotifications = function () {
+    var url = '/NotificationsHandler.ashx?action=demandNotifications';
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: 'json',
+        success: function (response)
+        {
+            if (response == "")
+                return;
+
+            response.forEach(function (val, index, array) {
+                notificationMgr.addNotification(val.Message, "error");
+            });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert("error");
+        }
+    });
+}
+
+/**
  * Adds notification to the queue.
  * Use it in code to init notification.
  */
 NotificationMgr.prototype.addNotification = function (message, type) {
     type = type || "";
+    if ($.isNumeric(type))
+    {
+        if (type == 1)
+            type = "warning";
+        else if (type == 2)
+            type = "error";
+        else
+            type = "";
+    }
     this.notificationQueue.push([message, type]);
     if (this.isNotificationActive == false)
         this.displayNextNotification();
@@ -78,10 +137,9 @@ function toggleFriendsBar(controlButton) {
 }
 
 $(document).ready(function () {
-    setTimeout(function () {
-        notificationMgr.addNotification("Kyky1", "error");
-        notificationMgr.addNotification("Kyky2");
-    }, 1000);
+    notificationMgr.init();
+
+    notificationMgr.demandNotifications();
 
     $("HEADER .control").live("click", function () {
         toggleFriendsBar(this);

@@ -186,9 +186,11 @@
     <Compile Include="Core\Database\MainContext.cs" />
     <Compile Include="Core\LayoutDefines.cs" />
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
-    <Compile Include="Core\Longpool\ClientState.cs" />
+    <Compile Include="Core\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
     <Compile Include="Core\Matchmaking\Matchmaking.cs" />
+    <Compile Include="Core\Notifications\Notification.cs" />
+    <Compile Include="Core\Notifications\NotificationManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +212,9 @@
     <Compile Include="Core\Game\Player.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="NotificationsHandler.ashx.cs">
+      <DependentUpon>NotificationsHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +282,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="LongPoolHandler.ashx" />
+    <Content Include="NotificationsHandler.ashx" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

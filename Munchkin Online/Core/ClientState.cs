@@ -8,24 +8,13 @@ using Munchkin_Online.Core.Database;
 using Munchkin_Online.Models;
 using Ninject;
 
-namespace Munchkin_Online.Core.Longpool
+namespace Munchkin_Online.Core
 {
     /// <summary>
-    /// Класс, характеризующий подключенный клиент/
+    /// Класс, характеризующий подключенный клиент
     /// </summary>
     public class ClientState : IAsyncResult
     {
-        /*[Inject]
-        IAuthentication Auth { get; set; }
-
-        User CurrentUser
-        {
-            get
-            {
-                return ((UserIndentity)(Auth.CurrentUser.Identity)).User;
-            }
-        }*/
-
         public HttpContext CurrentContext { get; set; }
         public AsyncCallback AsyncCallback { get; set; }
         public User User { get; set; }
@@ -34,8 +23,7 @@ namespace Munchkin_Online.Core.Longpool
 
         private Boolean _isCompleted;
 
-        public ClientState(HttpContext context,
-          AsyncCallback callback, object data)
+        public ClientState(HttpContext context, AsyncCallback callback, object data)
         {
             CurrentContext = context;
             AsyncCallback = callback;
