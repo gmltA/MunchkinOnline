@@ -21,13 +21,13 @@ namespace Munchkin_Online.Core.Notifications
         private const int DELAY_BEFORE_CLEANUP = 3600000;
 
         public static readonly NotificationManager Instance = new NotificationManager();
-        public Dictionary<Guid, List<Notification>> NotificationStore { get; set; }
+        public Dictionary<Guid, TimedList<Notification>> NotificationStore { get; set; }
 
         public Timer CleanupTimer { get; set; }
 
         NotificationManager()
         {
-            NotificationStore = new Dictionary<Guid, List<Notification>>();
+            NotificationStore = new Dictionary<Guid, TimedList<Notification>>();
             CleanupTimer = new Timer(CLEANUP_INTERVAL);
             ResetTimer();
         }
@@ -66,30 +66,22 @@ namespace Munchkin_Online.Core.Notifications
         public void Add(string message, NotificationType type)
         {
             HttpCookie notificationClientCookie = HttpContext.Current.Request.Cookies.Get(guidCookieName);
-            try
-            {
-                NotificationStore[new Guid(notificationClientCookie.Value)].Add(new Notification(message, type));
-            }
-            catch (KeyNotFoundException)
-            {
-                NotificationStore[new Guid(notificationClientCookie.Value)] = new List<Notification>();
-                NotificationStore[new Guid(notificationClientCookie.Value)].Add(new Notification(message, type));
-            }
+            Guid clientGuid = new Guid(notificationClientCookie.Value);
+            if (!NotificationStore.ContainsKey(clientGuid))
+                NotificationStore[clientGuid] = new TimedList<Notification>();
+
+            NotificationStore[clientGuid].Add(new Notification(message, type));
         }
 
         public string GetContent(ClientState state)
         {
-            try
-            {
-                Guid clientGuid = new Guid(state.ClientGuid);
-                string result = new JavaScriptSerializer().Serialize(NotificationStore[clientGuid]);
-                NotificationStore[clientGuid].Clear();
-                return result;
-            }
-            catch (KeyNotFoundException)
-            {
+            Guid clientGuid = new Guid(state.ClientGuid);
+            if (!NotificationStore.ContainsKey(clientGuid))
                 return "";
-            }
+
+            string result = new JavaScriptSerializer().Serialize(NotificationStore[clientGuid]);
+            NotificationStore[clientGuid].Clear();
+            return result;
         }
 
         void ResetTimer()
@@ -107,11 +99,7 @@ namespace Munchkin_Online.Core.Notifications
         {
             foreach (var list in NotificationStore)
             {
-                var lastNotification = list.Value.LastOrDefault();
-                if (lastNotification == null)
-                    return;
-
-                if (lastNotification.Posted.AddMilliseconds(DELAY_BEFORE_CLEANUP) < DateTime.Now)
+                if (list.Value.LastUpdate.AddMilliseconds(DELAY_BEFORE_CLEANUP) < DateTime.Now)
                     NotificationStore.Remove(list.Key);
             }
         }
