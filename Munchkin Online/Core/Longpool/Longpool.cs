@@ -87,8 +87,15 @@ namespace Munchkin_Online.Core.Longpool
         {
             if (_clientStateList.Where(x => x.User.Id == state.User.Id).Count() != 0)
             {
+                var st = _clientStateList.Where(x => x.User.Id == state.User.Id).ToArray()[0];
+                if (!st.IsCompleted)
+                {
+                    st.CurrentContext.Response.Write(new AsyncMessage(MessageType.StopPooling));
+                    st.CompleteRequest();
+                }
                 UpdateClient(state);
                 return;
+
             }              
             lock (_lock)
             {

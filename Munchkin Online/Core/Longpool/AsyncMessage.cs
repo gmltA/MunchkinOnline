@@ -37,6 +37,7 @@ namespace Munchkin_Online.Core.Longpool
         Invite,
         Notification,
         NoConfirm, 
-        QueueStatus
+        QueueStatus,
+        StopPooling
     }
 }

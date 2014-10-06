@@ -48,6 +48,11 @@ namespace Munchkin_Online.Models
         public virtual ICollection<User> Friends { get; set; }
         public virtual ICollection<GameLogEntry> Games { get; set; }
 
+        public User()
+        {
+            this.Friends = new HashSet<User>();
+        }
+
         public static bool operator==(User u1, User u2)
         {
             if (((object)u1 == null && (object)u2 != null) || ((object)u1 != null && (object)u2 == null))
