@@ -171,6 +171,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\DebugController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
@@ -224,6 +225,7 @@
     <Content Include="Content\img\tab-current.png" />
     <Content Include="Content\img\tab.png" />
     <Content Include="Content\js\Core.js" />
+    <Content Include="Content\js\Friends.js" />
     <Content Include="Content\js\LongPool.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -316,6 +318,8 @@
     <Content Include="Views\Accounts\Register.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Game\Find.cshtml" />
+    <Content Include="Views\Friends\Index.cshtml" />
+    <Content Include="Views\Friends\FriendPlateList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

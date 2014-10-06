@@ -46,7 +46,7 @@ NotificationMgr.prototype.demandNotifications = function () {
         dataType: 'json',
         success: function (response)
         {
-            if (response == "")
+            if (response == null)
                 return;
 
             response.forEach(function (val, index, array) {
@@ -127,11 +127,13 @@ function toggleFriendsBar(controlButton) {
         $(controlButton).parent().find(".container").slideDown();
         $(controlButton).animate({ marginTop: "-19px" }, "fast");
         $(controlButton).parent().find(".social").slideDown();
+        $(controlButton).parent().find(".add-friend").slideDown();
     }
     else {
         $(controlButton).parent().find(".container").slideUp();
         $(controlButton).animate({ marginTop: "0px" }, "fast");
         $(controlButton).parent().find(".social").slideUp();
+        $(controlButton).parent().find(".add-friend").slideUp();
     }
     $(controlButton).toggleClass("down");
 }

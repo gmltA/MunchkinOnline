@@ -1,4 +1,5 @@
-﻿@using Munchkin_Online.Core.Auth
+﻿@using Munchkin_Online.Core
+@using Munchkin_Online.Core.Auth
 @using Munchkin_Online.Models
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/js/Core")
+        @Scripts.Render("~/js/Friends")
         <title>@ViewBag.Title</title>
     </head>
     <body>
@@ -56,7 +58,7 @@
                             {
                                 foreach (User friend in CurrentUser.Instance.Current.Friends)
                                 {
-                                    <p @(friend.State == State.Offline ? "class=offline" : "")>@friend.Nickname</p>
+                                    <p @(friend.State == State.Offline ? "class=offline" : "") data-id="@friend.Id">@friend.Nickname</p>
                                 }
                             }
                             else
@@ -65,6 +67,7 @@
                                 <p>Cry</p>
                             }
                             </div>
+                            <div class="add-friend"><a href="/friends/">Add friend</a></div>
                             <div class="control down"></div>
                         </div>
                     }
@@ -72,10 +75,11 @@
             </header>
             <aside>
                 <ul class="nav">
-                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_MAIN ? "class=current" : "") href="/">Main&nbsp;page</a>
-                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_RULES ? "class=current" : "") href="/rules/">Game&nbsp;rules</a>
-                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_FIND_GAME ? "class=current" : "") href="/Game/Find">Find&nbsp;game</a>
-                    <li><a @(ViewBag.pageID == Munchkin_Online.Core.PageID.PAGE_CREATE_LOBBY ? "class=current" : "") href="">Create&nbsp;lobby</a>
+                    <li><a @(ViewBag.pageID == PageID.PAGE_MAIN ? "class=current" : "") href="/">Main&nbsp;page</a>
+                    <li><a @(ViewBag.pageID == PageID.PAGE_RULES ? "class=current" : "") href="/rules/">Game&nbsp;rules</a>
+                    <li><a @(ViewBag.pageID == PageID.PAGE_FIND_GAME ? "class=current" : "") href="/game/find">Find&nbsp;game</a>
+                    <li><a @(ViewBag.pageID == PageID.PAGE_CREATE_LOBBY ? "class=current" : "") href="">Create&nbsp;lobby</a>
+                    <li><a @(ViewBag.pageID == PageID.PAGE_FRIENDS ? "class=current" : "") href="/friends/">Friends</a>
                 </ul>
             </aside>
             <div class="main-block">

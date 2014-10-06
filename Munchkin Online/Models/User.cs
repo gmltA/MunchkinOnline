@@ -30,10 +30,10 @@ namespace Munchkin_Online.Models
         public string VkAccessToken { get; set; }
 
         [ScaffoldColumn(false)]
-        public uint GamesPlayed { get; set; }
+        public int GamesPlayed { get; set; }
 
         [ScaffoldColumn(false)]
-        public uint GamesWon { get; set; }
+        public int GamesWon { get; set; }
 
         [NotMapped]
         public State State { get; set; }
