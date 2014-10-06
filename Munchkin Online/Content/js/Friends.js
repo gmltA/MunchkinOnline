@@ -93,7 +93,7 @@ $(document).ready(function () {
         click:
         function ()
         {
-            friendMgr.removeFriend($(this).parent().data("id"), $(this).parent().data("friend"));
+            friendMgr.removeFriend($(this).parent().parent().data("id"), $(this).parent().parent().data("friend"));
             $("div.custom-menu").remove();
         }
     });
