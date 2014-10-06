@@ -452,6 +452,7 @@ FOOTER > .small
     position: absolute;
     font-size: 14px;
     display: none;
+    width: 132px;
     /*-webkit-filter : drop-shadow(0px 0px 10px black);*/
 }
 
