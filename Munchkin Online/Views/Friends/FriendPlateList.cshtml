@@ -1,0 +1,13 @@
+﻿@model List<Munchkin_Online.Core.Database.UserFriendData>
+
+@foreach (var friendData in Model)
+{
+    <div class='friend-plate @(friendData.FriendAlready ? " added" : " ")' id='@friendData.ID'>
+        <div class='avatar'></div>
+        <div class='friend-data'>
+            <span class='nickname'> @friendData.Nickname </span>
+            <br/>
+            <span class='stats'>Game stats: @friendData.GamesPlayed / @friendData.GamesWon </span>
+        </div>
+    </div>
+}

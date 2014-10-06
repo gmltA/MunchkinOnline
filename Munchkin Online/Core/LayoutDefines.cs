@@ -5,6 +5,7 @@
         PAGE_MAIN,
         PAGE_RULES,
         PAGE_FIND_GAME,
-        PAGE_CREATE_LOBBY
+        PAGE_CREATE_LOBBY,
+        PAGE_FRIENDS
     }
 }

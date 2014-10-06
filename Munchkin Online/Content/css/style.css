@@ -122,7 +122,7 @@ HEADER .friends P.offline
     color: gray;
 }
 
-HEADER .control, HEADER .social
+HEADER .control, HEADER .social, HEADER .add-friend
 {
     background: url(/Content/img/friends-control.png) 50% 100% no-repeat;
     width: 170px;
@@ -131,12 +131,17 @@ HEADER .control, HEADER .social
     display: block;
 }
 
+HEADER .add-friend
+{
+    display: none;
+}
+
 HEADER .control
 {
     cursor: pointer;
 }
 
-HEADER .social
+HEADER .social, HEADER .add-friend
 {
     background: url(/Content/img/authbar-tile.png) no-repeat;
     margin-bottom: 11px;
@@ -379,4 +384,86 @@ FOOTER > .small
 .notification > .scroll.right
 {
     background-position: 100% 100%;
+}
+
+#friend-search
+{
+    float: left;
+}
+
+#friend-list-container
+{
+    width: 410px;
+    height: 200px;
+    padding: 20px;
+    float: right;
+    box-shadow: inset 0 0 10px black;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    margin-right: 40px;
+    overflow-y: auto;
+}
+
+.friend-plate
+{
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background: url(/Content/img/friend-plate.png) left top no-repeat;
+    height: 51px;
+    width: 393px;
+}
+
+.friend-plate:hover
+{
+    background-position: left bottom;
+}
+
+.friend-plate.added
+{
+    background-position: right top;
+}
+
+.friend-plate.added:hover
+{
+    background-position: right bottom;
+}
+
+.friend-plate > .avatar
+{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.friend-plate > .friend-data
+{
+    display: inline-block;
+}
+
+.friend-plate > .friend-data > .stats
+{
+    font-size: 10px;
+}
+
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    background-color:#C0C0C0;
+    border: 1px solid black;
+    font-size: 14px;
+    display: none;
+}
+
+.custom-menu P
+{
+    margin: 0;
+    cursor: default;
+    border-bottom: 1px solid black;
+}
+
+.custom-menu P:hover
+{
+    background-color: white;
 }
