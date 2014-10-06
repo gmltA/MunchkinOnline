@@ -1,5 +1,8 @@
-﻿
-function SearchForFriends(nickname) {
+﻿function FriendMgr()
+{
+}
+
+FriendMgr.prototype.searchForFriends = function (nickname) {
     $.ajax({
         type: "POST",
         url: '/Friends/FriendPlateList',
@@ -10,32 +13,32 @@ function SearchForFriends(nickname) {
             $("#friend-list-container").html(response);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert("error");
+            alert(thrownError);
         }
     });
 }
 
-function AddFriend(friendPlate)
+FriendMgr.prototype.addFriend = function (id, name, callback)
 {
     $.ajax({
         type: "PUT",
         url: '/Friends/ManageFriend',
-        data: 'id=' + friendPlate.id,
+        data: 'id=' + id,
         cache: false,
         success: function (response)
         {
-            notificationMgr.addNotification("Friend " + $(friendPlate).find(".friend-data .nickname").text() + " added");
-            $(friendPlate).addClass("added");
+            notificationMgr.addNotification("Friend " + name + " added");
+            if (typeof (callback) == "function")
+                callback();
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
-            alert("error");
+            alert(thrownError);
         }
     });
 }
 
-function RemoveFriend(id, name)
-{
+FriendMgr.prototype.removeFriend = function (id, name) {
     $.ajax({
         type: "DELETE",
         url: '/Friends/ManageFriend',
@@ -52,9 +55,11 @@ function RemoveFriend(id, name)
     });
 }
 
+var friendMgr = new FriendMgr();
+
 $(document).ready(function () {
     $("#friend-search").keyup(function (key) {
-        SearchForFriends($(this).val());
+        friendMgr.searchForFriends($(this).val());
         return true;
     });
 
@@ -66,16 +71,17 @@ $(document).ready(function () {
                 notificationMgr.addNotification("You've already this friend", "error");
                 return false;
             }
-            AddFriend(this);
+            friendMgr.addFriend(this.id, $(this).find(".friend-data .nickname").text(), $(this).addClass("added"));
         }
     });
 
     $(".friends .container P[data-id]").bind("contextmenu", function (event)
     {
+        $("div.custom-menu").remove();
         event.preventDefault();
-        $("<div class='custom-menu'><p id='menu-remove-friend'>Remove friend</p><p>Open chat</p></div>")
-        .appendTo("body")
-        .css({ top: event.pageY + "px", left: event.pageX + "px" }).slideDown(100).data("id", $(this).data('id')).data("friend", $(this).text());
+        $("<div class='custom-menu'><div class='top-scroll'></div><div class='container'><p id='menu-remove-friend'>Remove friend</p><p>Open chat</p></div><div class='bottom-scroll'></div></div>")
+            .appendTo("body")
+            .css({ top: event.pageY + "px", left: event.pageX + "px" }).slideDown(100).data("id", $(this).data('id')).data("friend", $(this).text());
     });
 
     $(document).bind("click", function (event)
@@ -87,7 +93,7 @@ $(document).ready(function () {
         click:
         function ()
         {
-            RemoveFriend($(this).parent().data("id"), $(this).parent().data("friend"));
+            friendMgr.removeFriend($(this).parent().data("id"), $(this).parent().data("friend"));
             $("div.custom-menu").remove();
         }
     });
