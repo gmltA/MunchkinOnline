@@ -14,5 +14,18 @@ namespace Munchkin_Online.Core.Database
         { }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Friends)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.MapLeftKey("UserID");
+                    m.MapRightKey("FriendID");
+                    m.ToTable("UserFriends");
+                });
+        }
     }
 }

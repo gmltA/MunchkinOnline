@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201409221802447_Init.Designer.cs">
       <DependentUpon>201409221802447_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410061701317_UserFriends.cs" />
+    <Compile Include="Migrations\201410061701317_UserFriends.Designer.cs">
+      <DependentUpon>201410061701317_UserFriends.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Core\Game\Match.cs" />
@@ -336,6 +340,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409221802447_Init.resx">
       <DependentUpon>201409221802447_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410061701317_UserFriends.resx">
+      <DependentUpon>201410061701317_UserFriends.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
