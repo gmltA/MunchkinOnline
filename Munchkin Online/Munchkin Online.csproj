@@ -322,7 +322,6 @@
     <Content Include="Views\Accounts\Register.cshtml" />
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Game\Find.cshtml" />
-    <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\Friends\FriendPlateList.cshtml" />
   </ItemGroup>
   <ItemGroup>
