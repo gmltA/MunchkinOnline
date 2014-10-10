@@ -30,8 +30,7 @@ NotificationMgr.prototype.init = function () {
         type: "POST",
         url: url,
         success: function (response) { },
-        error: function (xhr, ajaxOptions, thrownError) {
-        }
+        error: function (xhr, ajaxOptions, thrownError) { }
     });
 }
 
@@ -143,7 +142,7 @@ $(document).ready(function () {
 
     notificationMgr.demandNotifications();
 
-    $("HEADER .control").live("click", function () {
+    $("HEADER .control").click(function () {
         toggleFriendsBar(this);
     });
 });

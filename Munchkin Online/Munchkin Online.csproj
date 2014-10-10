@@ -323,6 +323,7 @@
     <Content Include="Views\Accounts\Login.cshtml" />
     <Content Include="Views\Game\Find.cshtml" />
     <Content Include="Views\Friends\FriendPlateList.cshtml" />
+    <Content Include="Views\Friends\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

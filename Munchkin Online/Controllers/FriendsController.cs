@@ -14,9 +14,10 @@ namespace Munchkin_Online.Controllers
     {
         UserRepository Repository = new UserRepository();
 
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Search()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
