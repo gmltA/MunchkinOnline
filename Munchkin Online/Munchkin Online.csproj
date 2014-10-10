@@ -225,9 +225,11 @@
   <ItemGroup>
     <Content Include="Content\css\style.css" />
     <Content Include="Content\img\bg.png" />
+    <Content Include="Content\img\card_backs.png" />
     <Content Include="Content\img\main-block.png" />
     <Content Include="Content\img\tab-current.png" />
     <Content Include="Content\img\tab.png" />
+    <Content Include="Content\js\Cards.js" />
     <Content Include="Content\js\Core.js" />
     <Content Include="Content\js\Friends.js" />
     <Content Include="Content\js\LongPool.js" />
@@ -324,6 +326,7 @@
     <Content Include="Views\Game\Find.cshtml" />
     <Content Include="Views\Friends\FriendPlateList.cshtml" />
     <Content Include="Views\Friends\Search.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
