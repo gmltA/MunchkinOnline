@@ -30,6 +30,7 @@ FriendMgr.prototype.addFriend = function (id, name, callback)
             notificationMgr.addNotification("Friend " + name + " added");
             if (typeof (callback) == "function")
                 callback();
+            updateFriendList();
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
@@ -47,6 +48,7 @@ FriendMgr.prototype.removeFriend = function (id, name) {
         success: function (response)
         {
             notificationMgr.addNotification("Friend " + name + " removed");
+            updateFriendList();
         },
         error: function (xhr, ajaxOptions, thrownError)
         {
@@ -56,6 +58,23 @@ FriendMgr.prototype.removeFriend = function (id, name) {
 }
 
 var friendMgr = new FriendMgr();
+
+function updateFriendList()
+{
+    $.ajax({
+        type: "POST",
+        url: '/Friends/List',
+        cache: false,
+        success: function (response)
+        {
+            $("#friend-list").html(response);
+        },
+        error: function (xhr, ajaxOptions, thrownError)
+        {
+            alert(thrownError);
+        }
+    });
+}
 
 function showPopup()
 {
@@ -84,7 +103,7 @@ function closePopup()
 }
 
 $(document).ready(function () {
-    $(".friends .container P[data-id]").contextmenu(function (event) {
+    $(".friends .container P[data-id]").live("contextmenu", function (event) {
         event.preventDefault();
         $("div.custom-menu").remove();
         $("<div class='custom-menu'><div class='top-scroll'></div><div class='container'><p id='menu-remove-friend'>Remove friend</p><p>Open chat</p></div><div class='bottom-scroll'></div></div>")

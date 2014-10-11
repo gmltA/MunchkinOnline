@@ -53,19 +53,8 @@
                     else
                     {
                         <div class="friends">
-                            <div class="container" hidden>
-                            @if (CurrentUser.Instance.Current.Friends.Count != 0)
-                            {
-                                foreach (User friend in CurrentUser.Instance.Current.Friends)
-                                {
-                                    <p @(friend.State == State.Offline ? "class=offline" : "") data-id="@friend.Id">@friend.Nickname</p>
-                                }
-                            }
-                            else
-                            {
-                                <p>No friends</p>
-                                <p>Cry</p>
-                            }
+                            <div id="friend-list" class="container" hidden>
+                                @Html.Action("List", "Friends")
                             </div>
                             <div class="add-friend">Add friend</div>
                             <div class="control down"></div>
