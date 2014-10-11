@@ -36,7 +36,15 @@ namespace Munchkin_Online.Models
         public int GamesWon { get; set; }
 
         [NotMapped]
-        public State State { get; set; }
+        public State State
+        {
+            get
+            {
+                if (LastActivity.AddMinutes(5) < DateTime.Now)
+                    return Models.State.Offline;
+                return Models.State.Idle;
+            }
+        }
 
         public Gender Gender { get; set; }
 

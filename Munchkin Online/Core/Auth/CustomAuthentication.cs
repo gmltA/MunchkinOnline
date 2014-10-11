@@ -48,6 +48,8 @@ namespace Munchkin_Online.Core.Auth
             if (retUser != null)
             {
                 CreateCookie(userName);
+                retUser.LastActivity = DateTime.Now;
+                Repository.ForceSaveChanges();
             }
             return retUser;
         }

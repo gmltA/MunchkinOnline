@@ -46,6 +46,8 @@ namespace Munchkin_Online.Core.Auth
             if (!string.IsNullOrEmpty(email))
             {
                 User = repository.GetUser(email);
+                User.LastActivity = DateTime.Now;
+                repository.ForceSaveChanges();
             }
         }
 

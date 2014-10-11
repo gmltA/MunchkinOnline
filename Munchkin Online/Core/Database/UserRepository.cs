@@ -40,12 +40,24 @@ namespace Munchkin_Online.Core.Database
 
         public User Login(string email, string pass)
         {
-            return DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0 && string.Compare(p.PasswordHash, pass, false) == 0);
+            var user = DB.Users.FirstOrDefault(p => string.Compare(p.Email, email, true) == 0 && string.Compare(p.PasswordHash, pass, false) == 0);
+            if(user != null)
+            {
+                user.LastActivity = DateTime.Now;
+                DB.SaveChanges();
+            }
+            return user;
         }
 
         public User Login(int vkId, string email)
         {
-            return DB.Users.FirstOrDefault(p => p.VkId == vkId && string.Compare(p.Email, email, true) == 0);
+            var user = DB.Users.FirstOrDefault(p => p.VkId == vkId && string.Compare(p.Email, email, true) == 0);
+            if (user != null)
+            {
+                user.LastActivity = DateTime.Now;
+                DB.SaveChanges();
+            }
+            return user;
         }
 
         public User GetUser(string email)
