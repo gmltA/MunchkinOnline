@@ -327,6 +327,7 @@
     <Content Include="Views\Friends\FriendPlateList.cshtml" />
     <Content Include="Views\Friends\Search.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Friends\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

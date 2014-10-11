@@ -14,6 +14,11 @@ namespace Munchkin_Online.Controllers
     {
         UserRepository Repository = new UserRepository();
 
+        public ActionResult List()
+        {
+            return PartialView(CurrentUser.Instance.Current.Friends);
+        }
+
         [HttpPost]
         public ActionResult Search()
         {
