@@ -118,10 +118,9 @@ namespace Munchkin_Online.Controllers
                     newUser.VkAccessToken = result.ExtraData["accessToken"];
                     if (Users.Add(newUser) == false)
                     {
-                        NotificationManager.Instance.Add("Can't add user data to DB", NotificationType.Error);
+                        NotificationManager.Instance.Add("Can't add user data to DB, perhaps, we already have user with this e-mail", NotificationType.Error);
                         return RedirectToAction("Index", "Home");
                     }
-
                 }
 
                 if (Auth.Login(uniqueUserID, result.ExtraData["email"]) == null)

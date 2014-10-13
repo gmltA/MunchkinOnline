@@ -23,6 +23,9 @@ namespace Munchkin_Online.Core.Database
 
         public bool Add(User instance)
         {
+            var user = GetUser(instance.Email);
+            if (user != null)
+                return false;
             try
             {
                 instance.Id = Guid.NewGuid();
