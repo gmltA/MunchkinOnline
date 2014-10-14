@@ -575,17 +575,30 @@ FOOTER > .small
 
 .card:hover
 { 
-    //height:300px;
-    //width: 190px;
     margin-bottom: 10px;
 }
 
-.selected
+.card.selected
 {
     box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
+    animation: card-selected 5s linear infinite;
+    -webkit-animation: card-selected 2s linear infinite;
 }
 
-.selected:hover
-{
-    box-shadow: inset rgba(0, 255, 33, 0.5) 0px 0px 40px;
+@keyframes card-selected {
+  0%,100% {
+    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
+  }
+  50% {
+    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 10px;
+  }
+}
+
+@-webkit-keyframes card-selected {
+  0%,100% {
+    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
+  }
+  50% {
+    box-shadow: inset rgba(0, 255, 33, 1) 0px 0px 10px;
+  }
 }
