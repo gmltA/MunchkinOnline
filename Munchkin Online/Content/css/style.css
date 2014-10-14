@@ -30,7 +30,7 @@ HTML, BODY
 
 BODY
 {
-    background: url(/Content/img/main.jpg)  50% 114px no-repeat black;
+    background: url(/Content/img/main.jpg) center top no-repeat black;
     height: 100%;
 }
 
@@ -38,7 +38,7 @@ BODY
 {
     BODY
     {
-        background-position: -813px 114px;
+        background-position: -813px top;
     }
 }
 HEADER
@@ -47,14 +47,15 @@ HEADER
     padding: 10px;
     display: table;
     width: 990px;
-    margin: auto;
-    color: white;
+    margin: 0px auto 96px;
+    color: black;
 }
 
 HEADER > H1
 {
     display: table-cell;
     vertical-align: middle;
+    text-shadow: 0 0 10px black;
 }
 
 HEADER > .moto
@@ -62,6 +63,7 @@ HEADER > .moto
     display: table-cell;
     margin-right: 100px;
     vertical-align: middle;
+    text-shadow: 0 0 10px black;
 }
 
 HEADER > .auth-bar-container
