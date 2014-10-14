@@ -78,9 +78,9 @@ namespace Munchkin_Online.Core.Database
             return DB.Users.FirstOrDefault(p => p.VkId == vkId);
         }
 
-        public List<UserFriendData> GetPotentialFriendListByNickname(string nickname, User sender)
+        public List<UserFriendData> GetPotentialFriendListByNickname(string nicknamePart, User sender)
         {
-            var result =  DB.Users.Where(p => string.Compare(p.Nickname, nickname, true) == 0 && p.Id != sender.Id)
+            var result = DB.Users.Where(p => p.Nickname.Contains(nicknamePart) && p.Id != sender.Id)
                             .Select(f => new UserFriendData
                             {
                                 ID = f.Id,

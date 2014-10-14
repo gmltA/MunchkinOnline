@@ -2,7 +2,12 @@
 {
 }
 
-FriendMgr.prototype.searchForFriends = function (nickname) {
+FriendMgr.prototype.searchForFriends = function (nickname)
+{
+    if (nickname == "") {
+        $("#friend-list-container").html("");
+        return;
+    }
     $.ajax({
         type: "POST",
         url: '/Friends/FriendPlateList',
