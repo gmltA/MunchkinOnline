@@ -107,7 +107,7 @@ namespace Munchkin_Online.Core.Auth
                             _currentUser = new UserProvider(null, null);
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         _currentUser = new UserProvider(null, null);
                     }

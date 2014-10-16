@@ -1,0 +1,52 @@
+﻿@using Munchkin_Online.Models
+@model Munchkin_Online.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="profile-title">
+    <span>
+        @if (Model.State == State.Idle)
+        {
+            @Html.DisplayFor(model => model.Nickname)<i>Idle</i>
+        }
+        else if (Model.State == State.InGame)
+        {
+            @Html.DisplayFor(model => model.Nickname)<i>In game</i>
+        }
+        else if (Model.State == State.InLobby)
+        {
+            @Html.DisplayFor(model => model.Nickname)<i>In lobby</i>
+        }
+        else
+        {
+            @Html.DisplayFor(model => model.Nickname)<i>Offline</i>
+        }
+    </span>
+    <span class="stats">Game stats: @Model.GamesPlayed / @Model.GamesWon</span>
+</div>
+<hr class="profile-divider"/>
+<div class="profile-data">
+    <p>User info here</p>
+</div>
+<hr class="profile-divider"/>
+<div class="profile-friend-list">
+    @if (@Model.Friends.Count != 0)
+    {
+        foreach (var friend in @Model.Friends)
+        {
+            <a href="/profile/@friend.Id">@friend.Nickname</a>
+        }
+    }
+</div>
+<div class="profile-game-history">
+    @if (@Model.Games.Count != 0)
+    {
+        foreach (var game in @Model.Games)
+        {
+            <p>Look! A game!</p>
+        }
+    }
+</div>
+

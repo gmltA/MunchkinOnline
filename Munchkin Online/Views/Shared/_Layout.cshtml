@@ -29,7 +29,7 @@
                         }
                         else
                         {
-                            @("Привет, " + CurrentUser.Instance.Current.Nickname + " / ")@Html.ActionLink("Выход", "Logout", "Accounts")
+                            @("Привет, ") @Html.ActionLink(CurrentUser.Instance.Current.Nickname, CurrentUser.Instance.Current.Id.ToString("N"), "Profile") @(" / ")@Html.ActionLink("Выход", "Logout", "Accounts")
                         }
                     </div>
                     @if(!Request.IsAuthenticated)

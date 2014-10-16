@@ -35,11 +35,12 @@ $(document).ready(
                 
             });
 
-        $(".main-block").bind("contextmenu",
+        //todo: BURN IT WITH FIRE!
+        /*$(".main-block").bind("contextmenu",
             function (a) {
                 a.preventDefault();
                 if (currCard == null) return;
                 $(currCard).toggleClass("selected");
                 currCard = null;
-            });
+            });*/
     });

@@ -29,7 +29,7 @@ namespace Munchkin_Online.Core.Game
         {
             UserId = user.Id;
             IsConfirmed = false;
-            GamesPlayed = (int)user.GamesPlayed;
+            GamesPlayed = user.GamesPlayed;
         }
     }
 }

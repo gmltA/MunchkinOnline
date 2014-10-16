@@ -285,7 +285,7 @@ ASIDE
     float: left;
     width: 680px;
     height: 380px;
-    margin: 100px 80px 100px 20px;
+    margin: 100px 80px 100px 0px;
     overflow-y: auto;
 }
 
@@ -521,7 +521,6 @@ FOOTER > .small
     display: none;
 }
 
-/*todo: center popup properly*/
 #friend-search-popup
 {
     padding: 0px 90px;
@@ -603,4 +602,101 @@ FOOTER > .small
   50% {
     box-shadow: inset rgba(0, 255, 33, 1) 0px 0px 10px;
   }
+}
+
+.profile-title
+{
+    font-size: 20px;
+    height: 20px;
+    text-align: justify;
+}
+
+.profile-title:after
+{
+  content: "";
+  width: 100%;
+  display: inline-block;
+}
+
+.profile-title > SPAN > I
+{
+    font-size: 12px;
+    font-style: normal;
+    padding-left: 10px;
+}
+
+.profile-title > SPAN.stats
+{
+    font-size: 12px;
+    line-height: 28px;
+    display: inline-block;
+}
+
+HR.profile-divider
+{
+    margin-top: 0;
+    border: none;
+    border-top: 1px solid black;
+}
+
+.profile-game-history, .profile-friend-list
+{
+    float: left;
+}
+
+.profile-friend-list
+{
+    width: 245px;
+    height: 252px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.profile-game-history
+{
+    width: 390px;
+    height: 252px;
+    overflow-y: auto;
+    padding: 10px;
+    background: url(/Content/img/profile-games-list.png) no-repeat;
+}
+
+.profile-game-history P
+{
+    margin: 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px;
+    background-color: white;
+    margin-bottom: 10px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.profile-friend-list A
+{
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: inset 0 0 10px black;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+}
+
+.profile-game-history P:hover
+{
+    opacity: 1;
+}
+
+.profile-friend-list A:hover
+{
+    background-color: rgba(255, 255, 255, 0.2);
 }

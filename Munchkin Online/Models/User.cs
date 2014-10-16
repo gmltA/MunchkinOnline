@@ -40,6 +40,7 @@ namespace Munchkin_Online.Models
         {
             get
             {
+                //todo: define 5 as timeout somewhere
                 if (LastActivity.AddMinutes(5) < DateTime.Now)
                     return Models.State.Offline;
                 return Models.State.Idle;
