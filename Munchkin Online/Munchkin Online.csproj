@@ -174,6 +174,7 @@
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LobbyController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RulesController.cs" />
     <Compile Include="Core\Auth\AuthHttpModule.cs" />
@@ -322,6 +323,8 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Friends\List.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Lobby\Create.cshtml" />
+    <Content Include="Views\Lobby\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

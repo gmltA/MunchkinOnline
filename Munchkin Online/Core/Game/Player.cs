@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Munchkin_Online.Models;
+using Munchkin_Online.Core.Database;
 
 namespace Munchkin_Online.Core.Game
 {
@@ -30,6 +31,12 @@ namespace Munchkin_Online.Core.Game
             UserId = user.Id;
             IsConfirmed = false;
             GamesPlayed = user.GamesPlayed;
+        }
+
+        public User ToUser()
+        {
+            UserRepository repo = new UserRepository();
+            return repo.Accounts.Where(u => u.Id == this.UserId).FirstOrDefault();
         }
     }
 }

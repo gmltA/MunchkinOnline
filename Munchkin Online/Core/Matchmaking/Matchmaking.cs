@@ -65,7 +65,6 @@ namespace Munchkin_Online.Core.Matchmaking
         /// </summary>
         void CalculateMatches()
         {
-
             if (Players.Count < 4)
                 return;
 
@@ -143,6 +142,16 @@ namespace Munchkin_Online.Core.Matchmaking
             MatchCreated(this, new MatchCreatedArgs());
         }
 
+        public Match FindMatchByCreatorID(Guid creatorId)
+        {
+            return Matches.Where(m => m.Creator.UserId == creatorId).FirstOrDefault();
+        }
+
+        public Match FindMatchByParticipantID(Guid userId)
+        {
+            return Matches.Where(m => m.Players.Any(p => p.UserId == userId)).FirstOrDefault();
+        }
+
         /// <summary>
         /// Обработчик конца матча
         /// </summary>
@@ -172,7 +181,5 @@ namespace Munchkin_Online.Core.Matchmaking
         {
 
         }
-
-
     }
 }

@@ -13,6 +13,8 @@ namespace Munchkin_Online.Core.Game
 
         public Guid Id { get; set; }
 
+        public Player Creator { get; set; }
+
         public virtual List<Player> Players { get; set; }
 
         public State State { get; set; }

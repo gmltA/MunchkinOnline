@@ -1,0 +1,66 @@
+﻿@using Munchkin_Online.Core.Auth;
+@model Munchkin_Online.Core.Game.Match
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.pageID = Munchkin_Online.Core.PageID.PAGE_LOBBY;
+}
+
+<h2>Private lobby #@Model.Id</h2>
+<table class="lobby-players">
+    <tbody>
+        <tr>
+            <td>
+                <div class="player">
+                    <p>@Model.Players[0].ToUser().Nickname <i>Lobby creator</i></p>
+                </div>
+            </td>
+            <td>
+                @if (Model.Players.Count > 1)
+                {
+                    <div class="player">
+                        <p>@Model.Players[1].ToUser().Nickname</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="player none">
+                        <p>Add opponent</p>
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @if (Model.Players.Count > 2)
+                {
+                    <div class="player">
+                        <p>@Model.Players[2].ToUser().Nickname</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="player none">
+                        <p>Add opponent</p>
+                    </div>
+                }
+            </td>
+            <td>
+                @if (Model.Players.Count > 3)
+                {
+                    <div class="player">
+                        <p>@Model.Players[3].ToUser().Nickname</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="player none">
+                        <p>Add opponent</p>
+                    </div>
+                }
+            </td>
+         </tr>
+    </tbody>
+</table>
+
+<a href="/lobby/leave">Leave lobby</a>

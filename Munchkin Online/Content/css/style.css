@@ -693,3 +693,54 @@ HR.profile-divider
 {
     background-color: rgba(255, 255, 255, 0.2);
 }
+
+.lobby-players
+{
+    width: 100%;
+}
+
+.lobby-players TD
+{
+    border-radius: 5px;
+    height: 40px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px black;
+    background-color: rgba(0,0,0,0.2);
+    width: 50%;
+}
+
+.lobby-players .player
+{
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px 10px;
+    box-shadow: 0 0 10px black;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: block;
+    cursor: pointer;
+}
+
+.lobby-players .player P
+{
+    font-size: 20px;
+    margin: 0;
+    line-height: 30px;
+}
+
+.lobby-players .player I
+{
+    float: right;
+    font-size: 14px;
+}
+
+.lobby-players .player.none
+{
+    box-shadow: 0 0 10px black, inset 0 0 10px rgba(0,0,0,0.5);
+    opacity: 0.6;
+}
+
+.lobby-players .player.none P
+{
+    color: gray;
+    text-shadow: 0 0 10px;
+}
