@@ -118,7 +118,7 @@ HEADER .friends .container
     padding-bottom: 10px;
 }
 
-HEADER .friends P
+HEADER .friends A
 {
     margin: 0 0 10px 0;
     color: white;
@@ -126,9 +126,10 @@ HEADER .friends P
     text-align: center;
     font-size: 12px;
     height: 15px;
+    display: block;
 }
 
-HEADER .friends P.offline
+HEADER .friends A.offline
 {
     color: gray;
 }

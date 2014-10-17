@@ -108,7 +108,7 @@ function closePopup()
 }
 
 $(document).ready(function () {
-    $(".friends .container P[data-id]").live("contextmenu", function (event) {
+    $(".friends .container A[data-id]").live("contextmenu", function (event) {
         event.preventDefault();
         $("div.custom-menu").remove();
         $("<div class='custom-menu'><div class='top-scroll'></div><div class='container'><p id='menu-remove-friend'>Remove friend</p><p>Open chat</p></div><div class='bottom-scroll'></div></div>")
