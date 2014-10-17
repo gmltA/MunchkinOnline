@@ -1,5 +1,5 @@
 * { outline: none; }
-A { text-decoration: none; }
+A { text-decoration: none; color: black; }
 
 *::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.3s ease;}
 *::-moz-placeholder                {opacity: 1; transition: opacity 0.3s ease;}
@@ -118,7 +118,7 @@ HEADER .friends .container
     padding-bottom: 10px;
 }
 
-HEADER .friends A
+HEADER .friends A, HEADER .friends P
 {
     margin: 0 0 10px 0;
     color: white;
@@ -215,11 +215,6 @@ HEADER .auth-bar
     font-size: 14px;
 }
 
-HEADER .auth-bar > A
-{
-    color: black;
-}
-
 .wrapper
 {
     width: 990px;
@@ -255,7 +250,6 @@ HEADER .auth-bar > A
 .nav > LI > A
 {
     display: block;
-    color: black;
     padding: 23px 40px 23px 15px;
     background: url(/Content/img/tab.png) 0% 0%;
     text-align: center;
@@ -682,8 +676,6 @@ HR.profile-divider
 {
     transition: background-color 0.3s ease;
     cursor: pointer;
-    text-decoration: none;
-    color: black;
     display: block;
     box-shadow: inset 0 0 10px black;
     padding: 10px;

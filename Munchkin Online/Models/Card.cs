@@ -19,7 +19,7 @@ namespace Munchkin_Online.Models
 
         public bool IsBig { get; set; }
 
-        public bool IsTwohanded { get; set; }
+        public bool IsTwoHanded { get; set; }
 
         public bool IsActive { get; set; }
 

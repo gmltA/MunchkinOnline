@@ -8,6 +8,5 @@ namespace Munchkin_Online.Models
     public class GameLogEntry
     {
         public Guid Id { get; set; }
-
     }
 }
