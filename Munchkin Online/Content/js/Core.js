@@ -121,28 +121,43 @@ NotificationMgr.prototype.displayNextNotification = function () {
 
 var notificationMgr = new NotificationMgr();
 
-function toggleFriendsBar(controlButton) {
+function toggleFriendsBar()
+{
+    var controlButton = $("HEADER .control");
     if ($(controlButton).hasClass("down")) {
         $(controlButton).parent().find(".container").slideDown();
         $(controlButton).animate({ marginTop: "-19px" }, "fast");
         $(controlButton).parent().find(".social").slideDown();
         $(controlButton).parent().find(".add-friend").slideDown();
+
+        localStorage.setItem("authBarState", 1);
     }
     else {
         $(controlButton).parent().find(".container").slideUp();
         $(controlButton).animate({ marginTop: "0px" }, "fast");
         $(controlButton).parent().find(".social").slideUp();
         $(controlButton).parent().find(".add-friend").slideUp();
+
+        localStorage.setItem("authBarState", 0);
     }
     $(controlButton).toggleClass("down");
 }
 
-$(document).ready(function () {
-    notificationMgr.init();
+function setAuthBarState()
+{
+    if (localStorage.getItem("authBarState") == true) {
+        toggleFriendsBar();
+    }
+}
 
+$(document).ready(function ()
+{
+    setAuthBarState();
+
+    notificationMgr.init();
     notificationMgr.demandNotifications();
 
     $("HEADER .control").click(function () {
-        toggleFriendsBar(this);
+        toggleFriendsBar();
     });
 });
