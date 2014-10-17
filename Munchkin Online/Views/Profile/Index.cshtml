@@ -6,25 +6,28 @@
 }
 
 <div class="profile-title">
-    <span>
+    @Html.Gravatar(Model.Email, 80, new { Title = "User gravatar", Alt = "Gravatar" })
+    <div>
+        @Html.DisplayFor(model => model.Nickname)
         @if (Model.State == State.Idle)
         {
-            @Html.DisplayFor(model => model.Nickname)<i>Idle</i>
+            <i>Idle</i>
         }
         else if (Model.State == State.InGame)
         {
-            @Html.DisplayFor(model => model.Nickname)<i>In game</i>
+            <i>In game</i>
         }
         else if (Model.State == State.InLobby)
         {
-            @Html.DisplayFor(model => model.Nickname)<i>In lobby</i>
+            <i>In lobby</i>
         }
         else
         {
-            @Html.DisplayFor(model => model.Nickname)<i>Offline</i>
+            <i>Offline</i>
         }
-    </span>
-    <span class="stats">Game stats: @Model.GamesPlayed / @Model.GamesWon</span>
+        <br/>
+        <span class="stats">Game stats: @Model.GamesPlayed / @Model.GamesWon</span>
+    </div>
 </div>
 <hr class="profile-divider"/>
 <div class="profile-data">

@@ -602,25 +602,27 @@ FOOTER > .small
 .profile-title
 {
     font-size: 20px;
-    height: 20px;
-    text-align: justify;
+    height: 80px;
 }
 
-.profile-title:after
+.profile-title DIV
 {
-  content: "";
-  width: 100%;
-  display: inline-block;
+    display: inline-block;
 }
 
-.profile-title > SPAN > I
+.profile-title IMG
+{
+    vertical-align: top;
+}
+
+.profile-title I
 {
     font-size: 12px;
     font-style: normal;
     padding-left: 10px;
 }
 
-.profile-title > SPAN.stats
+.profile-title .stats
 {
     font-size: 12px;
     line-height: 28px;
@@ -641,7 +643,7 @@ HR.profile-divider
 
 .profile-friend-list
 {
-    width: 245px;
+    width: 230px;
     height: 252px;
     padding: 10px;
     overflow-y: auto;
