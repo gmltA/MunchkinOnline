@@ -28,7 +28,7 @@ namespace Munchkin_Online.Controllers
             {
                 MatchManager.Instance.UserJoinLobby(CurrentUser.Instance.Current, lobbyGuid);
             }
-            catch (LobbyJoinException e)
+            catch (LobbyJoinException)
             {
                 //todo: handle exceptions properly
                 return RedirectToAction("Index", "Home");

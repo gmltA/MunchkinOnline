@@ -15,8 +15,6 @@ namespace Munchkin_Online
     /// </summary>
     public class NotificationsHandler : IHttpAsyncHandler, IRequiresSessionState
     {
-        private Object _lock = new Object();
-
         #region IHttpAsyncHandler Members
 
         public IAsyncResult BeginProcessRequest(HttpContext ctx, AsyncCallback cb, Object obj)

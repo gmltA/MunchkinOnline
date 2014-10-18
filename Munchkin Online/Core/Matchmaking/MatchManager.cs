@@ -61,37 +61,37 @@ namespace Munchkin_Online.Core.Matchmaking
         public void UserJoinLobby(User user, Guid? lobbyId)
         {
             if (!lobbyId.HasValue)
-                throw new LobbyJoinException(LobbyJoinExceptionType.WrongLobbyId);
+                throw new WrongLobbyIdException();
 
             Match match = MatchManager.Instance.FindMatchByParticipantID(user.Id);
             if (match != null)
-                throw new LobbyJoinException(LobbyJoinExceptionType.AlreadyInMatch);
+                throw new AlreadyInMatchException();
 
             match = MatchManager.Instance.Matches.Where(m => m.Id == lobbyId).FirstOrDefault();
             if (match == null)
-                throw new LobbyJoinException(LobbyJoinExceptionType.WrongLobbyId);
+                throw new WrongLobbyIdException();
 
             if (match.Players.Count > 3)
-                throw new LobbyJoinException(LobbyJoinExceptionType.LobbyIsFull);
+                throw new LobbyIsFullException();
 
+            Matchmaking.Instance.Players.RemoveAll(p => p.UserId == user.Id);
             match.Players.Add(new Player(user));
         }
     }
 
     public class LobbyJoinException : Exception
     {
-        public LobbyJoinExceptionType Type { get; private set; }
-
-        public LobbyJoinException(LobbyJoinExceptionType type)
-        {
-            Type = type;
-        }
     }
 
-    public enum LobbyJoinExceptionType
+    public class AlreadyInMatchException : LobbyJoinException
     {
-        AlreadyInMatch,
-        WrongLobbyId,
-        LobbyIsFull
+    }
+
+    public class WrongLobbyIdException : LobbyJoinException
+    {
+    }
+
+    public class LobbyIsFullException : LobbyJoinException
+    {
     }
 }

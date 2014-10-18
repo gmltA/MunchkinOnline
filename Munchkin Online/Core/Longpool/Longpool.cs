@@ -102,7 +102,6 @@ namespace Munchkin_Online.Core.Longpool
                 state.ClientGuid = Guid.NewGuid().ToString("N");
                 _clientStateList.Add(state);
             }
-            Debug.WriteLine("User is here! Current users:{0}", _clientStateList.Count); 
         }
 
         /// <summary>
