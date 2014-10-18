@@ -2,12 +2,20 @@
     ViewBag.Title = "Index";
     ViewBag.pageID = Munchkin_Online.Core.PageID.PAGE_LOBBY;
 }
+@model Munchkin_Online.Core.Game.Match
 
+@if(Model == null)
+{
 <h2>Create or join lobby</h2>
 <form action="/Lobby/join" method="get">
     <input name="lobbyGuid" type="text"/>
     <button type="submit">Join lobby</button>
 </form>
-Or
+@("Or");
 <br/>
 <a href="/lobby/create">Create lobby</a>
+}
+else
+{
+    @Html.Partial("Create")
+}

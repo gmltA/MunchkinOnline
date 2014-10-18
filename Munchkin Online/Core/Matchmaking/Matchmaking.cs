@@ -28,7 +28,6 @@ namespace Munchkin_Online.Core.Matchmaking
         public static readonly Matchmaking Instance = new Matchmaking();
 
         public List<Player> Players { get; set; }
-        public List<Match> Matches { get; set; }
         public int LastCount { get; set; }
         public Timer Timer { get; set; }
 
@@ -36,7 +35,6 @@ namespace Munchkin_Online.Core.Matchmaking
         {
             LastCount = 0;
             Players = new List<Player>();
-            Matches = new List<Match>();
             LongPoolHandler.NewSearcher += OnNewSearcher;
             LongPoolHandler.MatchConfirmation += OnMatchConfirmation;
             Timer = new Timer(CREATE_INTERVAL);
@@ -135,21 +133,11 @@ namespace Munchkin_Online.Core.Matchmaking
                 players.Add(i);
                 Players.Remove(i);
             }
-            Match match = new Match();
+
+            Match match = MatchManager.Instance.CreateMatch();
             match.Players = players;
             match.MatchEnded += OnMatchEnded;
-            Matches.Add(match);
             MatchCreated(this, new MatchCreatedArgs());
-        }
-
-        public Match FindMatchByCreatorID(Guid creatorId)
-        {
-            return Matches.Where(m => m.Creator.UserId == creatorId).FirstOrDefault();
-        }
-
-        public Match FindMatchByParticipantID(Guid userId)
-        {
-            return Matches.Where(m => m.Players.Any(p => p.UserId == userId)).FirstOrDefault();
         }
 
         /// <summary>
@@ -167,7 +155,7 @@ namespace Munchkin_Online.Core.Matchmaking
             }
             ///TODO: Winner.GamesWon++;
             ///TODO: Add stats to db(optionally);
-            Matches.Remove(m);
+            MatchManager.Instance.Matches.Remove(m);
         }
     }
 

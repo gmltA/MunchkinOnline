@@ -9,70 +9,37 @@ using System.Web.Mvc;
 
 namespace Munchkin_Online.Controllers
 {
+    [Authorize]
     public class LobbyController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
-            Match match = Matchmaking.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
-            if (match != null)
-                return View("Create", match);
-            return View();
+            return View(MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id));
         }
 
-        [Authorize]
         public ActionResult Create()
         {
-            Match match = Matchmaking.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
-            if (match == null)
-            {
-                match = new Match();
-                match.Id = Guid.NewGuid();
-                match.Creator = new Player(CurrentUser.Instance.Current);
-                match.Players = new List<Player>();
-                match.Players.Add(new Player(CurrentUser.Instance.Current));
-                Matchmaking.Instance.Matches.Add(match);
-            }
-            return View(match);
+            return View(MatchManager.Instance.GetOrCreateNewMatchForUser(CurrentUser.Instance.Current));
         }
 
-        [Authorize]
         public ActionResult Join(Guid? lobbyGuid)
         {
-            Match match = Matchmaking.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
-            if (match != null)
+            try
             {
-                return RedirectToAction("Index");
+                MatchManager.Instance.UserJoinLobby(CurrentUser.Instance.Current, lobbyGuid);
             }
-
-            match = Matchmaking.Instance.Matches.Where(m => m.Id == lobbyGuid).FirstOrDefault();
-            if (match == null)
+            catch (LobbyJoinException e)
             {
-                //no lobby with provided guid
+                //todo: handle exceptions properly
                 return RedirectToAction("Index", "Home");
             }
-
-            if (match.Players.Count > 3)
-            {
-                return RedirectToAction("Index");
-            }
-
-            match.Players.Add(new Player(CurrentUser.Instance.Current));
 
             return RedirectToAction("Index");
         }
 
-        [Authorize]
         public ActionResult Leave()
         {
-            Match match = Matchmaking.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
-            if (match != null)
-            {
-                if (match.Creator.UserId == CurrentUser.Instance.Current.Id)
-                    Matchmaking.Instance.Matches.Remove(match);
-                else
-                    match.Players.RemoveAll(p => p.UserId == CurrentUser.Instance.Current.Id);
-            }
+            MatchManager.Instance.UserLeaveFromMatch(CurrentUser.Instance.Current.Id);
 
             return RedirectToAction("Index", "Home");
         }
