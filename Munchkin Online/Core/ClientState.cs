@@ -59,6 +59,7 @@ namespace Munchkin_Online.Core
             if (message != null)
             {
                 Push(message);
+                Messages.Remove(message);
             }
         }
 

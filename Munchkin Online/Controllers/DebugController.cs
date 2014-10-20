@@ -7,7 +7,7 @@ using Munchkin_Online.Core.Longpool;
 
 namespace Munchkin_Online.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize]
     public class DebugController : Controller
     {
         //
@@ -27,6 +27,11 @@ namespace Munchkin_Online.Controllers
             AsyncMessage m = new AsyncMessage(MessageType.Notification);
             m.Data = "Hello!";
             Longpool.Instance.PushMessage(m);
+        }
+
+        public void DisconnectAll()
+        {
+            Longpool.Instance.PushMessage(new AsyncMessage(MessageType.StopPooling));
         }
 
     }
