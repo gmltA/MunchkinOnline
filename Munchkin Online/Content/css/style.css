@@ -720,6 +720,11 @@ HR.profile-divider
     background-color: rgba(255, 255, 255, 0.5);
     display: block;
     cursor: pointer;
+    -webkit-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
+    -o-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
+    -moz-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
+    -ms-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
+    transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
 }
 
 .lobby-players .player P
@@ -745,4 +750,49 @@ HR.profile-divider
 {
     color: gray;
     text-shadow: 0 0 10px;
+}
+
+.lobby-players .player.none.menu-on
+{
+    box-shadow: 0 0 10px black;
+    border-radius: 5px 5px 0 0;
+    opacity: 1;
+    box-shadow: 0 12px 28px -7px rgba(0,0,0,0.7),
+        inset 0 -3px 30px -10px rgba(0,0,0,0.5),
+        inset 0 5px 27px 8px rgb(210, 185, 161);
+    z-index: 9003;
+    position: relative;
+}
+
+.lobby-players .player .menu
+{
+    margin: 5px -10px 0 -10px;
+    padding: 5px 0;
+    box-shadow: 0 12px 28px -7px rgba(0,0,0,0.7),
+        inset 0 -3px 30px -10px rgba(0,0,0,0.5),
+        inset 0 5px 27px 8px rgb(210, 185, 161);
+    background-color: rgba(210, 185, 161, 0.75);
+    border-radius: 0 0 5px 5px;
+    z-index: 9002;
+    position: relative;
+}
+
+.lobby-players .player .menu P
+{
+    font-size: 14px;
+    color: black;
+    text-shadow: none;
+    padding: 0 10px;
+
+    -webkit-transition:  box-shadow 0.3s ease, background 0.3s ease;
+    -o-transition:  box-shadow 0.3s ease;
+    -moz-transition:  box-shadow 0.3s ease;
+    -ms-transition:  box-shadow 0.3s ease;
+    transition: box-shadow 0.1s ease, background 0.3s ease;
+}
+
+.lobby-players .player .menu P:hover
+{
+    box-shadow: inset 0 0 10px -2px;
+    background-color: rgba(0,0,0,0.05);
 }
