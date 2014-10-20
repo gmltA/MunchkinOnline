@@ -24,7 +24,7 @@ function Connect() {
     $.ajax({
         type: "POST",
         url: url,
-        success: OnConnected,
+        success: ProcessResponse,
         error: ConnectionRefused
     });
 }

@@ -51,11 +51,7 @@ namespace Munchkin_Online.Core.Longpool
             {
                 foreach (ClientState clientState in _clientStateList)
                 {
-                    if (clientState.CurrentContext.Session != null)
-                    {
-                        clientState.CurrentContext.Response.Write(message.ToString());
-                        clientState.CompleteRequest();
-                    }
+                    clientState.Push(message);
                 }
             }
         }
@@ -71,10 +67,12 @@ namespace Munchkin_Online.Core.Longpool
             {
                 ClientState clientState = _clientStateList.Find(s => s.User == state.User);
                 if (clientState != null)
-                { 
+                {
+                    clientState.SetUncomplete();
                     clientState.CurrentContext = state.CurrentContext;
                     clientState.ExtraData = state.ExtraData;
                     clientState.AsyncCallback = state.AsyncCallback;
+                    clientState.CompleteMessages();
                 }
             }
         }
@@ -85,17 +83,12 @@ namespace Munchkin_Online.Core.Longpool
         /// <param name="state">Состояние</param>
         public void RegisterClient(ClientState state)
         {
-            if (_clientStateList.Where(x => x.User.Id == state.User.Id).Count() != 0)
+            var st = _clientStateList.FirstOrDefault(x => x.User.Id == state.User.Id);
+            if (st != null)
             {
-                var st = _clientStateList.Where(x => x.User.Id == state.User.Id).ToArray()[0];
-                if (!st.IsCompleted)
-                {
-                    st.CurrentContext.Response.Write(new AsyncMessage(MessageType.StopPooling));
-                    st.CompleteRequest();
-                }
+                //st.Push(new AsyncMessage(MessageType.StopPooling));
                 UpdateClient(state);
                 return;
-
             }              
             lock (_lock)
             {
@@ -128,10 +121,9 @@ namespace Munchkin_Online.Core.Longpool
             lock (_lock)
             {
                 var clientState = _clientStateList.FirstOrDefault(x => x.User.Id == User.Id);
-                if (clientState != null && clientState.IsCompleted == false)
+                if (clientState != null)
                 {
-                    clientState.CurrentContext.Response.Write(asyncMessage.ToString());
-                    clientState.CompleteRequest();
+                    clientState.Push(asyncMessage);
                 }
             }
         }
@@ -143,8 +135,7 @@ namespace Munchkin_Online.Core.Longpool
                 var clientState = _clientStateList.FirstOrDefault(x => x.User.Id == Guid);
                 if (clientState != null)
                 {
-                    clientState.CurrentContext.Response.Write(asyncMessage.ToString());
-                    clientState.CompleteRequest();
+                    clientState.Push(asyncMessage);
                 }
             }
         }

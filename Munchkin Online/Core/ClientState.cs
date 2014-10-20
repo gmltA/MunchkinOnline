@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web;
 using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Database;
+using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
 using Ninject;
 
@@ -21,6 +22,8 @@ namespace Munchkin_Online.Core
         public object ExtraData { get; set; }
         public string ClientGuid { get; set; }
 
+        HashSet<AsyncMessage> Messages = new HashSet<AsyncMessage>();
+
         private Boolean _isCompleted;
 
         public ClientState(HttpContext context, AsyncCallback callback, object data)
@@ -30,6 +33,33 @@ namespace Munchkin_Online.Core
             ExtraData = data;
             _isCompleted = false;
             User = ((UserIndentity)context.User.Identity).User;
+        }
+
+        public void SetUncomplete()
+        {
+            _isCompleted = false;
+        }
+
+        public void Push(AsyncMessage message)
+        {
+            if (IsCompleted)
+            {
+                Messages.Add(message);
+            }
+            else
+            {
+                CurrentContext.Response.Write(message.ToString());
+                CompleteRequest();
+            }
+        }
+
+        public void CompleteMessages()
+        {
+            var message = Messages.ElementAtOrDefault(0);
+            if (message != null)
+            {
+                Push(message);
+            }
         }
 
         public void CompleteRequest()
