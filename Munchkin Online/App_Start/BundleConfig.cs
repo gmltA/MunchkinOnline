@@ -23,6 +23,9 @@ namespace Munchkin_Online
             bundles.Add(new ScriptBundle("~/js/Friends").Include(
                         "~/Content/js/Friends.js"));
 
+            bundles.Add(new ScriptBundle("~/js/Lobby").Include(
+                        "~/Content/js/Lobby.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 

@@ -21,7 +21,12 @@ namespace Munchkin_Online.Core.Game
 
         public Player Winner { get; set; }
 
-        public BoardState BoardState { get; set; } 
+        public BoardState BoardState { get; set; }
+
+        public Match()
+        {
+            Players = new List<Player>();
+        }
     }
 
     public enum State

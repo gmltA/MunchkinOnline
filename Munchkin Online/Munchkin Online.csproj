@@ -195,6 +195,7 @@
     <Compile Include="Core\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
     <Compile Include="Core\Matchmaking\Matchmaking.cs" />
+    <Compile Include="Core\Matchmaking\MatchManager.cs" />
     <Compile Include="Core\Notifications\Notification.cs" />
     <Compile Include="Core\Notifications\NotificationManager.cs" />
     <Compile Include="Global.asax.cs">
@@ -229,6 +230,7 @@
     <Content Include="Content\js\Cards.js" />
     <Content Include="Content\js\Core.js" />
     <Content Include="Content\js\Friends.js" />
+    <Content Include="Content\js\Lobby.js" />
     <Content Include="Content\js\LongPool.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
