@@ -176,9 +176,21 @@ function setAuthBarState()
     }
 }
 
+function showPopup()
+{
+    $('#blackout').stop().fadeIn("fast");
+    $('#popup-container').stop().fadeIn("fast");
+    $(window).resize();
+}
+
+function closePopup()
+{
+    $('#blackout').stop().fadeOut("fast");
+    $('#popup-container').stop().fadeOut("fast");
+}
+
 $(document).ready(function ()
 {
-
     $.ajaxSetup({
         error: function (xhr, ajaxOptions, thrownError)
         {
@@ -193,5 +205,14 @@ $(document).ready(function ()
 
     $("HEADER .control").click(function () {
         toggleFriendsBar();
+    });
+
+    $(window).resize(function ()
+    {
+        $('#popup-container').css({
+            position: 'fixed',
+            left: ($(window).width() - $('#popup-container').outerWidth()) / 2,
+            top: ($(window).height() - $('#popup-container').outerHeight()) / 4
+        });
     });
 });

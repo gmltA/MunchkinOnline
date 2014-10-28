@@ -66,7 +66,7 @@ function updateFriendList()
     });
 }
 
-function showPopup()
+function showFriendSearch()
 {
     $.ajax({
         type: "POST",
@@ -74,18 +74,10 @@ function showPopup()
         cache: false,
         success: function (response)
         {
-            $("#friend-search-popup").html(response);
-            $('#blackout').stop().fadeIn("fast");
-            $('#friend-search-popup').stop().fadeIn("fast");
-            $(window).resize();
+            $("#popup-container").html(response);
+            showPopup();
         }
     });
-}
-
-function closePopup()
-{
-    $('#blackout').stop().fadeOut("fast");
-    $('#friend-search-popup').stop().fadeOut("fast");
 }
 
 $(document).ready(function () {
@@ -121,20 +113,11 @@ $(document).ready(function () {
     });
 
     $(".add-friend").click( function (){
-        showPopup();
+        showFriendSearch();
     });
 
     $("div.custom-menu #menu-remove-friend").live("click", function () {
         friendMgr.removeFriend($(this).parent().parent().data("id"), $(this).parent().parent().data("friend"));
         $("div.custom-menu").remove();
-    });
-
-    $(window).resize(function ()
-    {
-        $('#friend-search-popup').css({
-            position: 'fixed',
-            left: ($(window).width() - $('#friend-search-popup').outerWidth()) / 2,
-            top: ($(window).height() - $('#friend-search-popup').outerHeight()) / 4
-        });
     });
 });
