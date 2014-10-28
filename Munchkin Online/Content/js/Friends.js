@@ -16,9 +16,6 @@ FriendMgr.prototype.searchForFriends = function (nickname)
         success: function (response)
         {
             $("#friend-list-container").html(response);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(thrownError);
         }
     });
 }
@@ -36,10 +33,6 @@ FriendMgr.prototype.addFriend = function (id, name, callback)
             if (typeof (callback) == "function")
                 callback();
             updateFriendList();
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            alert(thrownError);
         }
     });
 }
@@ -54,10 +47,6 @@ FriendMgr.prototype.removeFriend = function (id, name) {
         {
             notificationMgr.addNotification("Friend " + name + " removed");
             updateFriendList();
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            alert(thrownError);
         }
     });
 }
@@ -73,10 +62,6 @@ function updateFriendList()
         success: function (response)
         {
             $("#friend-list").html(response);
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            alert(thrownError);
         }
     });
 }
@@ -93,10 +78,6 @@ function showPopup()
             $('#blackout').stop().fadeIn("fast");
             $('#friend-search-popup').stop().fadeIn("fast");
             $(window).resize();
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            alert(thrownError);
         }
     });
 }

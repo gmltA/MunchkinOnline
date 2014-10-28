@@ -29,9 +29,7 @@ NotificationMgr.prototype.init = function () {
     var url = '/NotificationsHandler.ashx';
     $.ajax({
         type: "POST",
-        url: url,
-        success: function (response) { },
-        error: function (xhr, ajaxOptions, thrownError) { }
+        url: url
     });
 }
 
@@ -52,9 +50,6 @@ NotificationMgr.prototype.demandNotifications = function () {
             response.forEach(function (val, index, array) {
                 notificationMgr.addNotification(val.Message, "error");
             });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert("error");
         }
     });
 }
@@ -183,6 +178,14 @@ function setAuthBarState()
 
 $(document).ready(function ()
 {
+
+    $.ajaxSetup({
+        error: function (xhr, ajaxOptions, thrownError)
+        {
+            notificationMgr.addNotification(thrownError, "error");
+        }
+    });
+
     setAuthBarState();
 
     notificationMgr.init();
