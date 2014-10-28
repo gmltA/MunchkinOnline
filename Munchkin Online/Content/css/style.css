@@ -323,7 +323,7 @@ FOOTER > .small
     font-size: 12px;
 }
 
-.notification
+.notification, .sticky-info
 {
     background: url(/Content/img/notification.png) 50% 100% no-repeat;
     width: 200px;
@@ -336,7 +336,12 @@ FOOTER > .small
     z-index: 9001;
 }
 
-.notification.anim
+.sticky-info
+{
+    left: 0;
+}
+
+.notification.anim, .sticky-info.anim
 {
     background: none;
     padding: 0;
@@ -346,34 +351,34 @@ FOOTER > .small
     letter-spacing: -4px;
 }
 
-.notification > .body
+.notification > .body, .sticky-info > .body
 {
     height: 100%;
     padding: 10px 0px 10px 60px;
 }
 
-.notification .body.warning
+.notification .body.warning, .sticky-info .body.warning
 {
     background: url("/Content/img/icon-warning.png") 0% 50% no-repeat;
 }
 
-.notification .body.error
+.notification .body.error, .sticky-info .body.error
 {
     background: url("/Content/img/icon-error.png") 0% 50% no-repeat;
 }
 
 
-.notification > .body > P
+.notification > .body > P, .sticky-info > .body > P
 {
     height: auto;
 }
 
-.notification.anim > .body
+.notification.anim > .body, .sticky-info.anim > .body
 {
     display: none;
 }
 
-.notification > .scroll
+.notification > .scroll, .sticky-info > .scroll
 {
     background: url(/Content/img/notification.png) no-repeat;
     width: 55px;
@@ -382,13 +387,13 @@ FOOTER > .small
     margin: 0;
 }
 
-.notification > .scroll.center
+.notification > .scroll.center, .sticky-info > .scroll.center
 {
     background-position: 50% 100%;
     width: 0;
 }
 
-.notification > .scroll.right
+.notification > .scroll.right, .sticky-info > .scroll.right
 {
     background-position: 100% 100%;
 }

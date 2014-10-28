@@ -13,6 +13,7 @@
 function NotificationMgr() {
     this.notificationQueue = [];
     this.isNotificationActive = false;
+    this.isStickyInfoActive = false;
 
     this.notificationWaitTime = 2000;
 }
@@ -62,8 +63,10 @@ NotificationMgr.prototype.demandNotifications = function () {
  * Adds notification to the queue.
  * Use it in code to init notification.
  */
-NotificationMgr.prototype.addNotification = function (message, type) {
+NotificationMgr.prototype.addNotification = function (message, type, isSticky) {
     type = type || "";
+    isSticky = isSticky || false;
+
     if ($.isNumeric(type))
     {
         if (type == 1)
@@ -73,6 +76,12 @@ NotificationMgr.prototype.addNotification = function (message, type) {
         else
             type = "";
     }
+
+    if (isSticky == true && this.isStickyInfoActive == false) {
+        this.showNotification([message, type], isSticky);
+        return;
+    }
+
     this.notificationQueue.push([message, type]);
     if (this.isNotificationActive == false)
         this.displayNextNotification();
@@ -82,30 +91,44 @@ NotificationMgr.prototype.addNotification = function (message, type) {
  * Displays notification.
  * Internal function. DO NOT USE IT DIRECTLY.
  */
-NotificationMgr.prototype.showNotification = function (messageObj) {
-    this.isNotificationActive = true;
-    $(".notification > .body").addClass(messageObj[1]);
-    $(".notification").addClass("anim");
-    $(".notification").animate({ bottom: '0' }, 250, "swing", function () {
-        $(".notification > .center").animate({ width: '190px' }, 500, "swing", function () {
-            $(".notification > .scroll").hide();
-            $(".notification").toggleClass("anim");
-            $(".notification > .body > P").text(messageObj[0]);
+NotificationMgr.prototype.showNotification = function (messageObj, isSticky)
+{
+    var opObject;
+    if (!isSticky) {
+        this.isNotificationActive = true;
+        opObject = $(".notification");
+    }
+    else {
+        this.isStickyInfoActive = true;
+        opObject = $(".sticky-info");
+    }
+    opObject.find(".body").addClass(messageObj[1]);
+    opObject.addClass("anim");
+    opObject.animate({ bottom: '0' }, 250, "swing", function () {
+        opObject.find(".center").animate({ width: '190px' }, 500, "swing", function () {
+            opObject.find(".scroll").hide();
+            opObject.toggleClass("anim");
+            opObject.find(".body > P").text(messageObj[0]);
         })
     });
-    var mgr = this;
-    setTimeout(function () {
-        $(".notification > .body").toggleClass(messageObj[1]);
-        $(".notification").toggleClass("anim");
-        $(".notification > .body > P").text("");
-        $(".notification > .scroll").show();
-        $(".notification > .center").animate({ width: '0px' }, 500, "swing", function () {
-            $(".notification").animate({ bottom: '-200px' }, 250, "swing", function () {
-                mgr.isNotificationActive = false;
-                mgr.displayNextNotification();
-            })
-        });
-    }, this.notificationWaitTime);
+    if (!isSticky) {
+        var mgr = this;
+        setTimeout(function ()
+        {
+            $(".notification > .body").toggleClass(messageObj[1]);
+            $(".notification").toggleClass("anim");
+            $(".notification > .body > P").text("");
+            $(".notification > .scroll").show();
+            $(".notification > .center").animate({ width: '0px' }, 500, "swing", function ()
+            {
+                $(".notification").animate({ bottom: '-200px' }, 250, "swing", function ()
+                {
+                    mgr.isNotificationActive = false;
+                    mgr.displayNextNotification();
+                })
+            });
+        }, this.notificationWaitTime);
+    }
 }
 
 /**
@@ -117,6 +140,14 @@ NotificationMgr.prototype.displayNextNotification = function () {
         return;
 
     this.showNotification(this.notificationQueue.pop());
+}
+
+NotificationMgr.prototype.updateStickyText = function (message)
+{
+    if (this.isStickyInfoActive == false)
+        return;
+
+    $(".sticky-info > .body > P").text(message);
 }
 
 var notificationMgr = new NotificationMgr();
