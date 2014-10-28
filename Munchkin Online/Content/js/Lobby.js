@@ -9,6 +9,9 @@ $(document).ready(function ()
 {
     $(".lobby-players .player").click(function ()
     {
+        if ($(this).hasClass("creator"))
+            return;
+
         if ($(this).hasClass("menu-on"))
         {
             var obj = this;

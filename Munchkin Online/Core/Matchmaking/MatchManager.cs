@@ -26,9 +26,12 @@ namespace Munchkin_Online.Core.Matchmaking
             return match;
         }
 
-        public Match FindMatchByParticipantID(Guid userId)
+        public Match FindMatchByParticipantID(Guid userId, bool isCreator = false)
         {
-            return Matches.Where(m => m.Players.Any(p => p.UserId == userId)).FirstOrDefault();
+            if (isCreator)
+                return Matches.Where(m => m.Creator.UserId == userId).FirstOrDefault();
+            else
+                return Matches.Where(m => m.Players.Any(p => p.UserId == userId)).FirstOrDefault();
         }
 
         public Match GetOrCreateNewMatchForUser(User user)
