@@ -12,10 +12,12 @@ namespace Munchkin_Online.Core.Matchmaking
         public static readonly MatchManager Instance = new MatchManager();
 
         public List<Match> Matches { get; set; }
+        public List<MatchInvite> MatchInvites { get; set; }
 
         MatchManager()
         {
             Matches = new List<Match>();
+            MatchInvites = new List<MatchInvite>();
         }
 
         public Match CreateMatch()
@@ -47,6 +49,17 @@ namespace Munchkin_Online.Core.Matchmaking
             }
 
             return match;
+        }
+
+        public MatchInvite InviteUserToLobby(User invitingUser, Guid userToInviteId)
+        {
+            Match lobby = MatchManager.Instance.FindMatchByParticipantID(invitingUser.Id, true);
+            if (lobby == null)
+                return null;
+
+            MatchInvite invite = new MatchInvite(lobby.Id, invitingUser, userToInviteId);
+            MatchManager.Instance.MatchInvites.Add(invite);
+            return invite;
         }
 
         public void UserLeaveFromMatch(Guid userId)

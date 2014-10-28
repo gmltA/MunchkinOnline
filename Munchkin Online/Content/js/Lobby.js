@@ -1,4 +1,13 @@
-﻿function closeMenuCallback(object)
+﻿function invitePlayerToLobby(playerId)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/InvitePlayer',
+        data: "playerGuid=" + playerId
+    });
+}
+
+function closeMenuCallback(object)
 {
     $(object).toggleClass("menu-on");
     $(object).find(".menu").remove();
@@ -30,5 +39,10 @@ $(document).ready(function ()
     {
         var obj = this;
         $(this).find(".menu").slideUp(200, function() { closeMenuCallback(obj) });
+    });
+
+    $(".lobby-players .player .menu P").live("click", function ()
+    {
+        invitePlayerToLobby($(this).data("id"));
     });
 });

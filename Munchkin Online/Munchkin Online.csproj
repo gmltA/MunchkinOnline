@@ -194,6 +194,7 @@
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
     <Compile Include="Core\ClientState.cs" />
     <Compile Include="Core\Longpool\Longpool.cs" />
+    <Compile Include="Core\Matchmaking\MatchInvite.cs" />
     <Compile Include="Core\Matchmaking\Matchmaking.cs" />
     <Compile Include="Core\Matchmaking\MatchManager.cs" />
     <Compile Include="Core\Notifications\Notification.cs" />
@@ -330,6 +331,7 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Lobby\Create.cshtml" />
     <Content Include="Views\Lobby\Index.cshtml" />
+    <Content Include="Views\Lobby\RenderInvite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

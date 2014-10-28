@@ -189,6 +189,46 @@ function closePopup()
     $('#popup-container').stop().fadeOut("fast");
 }
 
+function renderInvite(inviteId)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/RenderInvite',
+        data: "inviteGuid=" + inviteId,
+        success: function (response)
+        {
+            $("#popup-container").html(response);
+            showPopup();
+        }
+    });
+}
+
+function acceptInvite(inviteId)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/AcceptInvite',
+        data: "inviteGuid=" + inviteId,
+        success: function ()
+        {
+            window.location.href = "/Lobby/";
+        }
+    });
+}
+
+function denyInvite(inviteId)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/DenyInvite',
+        data: "inviteGuid=" + inviteId,
+        success: function ()
+        {
+            closePopup();
+        }
+    });
+}
+
 $(document).ready(function ()
 {
     $.ajaxSetup({
@@ -214,5 +254,17 @@ $(document).ready(function ()
             left: ($(window).width() - $('#popup-container').outerWidth()) / 2,
             top: ($(window).height() - $('#popup-container').outerHeight()) / 4
         });
+    });
+
+    $(".invite-container .button-accept").live("click", function ()
+    {
+        var inviteId = $(this).parent().attr("id");
+        acceptInvite(inviteId);
+    });
+
+    $(".invite-container .button-deny").live("click", function ()
+    {
+        var inviteId = $(this).parent().attr("id");
+        denyInvite(inviteId);
     });
 });

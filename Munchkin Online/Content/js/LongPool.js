@@ -14,7 +14,10 @@ LongPool.prototype = {
             {
                 self.processResponse(response)
             },
-            error: this.connectionRefused
+            error: function ()
+            {
+                self.connectionRefused();
+            }
         });
     },
     disconnect: function ()
@@ -36,7 +39,10 @@ LongPool.prototype = {
             {
                 self.processResponse(response)
             },
-            error: this.sendRequest
+            error: function ()
+            {
+                self.sendRequest();
+            }
         });
     },
     processFindGameResult: function (message)
@@ -51,6 +57,7 @@ LongPool.prototype = {
         transport = JSON.parse(transport);
         switch (transport.Type) {
             case 3: $(".find").html("<a onclick=\"accept()\">Принять</a>"); break;
+            case 4: renderInvite(transport.Data.Id); break;
             case 5: notificationMgr.addNotification(transport.Data); break;
             case 6: break;
             case 7: this.processFindGameResult(transport.Data); break;
@@ -63,13 +70,16 @@ LongPool.prototype = {
         var url = '/LongPoolHandler.ashx?cmd=MatchConfirmation';
         var self = this;
         $.ajax({
+            url: url,
             type: "POST",
             success: function (response)
             {
                 self.processResponse(response)
             },
-            error: this.sendRequest,
-            url: url
+            error: function()
+            {
+                self.sendRequest();
+            }
         });
     },
     connectionRefused: function ()
@@ -94,6 +104,7 @@ $(document).ready(function ()
     if (typeof currAction === 'undefined') {
         currAction = '';
     }
+    longPool.connect();
 });
 
 $(window).unload(function () {

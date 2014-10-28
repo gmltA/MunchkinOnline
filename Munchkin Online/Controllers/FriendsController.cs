@@ -27,7 +27,7 @@ namespace Munchkin_Online.Controllers
 
         [HttpPost]
         public ActionResult FriendPlateList(string name)
-        {    
+        {
             return PartialView(Repository.GetPotentialFriendListByNickname(name, CurrentUser.Instance.Current));
         }
 

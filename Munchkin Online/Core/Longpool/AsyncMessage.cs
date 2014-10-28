@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Munchkin_Online.Core.Matchmaking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,12 @@ namespace Munchkin_Online.Core.Longpool
         {
             Type = t;
             this.Data = Data;
+        }
+
+        public AsyncMessage(MatchInvite invite)
+        {
+            Type = MessageType.Invite;
+            Data = invite;
         }
 
         public override string ToString()
