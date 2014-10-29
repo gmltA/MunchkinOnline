@@ -592,6 +592,16 @@ FOOTER > .small
     box-shadow: 0 0 10px black, inset 0 0 20px black;
 }
 
+.button.disabled, .button:hover.disabled, .button:active.disabled
+{
+    background-color: gray;
+    box-shadow: 0 0 10px gray;
+    text-shadow: 1px 1px 1px black;
+    border: 1px solid #5F5F5F;
+    color: rgb(184, 184, 184);
+    cursor: default;
+}
+
 .card
 {
     height: 270px;

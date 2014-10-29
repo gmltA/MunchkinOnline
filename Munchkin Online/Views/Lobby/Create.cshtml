@@ -65,7 +65,14 @@
 
 <div class="lobby-control-container">
     <a href="/lobby/leave" class="button">Leave lobby</a>
-    <a href="/lobby/start" class="button">Start game</a>
+    @if (Model.Players.Count < 4)
+    {
+        <div class="button disabled">Start game</div>
+    }
+    else
+    {
+        <a href="/lobby/start" class="button">Start game</a>
+    }
 </div>
 
 @Scripts.Render("~/js/Lobby")
