@@ -3,6 +3,7 @@ using Munchkin_Online.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Web;
 
 namespace Munchkin_Online.Core.Matchmaking
@@ -14,10 +15,31 @@ namespace Munchkin_Online.Core.Matchmaking
         public List<Match> Matches { get; set; }
         public List<MatchInvite> MatchInvites { get; set; }
 
+        public const int INVITE_CLEANUP_INTERVAL = 120000;
+        public Timer InviteCleanupTimer { get; set; }
+
         MatchManager()
         {
             Matches = new List<Match>();
             MatchInvites = new List<MatchInvite>();
+
+            InviteCleanupTimer = new Timer(INVITE_CLEANUP_INTERVAL);
+            ResetTimer();
+        }
+
+        void ResetTimer()
+        {
+            InviteCleanupTimer.Stop();
+            InviteCleanupTimer.Close();
+            InviteCleanupTimer = new Timer(INVITE_CLEANUP_INTERVAL);
+            InviteCleanupTimer.AutoReset = true;
+            InviteCleanupTimer.Elapsed += (x, y) => CleanupInvites();
+            InviteCleanupTimer.Start();
+        }
+
+        void CleanupInvites()
+        {
+            MatchInvites.RemoveAll(i => i.InviteDate.AddMilliseconds(INVITE_CLEANUP_INTERVAL) < DateTime.Now);
         }
 
         public Match CreateMatch()
@@ -83,13 +105,21 @@ namespace Munchkin_Online.Core.Matchmaking
             return result;
         }
 
+        public void CleanupInvitesForUserId(Guid invitinguserId)
+        {
+            MatchInvites.RemoveAll(i => i.InvitingUser.Id == invitinguserId);
+        }
+
         public void UserLeaveFromMatch(Guid userId)
         {
             Match match = FindMatchByParticipantID(userId);
             if (match != null)
             {
                 if (match.Creator.UserId == userId)
+                {
+                    CleanupInvitesForUserId(userId);
                     Matches.Remove(match);
+                }
                 else
                     match.Players.RemoveAll(p => p.UserId == userId);
             }

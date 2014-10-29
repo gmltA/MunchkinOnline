@@ -205,6 +205,7 @@ function renderInvite(inviteId)
 
 function acceptInvite(inviteId)
 {
+    closePopup();
     $.ajax({
         type: "POST",
         url: '/Lobby/AcceptInvite',
@@ -218,14 +219,11 @@ function acceptInvite(inviteId)
 
 function denyInvite(inviteId)
 {
+    closePopup();
     $.ajax({
         type: "POST",
         url: '/Lobby/DenyInvite',
-        data: "inviteGuid=" + inviteId,
-        success: function ()
-        {
-            closePopup();
-        }
+        data: "inviteGuid=" + inviteId
     });
 }
 
