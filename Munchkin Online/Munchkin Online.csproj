@@ -332,6 +332,7 @@
     <Content Include="Views\Lobby\Create.cshtml" />
     <Content Include="Views\Lobby\Index.cshtml" />
     <Content Include="Views\Lobby\RenderInvite.cshtml" />
+    <Content Include="Views\Lobby\FriendToInviteList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

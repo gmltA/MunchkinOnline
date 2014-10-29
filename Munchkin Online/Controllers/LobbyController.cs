@@ -81,6 +81,12 @@ namespace Munchkin_Online.Controllers
             return PartialView(invite);
         }
 
+        public ActionResult FriendToInviteList()
+        {
+            var excludeFromInviteList = MatchManager.Instance.GetExcludeFromInviteUserIdList(CurrentUser.Instance.Current.Id);
+            return PartialView(CurrentUser.Instance.Current.Friends.Where(f => f.State != Munchkin_Online.Models.State.Offline && !excludeFromInviteList.Contains(f.Id)).ToList());
+        }
+
         [HttpPost]
         public ContentResult AcceptInvite(Guid? inviteGuid)
         {

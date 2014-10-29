@@ -14,6 +14,22 @@ function closeMenuCallback(object)
     $('#blackout').stop().fadeOut("fast");
 }
 
+function loadFriendToInviteList(container)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/FriendToInviteList',
+        cache: false,
+        success: function (response)
+        {
+            console.log(response);
+            $(container).append(response);
+            $(container).toggleClass("menu-on");
+            $(container).find(".menu").slideDown(200);
+        }
+    });
+}
+
 $(document).ready(function ()
 {
     $(".lobby-players .player").click(function ()
@@ -28,9 +44,7 @@ $(document).ready(function ()
         }
         else
         {
-            $(this).append('<div class="menu" hidden><p>Lalka</p><p>Tralka</p><p>Lalka</p><p>Tralka</p></div>');
-            $(this).toggleClass("menu-on");
-            $(this).find(".menu").slideDown(200);
+            loadFriendToInviteList(this);
             $('#blackout').stop().fadeIn("fast");
         }
     });

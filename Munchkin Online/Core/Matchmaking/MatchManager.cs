@@ -62,6 +62,27 @@ namespace Munchkin_Online.Core.Matchmaking
             return invite;
         }
 
+        public List<Guid> GetInvitedUsersIdByUserId(Guid invitingUserId)
+        {
+            return MatchInvites.Where(i => i.InvitingUser.Id == invitingUserId).Select(u => u.UserToInviteId).ToList();
+        }
+
+        public List<Guid> GetExcludeFromInviteUserIdList(Guid invitingUserId)
+        {
+            Match lobby = MatchManager.Instance.FindMatchByParticipantID(invitingUserId, true);
+            if (lobby == null)
+                return new List<Guid>();
+
+            var alreadyInLobbyUserIdList = lobby.Players.Select(u => u.UserId).ToList();
+            var alreadyInvitedUsersIdList = MatchManager.Instance.GetInvitedUsersIdByUserId(invitingUserId);
+
+            List<Guid> result = new List<Guid>();
+            result.AddRange(alreadyInLobbyUserIdList);
+            result.AddRange(alreadyInvitedUsersIdList);
+
+            return result;
+        }
+
         public void UserLeaveFromMatch(Guid userId)
         {
             Match match = FindMatchByParticipantID(userId);

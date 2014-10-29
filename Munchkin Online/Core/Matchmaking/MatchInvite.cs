@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace Munchkin_Online.Core.Matchmaking
 {
@@ -12,6 +13,8 @@ namespace Munchkin_Online.Core.Matchmaking
 
         public Guid MatchId { get; private set; }
         public Guid UserToInviteId { get; private set; }
+
+        [ScriptIgnore]
         public User InvitingUser { get; private set; }
 
         public DateTime InviteDate { get; private set; }
