@@ -18,7 +18,7 @@
             <td>
                 @if (Model.Players.Count > 1)
                 {
-                    <div class="player">
+                    <div class="player" data-id="@Model.Players[1].UserId">
                         <p>@Model.Players[1].ToUser().Nickname</p>
                     </div>
                 }
@@ -34,7 +34,7 @@
             <td>
                 @if (Model.Players.Count > 2)
                 {
-                    <div class="player">
+                    <div class="player" data-id="@Model.Players[2].UserId">
                         <p>@Model.Players[2].ToUser().Nickname</p>
                     </div>
                 }
@@ -48,7 +48,7 @@
             <td>
                 @if (Model.Players.Count > 3)
                 {
-                    <div class="player">
+                    <div class="player" data-id="@Model.Players[3].UserId">
                         <p>@Model.Players[3].ToUser().Nickname</p>
                     </div>
                 }

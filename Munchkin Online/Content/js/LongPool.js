@@ -62,6 +62,7 @@ LongPool.prototype = {
             case 6: break;
             case 7: this.processFindGameResult(transport.Data); break;
             case 8: return;
+            case 9: if (typeof lobbyUpdated != "undefined") lobbyUpdated(); break;
         }
         this.sendRequest();
     },

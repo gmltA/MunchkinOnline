@@ -69,6 +69,25 @@ namespace Munchkin_Online.Controllers
             }
         }
 
+        [HttpPost]
+        public ContentResult KickPlayer(Guid? playerGuid)
+        {
+            if (!playerGuid.HasValue)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Content("Wrong user Guid", MediaTypeNames.Text.Plain);
+            }
+
+            if (!MatchManager.Instance.KickUserFromLobby(CurrentUser.Instance.Current, playerGuid.Value))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Content("Wrong user Guid", MediaTypeNames.Text.Plain);
+            }
+
+            return Content("success");
+        }
+
+        [HttpPost]
         public ActionResult RenderInvite(Guid? inviteGuid)
         {
             if (!inviteGuid.HasValue)
@@ -81,10 +100,28 @@ namespace Munchkin_Online.Controllers
             return PartialView(invite);
         }
 
-        public ActionResult FriendToInviteList()
+        public ActionResult SlotContextMenu(int? emptySlot)
         {
-            var excludeFromInviteList = MatchManager.Instance.GetExcludeFromInviteUserIdList(CurrentUser.Instance.Current.Id);
-            return PartialView(CurrentUser.Instance.Current.Friends.Where(f => f.State != Munchkin_Online.Models.State.Offline && !excludeFromInviteList.Contains(f.Id)).ToList());
+            ViewData["EmptySlot"] = false;
+            if (emptySlot.HasValue)
+            {
+                if (emptySlot.Value == 1)
+                    ViewData["EmptySlot"] = true;
+            }
+            else
+                ViewData["EmptySlot"] = true;
+            Match lobby = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
+            if (lobby.Creator.UserId != CurrentUser.Instance.Current.Id)
+            {
+                ViewData["ForCreator"] = false;
+                return PartialView(new List<Munchkin_Online.Models.User>());
+            }
+            else
+            {
+                ViewData["ForCreator"] = true;
+                var excludeFromInviteList = MatchManager.Instance.GetExcludeFromInviteUserIdList(CurrentUser.Instance.Current.Id);
+                return PartialView(CurrentUser.Instance.Current.Friends.Where(f => f.State != Munchkin_Online.Models.State.Offline && !excludeFromInviteList.Contains(f.Id)).ToList());
+            }
         }
 
         [HttpPost]

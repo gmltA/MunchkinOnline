@@ -1,4 +1,5 @@
 ﻿using Munchkin_Online.Core.Game;
+using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,16 @@ namespace Munchkin_Online.Core.Matchmaking
             return invite;
         }
 
+        public bool KickUserFromLobby(User invitingUser, Guid userToInviteId)
+        {
+            Match lobby = MatchManager.Instance.FindMatchByParticipantID(invitingUser.Id, true);
+            if (lobby == null)
+                return false;
+
+            UserLeaveFromMatch(userToInviteId);
+            return true;
+        }
+
         public List<Guid> GetInvitedUsersIdByUserId(Guid invitingUserId)
         {
             return MatchInvites.Where(i => i.InvitingUser.Id == invitingUserId).Select(u => u.UserToInviteId).ToList();
@@ -115,6 +126,7 @@ namespace Munchkin_Online.Core.Matchmaking
             Match match = FindMatchByParticipantID(userId);
             if (match != null)
             {
+                match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate));
                 if (match.Creator.UserId == userId)
                 {
                     CleanupInvitesForUserId(userId);
@@ -142,6 +154,8 @@ namespace Munchkin_Online.Core.Matchmaking
                 throw new LobbyIsFullException();
 
             Matchmaking.Instance.Players.RemoveAll(p => p.UserId == user.Id);
+
+            match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate));
             match.Players.Add(new Player(user));
         }
     }

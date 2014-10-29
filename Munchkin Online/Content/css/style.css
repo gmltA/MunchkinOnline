@@ -747,6 +747,7 @@ HR.profile-divider
     -moz-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
     -ms-transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
     transition: opacity 0.1s ease, border-radius 0.1s ease, box-shadow 0.1s ease;
+    position: relative;
 }
 
 .lobby-players .player P
@@ -774,7 +775,12 @@ HR.profile-divider
     text-shadow: 0 0 10px;
 }
 
-.lobby-players .player.none.menu-on
+.lobby-players .player.menu-on
+{
+    z-index: 9003;
+}
+
+.lobby-players .player.menu-on
 {
     box-shadow: 0 0 10px black;
     border-radius: 5px 5px 0 0;
@@ -782,8 +788,6 @@ HR.profile-divider
     box-shadow: 0 12px 28px -7px rgba(0,0,0,0.7),
         inset 0 -3px 30px -10px rgba(0,0,0,0.5),
         inset 0 5px 27px 8px rgb(210, 185, 161);
-    z-index: 9003;
-    position: relative;
 }
 
 .lobby-players .player .menu

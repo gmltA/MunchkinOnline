@@ -7,6 +7,15 @@
     });
 }
 
+function kickPlayerFromLobby(playerId)
+{
+    $.ajax({
+        type: "POST",
+        url: '/Lobby/KickPlayer',
+        data: "playerGuid=" + playerId
+    });
+}
+
 function closeMenuCallback(object)
 {
     $(object).toggleClass("menu-on");
@@ -14,20 +23,30 @@ function closeMenuCallback(object)
     $('#blackout').stop().fadeOut("fast");
 }
 
-function loadFriendToInviteList(container)
+function loadSlotContextMenu(container)
 {
+    var emptySlot = 1;
+    if ($(container).data("id") != undefined) {
+        emptySlot = 0;
+    }
+
     $.ajax({
         type: "POST",
-        url: '/Lobby/FriendToInviteList',
+        url: '/Lobby/SlotContextMenu',
+        data: 'emptySlot=' + emptySlot,
         cache: false,
         success: function (response)
         {
-            console.log(response);
             $(container).append(response);
             $(container).toggleClass("menu-on");
             $(container).find(".menu").slideDown(200);
         }
     });
+}
+
+function lobbyUpdated()
+{
+    window.location.reload();
 }
 
 $(document).ready(function ()
@@ -44,7 +63,7 @@ $(document).ready(function ()
         }
         else
         {
-            loadFriendToInviteList(this);
+            loadSlotContextMenu(this);
             $('#blackout').stop().fadeIn("fast");
         }
     });
@@ -57,6 +76,9 @@ $(document).ready(function ()
 
     $(".lobby-players .player .menu P").live("click", function ()
     {
-        invitePlayerToLobby($(this).data("id"));
+        if ($(this).hasClass("button-kick"))
+            kickPlayerFromLobby($(this).parent().parent().data("id"));
+        else
+            invitePlayerToLobby($(this).data("id"));
     });
 });
