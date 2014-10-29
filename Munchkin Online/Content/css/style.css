@@ -561,15 +561,35 @@ FOOTER > .small
     margin: 100px 0;
 }
 
-.invite-container .button-accept, .invite-container .button-deny
+.button
 {
     cursor: pointer;
     display: inline-block;
     padding: 5px;
     border-radius: 5px;
-    background-color: white;
     width: 200px;
-    border: 1px solid #630
+    background-color: rgb(117, 77, 23);
+    border: 1px solid #630;
+    color: white;
+    text-shadow: 1px 1px 0px black;
+    box-shadow: none;
+
+    -webkit-transition: box-shadow 0.1s ease, text-shadow 0.1s ease;
+    -o-transition: box-shadow 0.1s ease, text-shadow 0.1s ease;
+    -moz-transition: box-shadow 0.1s ease, text-shadow 0.1s ease;
+    -ms-transition: box-shadow 0.1s ease, text-shadow 0.1s ease;
+    transition: box-shadow 0.1s ease, text-shadow 0.1s ease;
+}
+
+.button:hover
+{
+    box-shadow: 0 0 10px black;
+    text-shadow: 1px 1px 0px black, 0 0 15px white;
+}
+
+.button:active
+{
+    box-shadow: 0 0 10px black, inset 0 0 20px black;
 }
 
 .card
@@ -821,4 +841,10 @@ HR.profile-divider
 {
     box-shadow: inset 0 0 10px -2px;
     background-color: rgba(0,0,0,0.05);
+}
+
+.lobby-control-container
+{
+    text-align: center;
+    margin-top: 20px;
 }
