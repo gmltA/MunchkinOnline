@@ -49,8 +49,12 @@ namespace Munchkin_Online.Core.Matchmaking
         public void OnNewSearcher(object sender, NewFinderArgs e)
         {
             Player player = new Player(sender as User);
+            if (MatchManager.Instance.FindMatchByParticipantID(player.UserId) != null)
+                return;
+
             if (Players.Where(x => x.UserId == player.UserId).Count() != 0)
                 return;
+
             Players.Add(player);
             foreach (var p in Players)
                 Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.QueueStatus, Players.Count));
