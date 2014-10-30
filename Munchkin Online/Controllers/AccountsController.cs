@@ -38,8 +38,9 @@ namespace Munchkin_Online.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if(CurrentUser == null) return View();
-                else
+            if (CurrentUser == null)
+                return View();
+            else
                 return RedirectToAction("Index", "Home");
         }
 

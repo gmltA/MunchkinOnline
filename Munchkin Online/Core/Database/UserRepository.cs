@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Munchkin_Online.Core.Database
 {
-    public class UserRepository
+    public class UserRepository : IDisposable
     {
         MainContext DB = new MainContext();
 
@@ -99,7 +99,15 @@ namespace Munchkin_Online.Core.Database
         {
             DB.SaveChanges();
         }
-    }
+
+        void IDisposable.Dispose()
+        {
+            IDisposable d = DB as IDisposable;
+            if (d != null)
+                d.Dispose();
+            GC.SuppressFinalize(this);
+        }
+}
 
     public class UserFriendData
     {
