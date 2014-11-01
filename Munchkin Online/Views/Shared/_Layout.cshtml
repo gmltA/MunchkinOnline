@@ -19,7 +19,7 @@
         <div class="wrapper">
             <header>
                 <h1>Munchkin!</h1>
-                <div class="moto">Убивай гусей<br>подставляй друзей!</div>
+                <div class="moto">@Html.Raw(MotoImporter.GetMoto())</div>
                 <div class="auth-bar-container">
                     <div class="auth-bar">
                         @if(!Request.IsAuthenticated)

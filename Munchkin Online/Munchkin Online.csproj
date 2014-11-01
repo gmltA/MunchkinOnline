@@ -197,6 +197,7 @@
     <Compile Include="Core\Matchmaking\MatchInvite.cs" />
     <Compile Include="Core\Matchmaking\Matchmaking.cs" />
     <Compile Include="Core\Matchmaking\MatchManager.cs" />
+    <Compile Include="Core\MotoImporter.cs" />
     <Compile Include="Core\Notifications\Notification.cs" />
     <Compile Include="Core\Notifications\NotificationManager.cs" />
     <Compile Include="Global.asax.cs">

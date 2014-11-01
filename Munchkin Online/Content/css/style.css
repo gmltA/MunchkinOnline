@@ -64,6 +64,7 @@ HEADER > .moto
     margin-right: 100px;
     vertical-align: middle;
     text-shadow: 0 0 10px black;
+    width: 356px;
 }
 
 HEADER > .auth-bar-container
