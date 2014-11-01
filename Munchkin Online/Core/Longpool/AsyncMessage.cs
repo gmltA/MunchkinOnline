@@ -46,6 +46,7 @@ namespace Munchkin_Online.Core.Longpool
         NoConfirm,
         QueueStatus,
         StopPooling,
-        LobbyUpdate
+        LobbyUpdate,
+        GameStarted
     }
 }

@@ -66,6 +66,7 @@ namespace Munchkin_Online.Core.Matchmaking
             {
                 match = CreateMatch();
 
+                match.State = Munchkin_Online.Core.Game.State.Lobby;
                 match.Creator = new Player(user);
                 match.Players.Add(new Player(user));
                 Matches.Add(match);
@@ -126,14 +127,17 @@ namespace Munchkin_Online.Core.Matchmaking
             Match match = FindMatchByParticipantID(userId);
             if (match != null)
             {
-                match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate));
                 if (match.Creator.UserId == userId)
                 {
+                    match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate), true);
                     CleanupInvitesForUserId(userId);
                     Matches.Remove(match);
                 }
                 else
+                {
                     match.Players.RemoveAll(p => p.UserId == userId);
+                    match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate));
+                }
             }
         }
 
@@ -157,6 +161,16 @@ namespace Munchkin_Online.Core.Matchmaking
 
             match.SendMessageToPlayers(new AsyncMessage(MessageType.LobbyUpdate));
             match.Players.Add(new Player(user));
+        }
+
+        public bool UserStartsMatch(Guid userId)
+        {
+            Match match = MatchManager.Instance.FindMatchByParticipantID(userId, true);
+            if (match == null)
+                return false;
+
+            match.Start();
+            return true;
         }
     }
 
