@@ -2,6 +2,7 @@
 using Munchkin_Online.Core.Game;
 using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Core.Matchmaking;
+using Munchkin_Online.Core.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +111,7 @@ namespace Munchkin_Online.Controllers
             }
             else
                 ViewData["EmptySlot"] = true;
+
             Match lobby = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
             if (lobby.Creator.UserId != CurrentUser.Instance.Current.Id)
             {
@@ -176,6 +178,42 @@ namespace Munchkin_Online.Controllers
             MatchManager.Instance.MatchInvites.Remove(invite);
 
             return Content("success");
+        }
+
+        public ActionResult Start()
+        {
+            try
+            {
+                try
+                {
+                    if (MatchManager.Instance.UserStartsMatch(CurrentUser.Instance.Current.Id))
+                        return RedirectToAction("Index", "Game");
+                    else
+                    {
+                        if (Request.UrlReferrer != null)
+                            return Redirect(Request.UrlReferrer.AbsolutePath);
+                        else
+                            return RedirectToAction("Index", "Home");
+                    }
+                }
+                catch (NotEnoughPlayersException)
+                {
+                    NotificationManager.Instance.Add("Can't start match: not enough players!", NotificationType.Error);
+                    throw;
+                }
+                catch (WrongMatchStateException)
+                {
+                    NotificationManager.Instance.Add("Can't start match: wrong match state (already started, etc)!", NotificationType.Error);
+                    throw;
+                }
+            }
+            catch (MatchStartException)
+            {
+                if (Request.UrlReferrer != null)
+                    return Redirect(Request.UrlReferrer.AbsolutePath);
+                else
+                    return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

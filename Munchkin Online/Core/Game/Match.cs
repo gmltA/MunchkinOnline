@@ -11,7 +11,6 @@ namespace Munchkin_Online.Core.Game
     {
         public event EventHandler MatchEnded = delegate { };
 
-
         public Guid Id { get; set; }
 
         public Player Creator { get; set; }
@@ -26,22 +25,44 @@ namespace Munchkin_Online.Core.Game
 
         public Match()
         {
+            State = State.Created;
             Players = new List<Player>();
         }
 
-        public void SendMessageToPlayers(AsyncMessage message)
+        public void Start()
+        {
+            if (State != State.Lobby && State != State.Created)
+                throw new WrongMatchStateException();
+
+            // todo: define somewhere
+            if (Players.Count != 4)
+                throw new NotEnoughPlayersException();
+
+            State = State.InGame;
+
+            SendMessageToPlayers(new AsyncMessage(MessageType.GameStarted));
+        }
+
+        public void SendMessageToPlayers(AsyncMessage message, bool exceptCreator = false)
         {
             foreach (Player player in Players)
             {
-                Longpool.Longpool.Instance.PushMessageToUser(player.UserId, message);
+                if (!exceptCreator || (exceptCreator && player.UserId != Creator.UserId))
+                    Longpool.Longpool.Instance.PushMessageToUser(player.UserId, message);
             }
         }
     }
 
     public enum State
     {
+        Created,
         Lobby,
         InGame,
         Ended
     }
+
+    public class MatchStartException : Exception { }
+
+    public class WrongMatchStateException : MatchStartException { }
+    public class NotEnoughPlayersException : MatchStartException { }
 }

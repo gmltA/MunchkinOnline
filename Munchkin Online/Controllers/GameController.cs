@@ -1,4 +1,5 @@
 ﻿using Munchkin_Online.Core.Auth;
+using Munchkin_Online.Core.Game;
 using Munchkin_Online.Core.Matchmaking;
 using Munchkin_Online.Core.Notifications;
 using System;
@@ -14,6 +15,12 @@ namespace Munchkin_Online.Controllers
     {
         public ActionResult Index()
         {
+            Match match = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
+            if (match == null || match.State != State.InGame)
+            {
+                NotificationManager.Instance.Add("You can't access game field while not in game", NotificationType.Error);
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
