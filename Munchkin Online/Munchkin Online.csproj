@@ -326,13 +326,13 @@
     <Content Include="Views\Game\Find.cshtml" />
     <Content Include="Views\Friends\FriendPlateList.cshtml" />
     <Content Include="Views\Friends\Search.cshtml" />
-    <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Friends\List.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Lobby\Create.cshtml" />
     <Content Include="Views\Lobby\Index.cshtml" />
     <Content Include="Views\Lobby\RenderInvite.cshtml" />
     <Content Include="Views\Lobby\SlotContextMenu.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
