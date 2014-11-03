@@ -67,6 +67,7 @@ BODY
     height: 130px;
     width: 300px;
     margin: auto;
+    border-radius: 10px;
 }
 
 .player-hand.bottom .stack
@@ -103,7 +104,7 @@ BODY
 .card-mgr.small .card
 {
     height: 61px;
-    width: 40px;
+    width: 39px;
     border-radius: 5px;
 }
 
@@ -125,6 +126,11 @@ BODY
 
     border-radius: 10px;
     border: 1px solid;
+}
+
+.draggable-hover
+{
+    box-shadow: 0 0 6px 4px rgb(145, 255, 47);
 }
 
 .card-mgr .card-slot SPAN

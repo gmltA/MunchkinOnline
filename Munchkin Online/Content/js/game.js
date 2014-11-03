@@ -68,20 +68,45 @@ $(document).ready(function () {
         stop: function ()
         {
             $(this).attr("style", "");
-            if ($(this).parent().hasClass("stack"))
-                updateStack($(this).parent());
         },
-        revert: "invalid"
+        revert: "invalid",
+        addClasses: false
     });
 
     $(".card-mgr:not(.small) .card-slot").droppable({
         drop: function (event, ui)
         {
             var droppedCard = ui.draggable;
+            var stackParent = undefined;
+            if ($(droppedCard).parent().hasClass("stack"))
+                stackParent = $(droppedCard).parent();
+
+            $(this).append(droppedCard);
+
+            if (stackParent != undefined)
+                updateStack(stackParent);
+
+            $(droppedCard).attr("style", "");
+        },
+        accept: function()
+        {
+            if ($(this).children(".card").length != 0)
+                return false;
+            return true;
+        },
+        hoverClass: "draggable-hover",
+        addClasses: false
+    });
+
+    $(".stack").droppable({
+        drop: function (event, ui)
+        {
+            var droppedCard = ui.draggable;
             $(this).append(droppedCard);
 
             $(droppedCard).attr("style", "");
-            $(this).droppable({ disabled: true });
-        }
+        },
+        hoverClass: "draggable-hover",
+        addClasses: false
     });
 });
