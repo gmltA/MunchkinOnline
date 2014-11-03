@@ -26,19 +26,6 @@ function cardHover(card, stack, cardIndex)
     });
 }
 
-function showPopup()
-{
-    $('#blackout').stop().fadeIn("fast");
-    $('#popup-container').stop().fadeIn("fast");
-    $(window).resize();
-}
-
-function closePopup()
-{
-    $('#blackout').stop().fadeOut("fast");
-    $('#popup-container').stop().fadeOut("fast");
-}
-
 function setPopupCardBG(card)
 {
     var bgImg = $(card).css("background-image");
@@ -60,7 +47,7 @@ $(document).ready(function () {
     });
 
     $(".card").on({
-        click: function ()
+        dblclick: function ()
         {
             setPopupCardBG(this);
             showPopup();
@@ -73,5 +60,28 @@ $(document).ready(function () {
         closePopup();
     });
     
-    //$(".card").draggable({ revert:"invalid" });
+    $(".card").draggable({
+        start: function ()
+        {
+            $(this).css("transition", "none");
+        },
+        stop: function ()
+        {
+            $(this).attr("style", "");
+            if ($(this).parent().hasClass("stack"))
+                updateStack($(this).parent());
+        },
+        revert: "invalid"
+    });
+
+    $(".card-mgr:not(.small) .card-slot").droppable({
+        drop: function (event, ui)
+        {
+            var droppedCard = ui.draggable;
+            $(this).append(droppedCard);
+
+            $(droppedCard).attr("style", "");
+            $(this).droppable({ disabled: true });
+        }
+    });
 });

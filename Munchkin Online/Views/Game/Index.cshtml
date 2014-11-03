@@ -8,9 +8,9 @@
     <head>
         <link href="/Content/css/game.css" rel="stylesheet">
         <link href="/Content/css/jquery-ui.structure.css" rel="stylesheet">
-        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="/Content/js/jquery-ui.min.js"></script>
-        <script src="/Content/js/game.js"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/game")
         <meta charset="utf-8">
     </head>
     <body>
@@ -72,50 +72,38 @@
                     <div class="race-group">
                         <div class="card-slot race-combo">
                             <span>Полукровка</span>
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot race-one">
                             <span>Первая раса</span>
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot race-two">
                             <span>Вторая раса</span>
-                            <div class="card door"></div>
                         </div>
                     </div>
                     <div class="class-group">
                         <div class="card-slot class-combo">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot class-one">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot class-two">
-                            <div class="card door"></div>
                         </div>
                     </div>
                 </div>
                 <div class="line-two">
                     <div class="items-group">
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                     </div>
                     <div class="weapons-group">
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                         <div class="card-slot">
-                            <div class="card door"></div>
                         </div>
                     </div>
                 </div>
@@ -124,62 +112,122 @@
         <div class="field">
             <div class="player top">
                 <div class="card-mgr small">
+                    <div>
+                        <div class="race-group">
+                            <div class="card-slot race-combo">
+                            </div>
+                            <div class="card-slot race-one">
+                            </div>
+                            <div class="card-slot race-two">
+                            </div>
+                        </div>
+                        <div class="class-group">
+                            <div class="card-slot class-combo">
+                            </div>
+                            <div class="card-slot class-one">
+                            </div>
+                            <div class="card-slot class-two">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-two">
+                        <div class="items-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                        </div>
+                        <div class="weapons-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="player left">
                 <div class="card-mgr small">
                     <div>
-                    <div class="race-group">
-                        <div class="card-slot race-combo">
-                            <div class="card door"></div>
+                        <div class="race-group">
+                            <div class="card-slot race-combo">
+                            </div>
+                            <div class="card-slot race-one">
+                            </div>
+                            <div class="card-slot race-two">
+                            </div>
                         </div>
-                        <div class="card-slot race-one">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot race-two">
-                            <div class="card door"></div>
-                        </div>
-                    </div>
-                    <div class="class-group">
-                        <div class="card-slot class-combo">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot class-one">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot class-two">
-                            <div class="card door"></div>
+                        <div class="class-group">
+                            <div class="card-slot class-combo">
+                            </div>
+                            <div class="card-slot class-one">
+                            </div>
+                            <div class="card-slot class-two">
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div class="line-two">
-                    <div class="items-group">
-                        <div class="card-slot">
-                            <div class="card door"></div>
+                        <div class="items-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
                         </div>
-                        <div class="card-slot">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot">
-                            <div class="card door"></div>
-                        </div>
-                    </div>
-                    <div class="weapons-group">
-                        <div class="card-slot">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot">
-                            <div class="card door"></div>
-                        </div>
-                        <div class="card-slot">
-                            <div class="card door"></div>
+                        <div class="weapons-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="player right">
                 <div class="card-mgr small">
+                    <div>
+                        <div class="race-group">
+                            <div class="card-slot race-combo">
+                            </div>
+                            <div class="card-slot race-one">
+                            </div>
+                            <div class="card-slot race-two">
+                            </div>
+                        </div>
+                        <div class="class-group">
+                            <div class="card-slot class-combo">
+                            </div>
+                            <div class="card-slot class-one">
+                            </div>
+                            <div class="card-slot class-two">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line-two">
+                        <div class="items-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                        </div>
+                        <div class="weapons-group">
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                            <div class="card-slot">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
