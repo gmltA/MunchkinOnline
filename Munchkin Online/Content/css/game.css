@@ -1,0 +1,251 @@
+HTML, BODY { height: 100%; margin: 0; padding: 0; }
+
+BODY
+{
+    background: radial-gradient(ellipse at center,  rgba(0,0,0,0) 20%,rgba(0,0,0,1) 100%), url(/Content/img/game-bg.jpg) no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.player-hand
+{
+    width: 600px;
+    height: 130px;
+    position: fixed;
+
+    transition: all ease 0.5s;
+}
+
+.player-hand.left
+{
+    transform: rotate(90deg);
+    left: -176px;
+    top: 100px;
+    margin: 0 0 0 -123px;
+}
+
+.player-hand.right
+{
+    transform: rotate(-90deg);
+    right: -176px;
+    top: 100px;
+    margin: 0 -123px 0 0;
+}
+
+.player-hand.top
+{
+    transform: rotate(180deg);
+    top: -100px;
+    margin: 0 0 0 -300px;
+    left: 50%;
+}
+
+.player-hand.bottom
+{
+    bottom: -176px;
+    margin: 0 0 0 -300px;
+    left: calc(50% + 307px);
+    width: 910px;
+    height: 272px;
+}
+
+.player-hand.bottom:hover, .player-hand.bottom.pinned
+{
+    bottom: 0;
+}
+
+.player-hand.bottom.fixed:hover, .player-hand.bottom.fixed
+{
+    left: 50%;
+    bottom: -176px;
+}
+
+.player-hand .stack
+{
+    height: 130px;
+    width: 300px;
+    margin: auto;
+}
+
+.player-hand.bottom .stack
+{
+    display: inline-block;
+    bottom: 176px;
+}
+
+.player-hand.bottom .card-mgr
+{
+    display: inline-block;
+}
+
+.player-hand .stack .card
+{
+    margin-right: -100px;
+}
+
+.card-mgr
+{
+    border: 1px solid black;
+    box-shadow: 0 0 20px black, inset 0 0 60px 22px rgba(0,0,0,0.3);
+    background-color: rgba(255,255,255, 0.5);
+    width: 600px;
+    height: 280px;
+}
+
+.card-mgr.small
+{
+    width: 300px;
+    height: 140px;
+}
+
+.card-mgr.small .card
+{
+    height: 61px;
+    width: 40px;
+    border-radius: 5px;
+}
+
+.card-mgr.small .card-slot
+{
+    height: 59px;
+    width: 38px;
+    display: inline-block;
+
+    border-radius: 5px;
+    border: 1px solid;
+}
+
+.card-mgr .card-slot
+{
+    height: 123px;
+    width: 78px;
+    display: inline-block;
+
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.card-mgr .card-slot SPAN
+{
+    position: absolute;
+    text-align: center;
+}
+
+.card-mgr .race-group, .card-mgr .class-group
+{
+    display: inline-block;
+    width: 164px;
+}
+
+.card-mgr .class-group, .card-mgr .weapons-group
+{
+    float: right;
+}
+
+.card-mgr .line-two
+{
+    margin-top: 20px;
+}
+
+.card-mgr .items-group, .weapons-group
+{
+    display: inline-block;
+    width: 248px;
+}
+
+.card-mgr .race-combo, .card-mgr .race-one, .card-mgr .race-two, .card-mgr .class-combo, .card-mgr .class-one, .card-mgr .class-two
+{
+    display: inline-block;
+}
+
+.card-mgr .race-combo, .card-mgr .class-combo
+{
+    position: absolute;
+    margin-left: 42px;
+}
+
+.card-mgr .race-one, .card-mgr .race-two, .card-mgr .class-one, .card-mgr .class-two
+{
+    top: 20px;
+    position: relative;
+}
+
+/*first in stack*/
+.card:last-child
+{
+    margin-right: 0;
+}
+
+.card
+{
+    /*height: 174px;
+    width: 112px;*/
+    height: 125px;
+    width: 80px;
+
+    border-radius: 10px;
+    display: inline-block;
+    position: relative;
+    top: 0;
+
+    transition: margin ease 0.2s;
+    background: url(/Content/img/card_backs.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    box-shadow: 0 0 10px;
+
+    cursor: pointer;
+}
+
+.card:hover
+{
+    top: 10px;
+}
+
+.card.treasure
+{
+    background-position: center right;
+}
+
+.card.door
+{
+    background-position: center left;
+}
+
+.field
+{
+    height: 280px;
+    width: 600px;
+    padding-top: 70px;
+    margin: auto;
+}
+
+.field .player
+{
+    position: relative;
+    width: 300px
+}
+
+.field .player.top
+{
+    margin-left: 141px;
+}
+
+.field .player.left
+{
+    transform: rotate(90deg);
+    left: -79px;
+    top: -63px;
+}
+
+.field .player.right
+{
+    transform: rotate(-90deg);
+    right: -363px;
+    top: -203px;
+}
