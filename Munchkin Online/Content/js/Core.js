@@ -265,4 +265,9 @@ $(document).ready(function ()
         var inviteId = $(this).parent().attr("id");
         denyInvite(inviteId);
     });
+
+    $("#blackout").click(function ()
+    {
+        closePopup();
+    });
 });

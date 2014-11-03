@@ -108,10 +108,6 @@ $(document).ready(function () {
         $("div.custom-menu").remove();
     });
 
-    $("#blackout").click(function (){
-        closePopup();
-    });
-
     $(".add-friend").click( function (){
         showFriendSearch();
     });
