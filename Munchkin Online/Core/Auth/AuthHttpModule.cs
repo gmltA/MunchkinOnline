@@ -22,7 +22,7 @@ namespace Munchkin_Online.Core.Auth
             var auth = DependencyResolver.Current.GetService<IAuthentication>();
             auth.HttpContext = context;
             context.User = auth.CurrentUser;
-            CurrentUser.Instance.Current = ((UserIndentity)auth.CurrentUser.Identity).User;
+            //CurrentUser.Instance.Current = ((UserIndentity)auth.CurrentUser.Identity).User;
         }
 
         public void Dispose()

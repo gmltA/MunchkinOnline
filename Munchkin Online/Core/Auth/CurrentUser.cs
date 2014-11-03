@@ -12,7 +12,12 @@ namespace Munchkin_Online.Core.Auth
 
         public static readonly CurrentUser Instance = new CurrentUser();
 
-        public User Current { get; set; }
-
+        public User Current
+        {
+            get
+            {
+                return ((UserIndentity)HttpContext.Current.User.Identity).CurrentUser;
+            }
+        }
     }
 }
