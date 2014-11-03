@@ -230,7 +230,6 @@
     <Content Include="Content\img\main-block.png" />
     <Content Include="Content\img\tab-current.png" />
     <Content Include="Content\img\tab.png" />
-    <Content Include="Content\js\Cards.js" />
     <Content Include="Content\js\Core.js" />
     <Content Include="Content\js\Friends.js" />
     <Content Include="Content\js\game.js" />

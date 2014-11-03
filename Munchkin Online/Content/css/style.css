@@ -603,55 +603,6 @@ FOOTER > .small
     cursor: default;
 }
 
-.card
-{
-    height: 270px;
-    width: 175px;
-    display: inline-block;
-    border-radius: 20px;
-    transition: all linear 0.1s;
-}
-
-.card.treasure
-{
-    background: url(/Content/img/card_backs.png) right;
-}
-
-.card.door
-{
-    background: url(/Content/img/card_backs.png) left;
-}
-
-.card:hover
-{ 
-    margin-bottom: 10px;
-}
-
-.card.selected
-{
-    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
-    animation: card-selected 5s linear infinite;
-    -webkit-animation: card-selected 2s linear infinite;
-}
-
-@keyframes card-selected {
-  0%,100% {
-    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
-  }
-  50% {
-    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 10px;
-  }
-}
-
-@-webkit-keyframes card-selected {
-  0%,100% {
-    box-shadow: inset rgba(0, 255, 33, 0.8) 0px 0px 40px;
-  }
-  50% {
-    box-shadow: inset rgba(0, 255, 33, 1) 0px 0px 10px;
-  }
-}
-
 .profile-title
 {
     font-size: 20px;
