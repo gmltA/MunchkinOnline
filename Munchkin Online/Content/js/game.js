@@ -26,6 +26,27 @@ function cardHover(card, stack, cardIndex)
     });
 }
 
+function showPopup()
+{
+    $('#blackout').stop().fadeIn("fast");
+    $('#popup-container').stop().fadeIn("fast");
+    $(window).resize();
+}
+
+function closePopup()
+{
+    $('#blackout').stop().fadeOut("fast");
+    $('#popup-container').stop().fadeOut("fast");
+}
+
+function setPopupCardBG(card)
+{
+    var bgImg = $(card).css("background-image");
+    var bgPos = $(card).css("background-position");
+    $("#popup-container").css("background-image", bgImg);
+    $("#popup-container").css("background-position", bgPos);
+}
+
 $(document).ready(function () {
     $(".stack").each(function(index, elem){updateStack(elem)});
     $(".stack .card").on({
@@ -37,8 +58,20 @@ $(document).ready(function () {
             updateStack($(this).parent());
         }
     });
+
+    $(".card").on({
+        click: function ()
+        {
+            setPopupCardBG(this);
+            showPopup();
+        }
+    });
     
-    $(".card-mgr").click(function(){$(this).parent().toggleClass("pinned")});
+    $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
+    $("#blackout").click(function ()
+    {
+        closePopup();
+    });
     
     //$(".card").draggable({ revert:"invalid" });
 });

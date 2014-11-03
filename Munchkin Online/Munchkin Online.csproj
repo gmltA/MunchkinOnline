@@ -223,6 +223,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\game.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\img\bg.png" />
     <Content Include="Content\img\card_backs.png" />
@@ -232,6 +233,7 @@
     <Content Include="Content\js\Cards.js" />
     <Content Include="Content\js\Core.js" />
     <Content Include="Content\js\Friends.js" />
+    <Content Include="Content\js\game.js" />
     <Content Include="Content\js\Lobby.js" />
     <Content Include="Content\js\LongPool.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

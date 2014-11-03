@@ -172,6 +172,38 @@ BODY
     position: relative;
 }
 
+.card-mgr.small .race-group, .card-mgr.small .class-group
+{
+    width: 84px;
+    height: 66px;
+}
+
+.card-mgr.small .race-combo, .card-mgr.small .class-combo
+{
+    margin-left: 22px;
+}
+
+.card-mgr.small .items-group, .card-mgr.small .weapons-group
+{
+    width: 128px;
+}
+
+.card-mgr.small .race-one, .card-mgr.small .race-two, .card-mgr.small .class-one, .card-mgr.small .class-two
+{
+    top: 10px;
+}
+
+.card-mgr.small .line-two
+{
+    margin-top: 10px;
+}
+
+.card-slot .card
+{
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
 /*first in stack*/
 .card:last-child
 {
@@ -190,7 +222,7 @@ BODY
     position: relative;
     top: 0;
 
-    transition: margin ease 0.2s;
+    transition: all ease 0.2s;
     background: url(/Content/img/card_backs.png);
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -204,7 +236,7 @@ BODY
 
 .card:hover
 {
-    top: 10px;
+    top: -10px;
 }
 
 .card.treasure
@@ -239,13 +271,44 @@ BODY
 .field .player.left
 {
     transform: rotate(90deg);
-    left: -79px;
+    left: -179px;
     top: -63px;
 }
 
 .field .player.right
 {
     transform: rotate(-90deg);
-    right: -363px;
+    right: -463px;
     top: -203px;
+}
+
+#blackout
+{
+    background: -moz-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(0,0,0,0.4)), color-stop(100%,rgba(0,0,0,1)));
+    background: -webkit-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,1) 100%);
+    background: radial-gradient(ellipse at center,  rgba(0,0,0,0.4) 0%,rgba(0,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#000000',GradientType=1 );
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9000;
+    display: none;
+}
+
+#popup-container
+{
+    position: fixed;
+    top: calc(50% - 255px / 2);
+    left: calc(50% - 164px / 2);
+    z-index: 9001;
+    height: 255px;
+    width: 164px;
+    display: none;
+    transition: none;
 }
