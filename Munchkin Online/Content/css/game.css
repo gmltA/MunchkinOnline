@@ -49,6 +49,11 @@ BODY
     left: calc(50% + 307px);
     width: 910px;
     height: 272px;
+    z-index: 8999;
+}
+
+.player-hand.bottom:not(.fixed)
+{
     z-index: 8998;
 }
 
@@ -61,6 +66,7 @@ BODY
 {
     left: 50%;
     bottom: -176px;
+    width: 300px;
 }
 
 .player-hand .stack
@@ -89,11 +95,15 @@ BODY
 
 .card-mgr
 {
-    border: 1px solid black;
-    box-shadow: 0 0 20px black, inset 0 0 60px 22px rgba(0,0,0,0.3);
-    background-color: rgba(255,255,255, 0.5);
+    background: url("/Content/img/card-mgr-bg.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     width: 600px;
     height: 280px;
+    -webkit-filter: drop-shadow(0 0 10px black);
+    filter: drop-shadow(0 0 10px black);
 }
 
 .card-mgr.small
@@ -113,10 +123,6 @@ BODY
 {
     height: 59px;
     width: 38px;
-    display: inline-block;
-
-    border-radius: 5px;
-    border: 1px solid;
 }
 
 .card-mgr .card-slot
@@ -126,7 +132,7 @@ BODY
     display: inline-block;
 
     border-radius: 10px;
-    border: 1px solid;
+    border: 1px dashed;
     -webkit-transition: box-shadow, 0.2s, ease;
     -moz-transition: box-shadow, 0.2s, ease;
     -ms-transition: box-shadow, 0.2s, ease;
@@ -274,15 +280,23 @@ BODY
     margin: auto;
 }
 
-.field .player
+.field .player, .field .table
 {
     position: relative;
-    width: 300px
+    width: 300px;
+    height: 142px;
 }
 
-.field .player.top
+.field .player.top, .field .table
 {
     margin-left: 141px;
+}
+
+.field .table
+{
+    border-radius: 10px;
+    height: 200px;
+    margin-bottom: -200px;
 }
 
 .field .player.left

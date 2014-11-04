@@ -62,7 +62,7 @@ $(document).ready(function ()
     });
 
     $(".stack").each(function(index, elem){updateStack(elem)});
-    $(".stack .card").on({
+    $(".stack").on({
         mouseenter: function() {
             var currIndex = $(this).parent().children().index(this);
             cardHover(this, $(this).parent(), currIndex);
@@ -70,15 +70,15 @@ $(document).ready(function ()
         mouseleave: function() {
             updateStack($(this).parent());
         }
-    });
+    }, ".card");
 
-    $(".card").on({
+    $("BODY").on({
         dblclick: function ()
         {
             setPopupCardBG(this);
             showPopup();
         }
-    });
+    }, ".card");
     
     $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
     $("#blackout").click(function ()
@@ -133,7 +133,7 @@ $(document).ready(function ()
         addClasses: false
     });
 
-    $(".stack").droppable({
+    $(".stack, .table").droppable({
         drop: function (event, ui)
         {
             var droppedCard = ui.draggable;
