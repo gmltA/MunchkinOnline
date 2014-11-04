@@ -179,14 +179,20 @@ function setAuthBarState()
 function showPopup()
 {
     $('#blackout').stop().fadeIn("fast");
-    $('#popup-container').stop().fadeIn("fast");
     $(window).resize();
+    if ($('#popup-container').hasClass("card"))
+        $('#popup-container').stop().show("puff", {}, "fast");
+    else
+        $('#popup-container').stop().fadeIn("fast");
 }
 
 function closePopup()
 {
     $('#blackout').stop().fadeOut("fast");
-    $('#popup-container').stop().fadeOut("fast");
+    if ($('#popup-container').hasClass("card"))
+        $('#popup-container').stop().hide("puff", {}, "fast");
+    else
+        $('#popup-container').stop().fadeOut("fast");
 }
 
 function renderInvite(inviteId)

@@ -34,7 +34,33 @@ function setPopupCardBG(card)
     $("#popup-container").css("background-position", bgPos);
 }
 
-$(document).ready(function () {
+$(document).ready(function ()
+{
+    jQuery.fn.extend({
+        moveTo: function (target, callback)
+        {
+            if (target.length == 0) {
+                console.error("No move target provided");
+                return;
+            }
+            return this.each(function ()
+            {
+                var oldPosition = $(this).css("position");
+                $(this).css({ "position": "fixed", "top": $(this).offset().top, "left": $(this).offset().left, "transition": "none" }).animate(
+                    {
+                        "top": target.offset().top, "left": target.offset().left
+                    }, 600, "easeOutCubic", function ()
+                    {
+                        $(this).attr("style", "");
+                        target.append($(this));
+                        if (typeof callback == "function")
+                            callback();
+                    }
+                );
+            });
+        }
+    });
+
     $(".stack").each(function(index, elem){updateStack(elem)});
     $(".stack .card").on({
         mouseenter: function() {
@@ -60,7 +86,7 @@ $(document).ready(function () {
         closePopup();
     });
     
-    $(".card").draggable({
+    $(".card:not(#popup-container)").draggable({
         start: function ()
         {
             $(this).css("transition", "none");
@@ -88,13 +114,22 @@ $(document).ready(function () {
 
             $(droppedCard).attr("style", "");
         },
-        accept: function()
+        accept: function(draggable)
         {
             if ($(this).children(".card").length != 0)
                 return false;
+
+            //todo: remove after WIP stage
+            if (draggable.data("card-class") == undefined)
+                return true;
+
+            if ($(this).data("accept-class") != draggable.data("card-class"))
+                return false;
+
             return true;
         },
         hoverClass: "draggable-hover",
+        activeClass: "draggable-accept",
         addClasses: false
     });
 
@@ -107,6 +142,18 @@ $(document).ready(function () {
             $(droppedCard).attr("style", "");
         },
         hoverClass: "draggable-hover",
+        activeClass: "draggable-accept",
         addClasses: false
+    });
+
+    $(".deck").click(function ()
+    {
+        var deckClass = "door";
+        if ($(this).hasClass("treasure"))
+            deckClass = "treasure";
+        $(this).append("<div class='card " + deckClass + "'></div>").children(".card").moveTo($(".player-hand.bottom .stack"), function ()
+        {
+            updateStack($(".player-hand.bottom .stack"))
+        });
     });
 });

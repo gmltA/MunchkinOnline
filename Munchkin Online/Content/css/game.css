@@ -49,6 +49,7 @@ BODY
     left: calc(50% + 307px);
     width: 910px;
     height: 272px;
+    z-index: 8998;
 }
 
 .player-hand.bottom:hover, .player-hand.bottom.pinned
@@ -126,6 +127,16 @@ BODY
 
     border-radius: 10px;
     border: 1px solid;
+    -webkit-transition: box-shadow, 0.2s, ease;
+    -moz-transition: box-shadow, 0.2s, ease;
+    -ms-transition: box-shadow, 0.2s, ease;
+    -o-transition: box-shadow, 0.2s, ease;
+    transition: box-shadow, 0.2s, ease;
+}
+
+.draggable-accept
+{
+    box-shadow: 0 0 6px 4px rgba(145, 255, 47, 0.3);
 }
 
 .draggable-hover
@@ -216,7 +227,7 @@ BODY
     margin-right: 0;
 }
 
-.card
+.card, .deck
 {
     /*height: 174px;
     width: 112px;*/
@@ -245,12 +256,12 @@ BODY
     top: -10px;
 }
 
-.card.treasure
+.card.treasure, .deck.treasure
 {
     background-position: center right;
 }
 
-.card.door
+.card.door, .deck.door
 {
     background-position: center left;
 }

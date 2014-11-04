@@ -55,7 +55,7 @@
         </div>
         <div class="player-hand fixed bottom">
             <div class="stack">
-                <div class="card door"></div>
+                <div class="card door" data-card-class="race"></div>
                 <div class="card treasure"></div>
                 <div class="card door"></div>
                 <div class="card treasure"></div>
@@ -70,40 +70,40 @@
             <div class="card-mgr">
                 <div>
                     <div class="race-group">
-                        <div class="card-slot race-combo">
+                        <div class="card-slot race-combo" data-accept-class="race-combo">
                             <span>Полукровка</span>
                         </div>
-                        <div class="card-slot race-one">
+                        <div class="card-slot race-one" data-accept-class="race">
                             <span>Первая раса</span>
                         </div>
-                        <div class="card-slot race-two">
+                        <div class="card-slot race-two" data-accept-class="race">
                             <span>Вторая раса</span>
                         </div>
                     </div>
                     <div class="class-group">
-                        <div class="card-slot class-combo">
+                        <div class="card-slot class-combo" data-accept-class="class-combo">
                         </div>
-                        <div class="card-slot class-one">
+                        <div class="card-slot class-one" data-accept-class="class">
                         </div>
-                        <div class="card-slot class-two">
+                        <div class="card-slot class-two" data-accept-class="class">
                         </div>
                     </div>
                 </div>
                 <div class="line-two">
                     <div class="items-group">
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="head">
                         </div>
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="body">
                         </div>
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="legs">
                         </div>
                     </div>
                     <div class="weapons-group">
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="weapon-2h">
                         </div>
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="weapon-1h">
                         </div>
-                        <div class="card-slot">
+                        <div class="card-slot" data-accept-class="weapon-1h">
                         </div>
                     </div>
                 </div>
@@ -230,6 +230,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="deck door">
+        </div>
+        <div class="deck treasure">
         </div>
         <div id="blackout"></div>
         <div id="popup-container" class="card"></div>
