@@ -1,3 +1,46 @@
+function Player(position)
+{
+    this.fieldPosition = position;
+}
+
+Player.prototype.getStack = function ()
+{
+    return $(".player-hand." + this.fieldPosition + " .stack");
+}
+
+Player.prototype.getCards = function (deck, counter, callback)
+{
+    if (counter > 0)
+    {
+        var self = this;
+        requestCard(deck, this.getStack(), function ()
+        {
+            counter--;
+            self.getCards(deck, counter, callback);
+        });
+    }
+    else
+    {
+        if (typeof callback == "function")
+            callback();
+    }
+}
+
+Player.prototype.getRandomCard = function ()
+{
+    var cardCount = this.getStack().children().length;
+    return this.getStack().children().eq(Math.floor(Math.random() * cardCount));
+}
+
+Player.prototype.makeMove = function ()
+{
+    var card = this.getRandomCard();
+    card.moveTo($(".table"), function ()
+    {
+        card.addClass("flipped");
+    });
+};
+
 function updateStack(stack)
 {
     var cardCount = $(stack).children().length;
@@ -12,12 +55,12 @@ function updateStack(stack)
 function cardHover(card, stack, cardIndex)
 {
     var cardCount = $(stack).children().length;
-    if (cardIndex == cardCount-1)
+    if (cardIndex == cardCount - 1 || cardCount < 3)
         return;
         
     var stackWidth = $(stack).width();
     var cardWidth = $(stack).children().first().width();
-    var margin = -1*(cardWidth - (stackWidth - (cardWidth)*2)/(cardCount - 2));
+    var margin = -1*(cardWidth - (stackWidth - cardWidth*2)/(cardCount - 2));
     $(stack).children(".card").each(function(index, elem) {
         if (index != cardCount-1 && index != cardIndex)
             $(elem).css("margin-right", margin);
@@ -34,38 +77,55 @@ function setPopupCardBG(card)
     $("#popup-container").css("background-position", bgPos);
 }
 
+function requestCard(deck, stack, callback)
+{
+    var deckClass = "door";
+    if ($(deck).hasClass("treasure"))
+        deckClass = "treasure";
+
+    $(deck).append("<div class='card " + deckClass + "'><figure class='back'></figure><figure class='face'></figure></div>").children(".card").moveTo(stack, function ()
+    {
+        updateStack(stack);
+
+        if (typeof callback == "function")
+            callback();
+    }).setDraggable();
+}
+
+function onMatchStart()
+{
+    var counter = 5;
+    var topPlayer = new Player("top");
+    topPlayer.getCards($(".deck.treasure"), counter, function ()
+    {
+        var rightPlayer = new Player("right");
+        rightPlayer.getCards($(".deck.treasure"), counter);
+    });
+}
+
+function dropAction(event, ui)
+{
+    var droppedCard = ui.draggable;
+    var stackParent = undefined;
+    if ($(droppedCard).parent().hasClass("stack"))
+        stackParent = $(droppedCard).parent();
+
+    $(droppedCard).attr("style", "");
+    $(this).append(droppedCard);
+
+    if (stackParent != undefined)
+        updateStack(stackParent);
+
+    if ($(this).hasClass("stack"))
+        updateStack($(this));
+}
+
 $(document).ready(function ()
 {
-    jQuery.fn.extend({
-        moveTo: function (target, callback)
-        {
-            if (target.length == 0) {
-                console.error("No move target provided");
-                return;
-            }
-            return this.each(function ()
-            {
-                var oldPosition = $(this).css("position");
-                $(this).css({ "position": "fixed", "top": $(this).offset().top, "left": $(this).offset().left, "transition": "none" }).animate(
-                    {
-                        "top": target.offset().top, "left": target.offset().left
-                    }, 600, "easeOutCubic", function ()
-                    {
-                        $(this).attr("style", "");
-                        target.append($(this));
-                        if (typeof callback == "function")
-                            callback();
-                    }
-                );
-            });
-        }
-    });
-
-    $(".stack").each(function(index, elem){updateStack(elem)});
+    $(".stack").each(function (index, elem) { updateStack(elem) });
     $(".stack").on({
         mouseenter: function() {
-            var currIndex = $(this).parent().children().index(this);
-            cardHover(this, $(this).parent(), currIndex);
+            cardHover(this, $(this).parent(), $(this).parent().children().index(this));
         },
         mouseleave: function() {
             updateStack($(this).parent());
@@ -75,45 +135,19 @@ $(document).ready(function ()
     $("BODY").on({
         dblclick: function ()
         {
+            $("#popup-container").attr("class", "").addClass($(this).attr("class"));
             setPopupCardBG(this);
             showPopup();
         }
     }, ".card");
     
     $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
-    $("#blackout").click(function ()
-    {
-        closePopup();
-    });
+    $("#blackout").click(closePopup);
     
-    $(".card:not(#popup-container)").draggable({
-        start: function ()
-        {
-            $(this).css("transition", "none");
-        },
-        stop: function ()
-        {
-            $(this).attr("style", "");
-        },
-        revert: "invalid",
-        addClasses: false
-    });
+    $(".card:not(#popup-container)").setDraggable();
 
     $(".card-mgr:not(.small) .card-slot").droppable({
-        drop: function (event, ui)
-        {
-            var droppedCard = ui.draggable;
-            var stackParent = undefined;
-            if ($(droppedCard).parent().hasClass("stack"))
-                stackParent = $(droppedCard).parent();
-
-            $(this).append(droppedCard);
-
-            if (stackParent != undefined)
-                updateStack(stackParent);
-
-            $(droppedCard).attr("style", "");
-        },
+        drop: dropAction,
         accept: function(draggable)
         {
             if ($(this).children(".card").length != 0)
@@ -134,26 +168,61 @@ $(document).ready(function ()
     });
 
     $(".stack, .table").droppable({
-        drop: function (event, ui)
-        {
-            var droppedCard = ui.draggable;
-            $(this).append(droppedCard);
-
-            $(droppedCard).attr("style", "");
-        },
+        drop: dropAction,
         hoverClass: "draggable-hover",
         activeClass: "draggable-accept",
         addClasses: false
     });
 
-    $(".deck").click(function ()
+    $(".deck").click(function () { requestCard(this, $(".player-hand.bottom .stack")); });
+
+    onMatchStart();
+});
+
+jQuery.fn.extend({
+    moveTo: function (target, callback)
     {
-        var deckClass = "door";
-        if ($(this).hasClass("treasure"))
-            deckClass = "treasure";
-        $(this).append("<div class='card " + deckClass + "'></div>").children(".card").moveTo($(".player-hand.bottom .stack"), function ()
+        if (target.length == 0) {
+            console.error("No move target provided");
+            return;
+        }
+        return this.each(function ()
         {
-            updateStack($(".player-hand.bottom .stack"))
+            var oldPosition = $(this).css("position");
+            var offset = $(this).offset();
+            $(this).appendTo($("body"));
+            $(this).css({ "position": "fixed", "top": offset.top, "left": offset.left, "transition": "none" }).animate(
+                {
+                    "top": target.offset().top, "left": target.offset().left
+                }, 600, "easeOutCubic", function ()
+                {
+                    $(this).attr("style", "");
+                    target.append($(this));
+
+                    //todo: transition-related delay. fix it!
+                    if (typeof callback == "function")
+                        setTimeout(callback, 10);
+                }
+            );
         });
-    });
+    },
+    setDraggable: function()
+    {
+        return this.each(function ()
+        {
+            $(this).draggable({
+                start: function ()
+                {
+                    $(this).css("transition", "none");
+                },
+                stop: function ()
+                {
+                    $(this).attr("style", "");
+                },
+                revert: "invalid",
+                containment: "window",
+                addClasses: false
+            });
+        });
+    }
 });
