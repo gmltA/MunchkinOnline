@@ -75,6 +75,7 @@ BODY
     width: 300px;
     margin: auto;
     border-radius: 10px;
+    letter-spacing: -4px;
 }
 
 .player-hand.bottom .stack

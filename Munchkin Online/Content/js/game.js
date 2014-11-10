@@ -3,7 +3,7 @@ function updateStack(stack)
     var cardCount = $(stack).children().length;
     var stackWidth = $(stack).width();
     var cardWidth = $(stack).children().first().width();
-    var margin = -1*(cardWidth - (stackWidth - cardWidth)/(cardCount - 1)) - 4;
+    var margin = -1*(cardWidth - (stackWidth - cardWidth)/(cardCount - 1));
     $(stack).children(".card").each(function(index, elem) {
         if (index != cardCount-1)
             $(elem).css("margin-right", margin);
@@ -17,7 +17,7 @@ function cardHover(card, stack, cardIndex)
         
     var stackWidth = $(stack).width();
     var cardWidth = $(stack).children().first().width();
-    var margin = -1*(cardWidth - (stackWidth - (cardWidth+3)*2)/(cardCount - 2)) - 4;
+    var margin = -1*(cardWidth - (stackWidth - (cardWidth)*2)/(cardCount - 2));
     $(stack).children(".card").each(function(index, elem) {
         if (index != cardCount-1 && index != cardIndex)
             $(elem).css("margin-right", margin);
