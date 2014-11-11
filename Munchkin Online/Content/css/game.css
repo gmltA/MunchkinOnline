@@ -2,11 +2,8 @@ HTML, BODY { height: 100%; margin: 0; padding: 0; }
 
 BODY
 {
-    background: radial-gradient(ellipse at center,  rgba(0,0,0,0) 20%,rgba(0,0,0,1) 100%), url(/Content/img/game-bg.jpg) no-repeat fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background: url(/Content/img/game-bg.jpg) no-repeat top center fixed;
+    background-size: 1380px;
     -webkit-perspective: 800;
     perspective: 800px;
 }
@@ -241,9 +238,17 @@ BODY
     background: url(/Content/img/card_backs.png);
     background-size: 161px;
 
-    box-shadow: 0 0 10px;
+    box-shadow: 0 0 10px, 3px 3px 1px hsl(19, 100%, 8%),6px 6px 0px hsl(19, 100%, 4%), 9px 9px 10px;
 
     cursor: pointer;
+}
+
+.deck:active
+{
+    transition: all 0.2s ease;
+    left: 4px;
+    top: 4px;
+    box-shadow: 2px 2px 0px hsl(19, 100%, 4%), 5px 5px 10px;
 }
 
 .card
@@ -344,6 +349,7 @@ BODY
     border-radius: 10px;
     height: 200px;
     margin-bottom: -200px;
+    text-align: center;
 }
 
 .field .player.left

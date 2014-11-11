@@ -55,7 +55,7 @@ function updateStack(stack)
 function cardHover(card, stack, cardIndex)
 {
     var cardCount = $(stack).children().length;
-    if (cardIndex == cardCount - 1 || cardCount < 3)
+    if (cardIndex == cardCount - 1 || cardCount < 4)
         return;
         
     var stackWidth = $(stack).width();
