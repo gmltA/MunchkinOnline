@@ -16,6 +16,14 @@ namespace Munchkin_Online.Models
         public Target Target { get; set; }
 
         public Condition Condition { get; set; }
+
+        public Mechanic(Action action, int value, Target target, Condition condition)
+        {
+            Action = action;
+            Value = value;
+            Target = target;
+            Condition = condition;
+        }
     }
 
     public enum Action
@@ -123,6 +131,5 @@ namespace Munchkin_Online.Models
         IfElfsInBattle,
         WithoutSupport,
         WhenEscaped,
-
     }
 }

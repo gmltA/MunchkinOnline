@@ -64,6 +64,7 @@ LongPool.prototype = {
             case 8: return;
             case 9: if (typeof lobbyUpdated != "undefined") lobbyUpdated(); break;
             case 10: window.location.href = "/Game/";
+            case 11: onMatchStart(transport.Data.Board);
         }
         this.sendRequest();
     },

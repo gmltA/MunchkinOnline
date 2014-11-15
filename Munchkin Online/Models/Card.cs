@@ -7,7 +7,11 @@ namespace Munchkin_Online.Models
 {
     public class Card
     {
-        public Guid Id { get; set; }
+        const string BasePath = "/Content/img/cards/";
+
+        const string Ext = ".png";
+
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -33,24 +37,28 @@ namespace Munchkin_Online.Models
 
         public int Levels { get; set; }
 
+        public string Path { get { return BasePath + Name + Ext; } }
+
         public virtual ICollection<Mechanic> Mechanics { get; set; }
 
-        public enum CardType
-        {
-            Dungeon,
-            Treasure
-        }
-
-        public enum CardClass
-        {
-            Item,
-            Monster,
-            Spell,
-            Class,
-            Race,
-            Headgear,
-            Footgear,
-            Armor
-        }
     }
+
+    public enum CardType
+    {
+        Dungeon,
+        Treasure
+    }
+
+    public enum CardClass
+    {
+        Item,
+        Monster,
+        Spell,
+        Class,
+        Race,
+        Headgear,
+        Footgear,
+        Armor
+    }
+    
 }

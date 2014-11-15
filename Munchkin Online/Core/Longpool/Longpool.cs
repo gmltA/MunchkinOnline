@@ -138,5 +138,17 @@ namespace Munchkin_Online.Core.Longpool
                 }
             }
         }
+
+        public void PushMessageToUserDelayed(Guid Guid, AsyncMessage asyncMessage)
+        {
+            lock (_lock)
+            {
+                var clientState = _clientStateList.FirstOrDefault(x => x.User.Id == Guid);
+                if (clientState != null)
+                {
+                    clientState.AddToPool(asyncMessage);
+                }
+            }
+        }
     }
 }

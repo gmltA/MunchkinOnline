@@ -190,6 +190,10 @@
     <Compile Include="Core\Auth\VKAuthClient.cs" />
     <Compile Include="Core\Database\UserRepository.cs" />
     <Compile Include="Core\Database\MainContext.cs" />
+    <Compile Include="Core\Game\BoardStateInfo.cs" />
+    <Compile Include="Core\Game\Cards\CardsContainer.cs" />
+    <Compile Include="Core\Game\LongpoolBuilder.cs" />
+    <Compile Include="Core\Game\PlayerInfo.cs" />
     <Compile Include="Core\LayoutDefines.cs" />
     <Compile Include="Core\Longpool\AsyncMessage.cs" />
     <Compile Include="Core\ClientState.cs" />
