@@ -69,7 +69,6 @@ namespace Munchkin_Online.Core.Matchmaking
                 match.State = Munchkin_Online.Core.Game.State.Lobby;
                 match.Creator = new Player(user);
                 match.Players.Add(new Player(user));
-                Matches.Add(match);
             }
 
             return match;
