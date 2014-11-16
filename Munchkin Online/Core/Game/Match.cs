@@ -40,6 +40,8 @@ namespace Munchkin_Online.Core.Game
 
             State = State.InGame;
 
+            BoardState = new BoardState(Players);
+            SetRandomStartPlayer();
             SendMessageToPlayers(new AsyncMessage(MessageType.GameStarted));
         }
 
@@ -50,6 +52,12 @@ namespace Munchkin_Online.Core.Game
                 if (!exceptCreator || (exceptCreator && player.UserId != Creator.UserId))
                     Longpool.Longpool.Instance.PushMessageToUser(player.UserId, message);
             }
+        }
+
+        public void SetRandomStartPlayer()
+        {
+            Random r = new Random();
+            BoardState.CurrentPlayerId = r.Next(3);
         }
     }
 

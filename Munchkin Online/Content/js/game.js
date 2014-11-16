@@ -92,15 +92,20 @@ function requestCard(deck, stack, callback)
     }).setDraggable();
 }
 
-function onMatchStart()
+function onMatchStart(boardState)
 {
-    var counter = 5;
+    var bottomPlayer = new Player("bottom");
+    bottomPlayer.getCards($(".deck.treasure"), boardState.Me.Hand.lenght, function () { });
+
     var topPlayer = new Player("top");
-    topPlayer.getCards($(".deck.treasure"), counter, function ()
-    {
-        var rightPlayer = new Player("right");
-        rightPlayer.getCards($(".deck.treasure"), counter);
-    });
+    topPlayer.getCards($(".deck.treasure"), boardState.Players[0].TreasuresCount, function () { });
+    topPlayer.getCards($(".deck.door"), boardState.Players[0].DoorsCount, function () { });
+    var leftPlayer = new Player("left");
+    leftPlayer.getCards($(".deck.treasure"), boardState.Players[1].TreasuresCount, function () { });
+    leftPlayer.getCards($(".deck.door"), boardState.Players[1].DoorsCount, function () { });
+    var rightPlayer = new Player("right");
+    rightPlayer.getCards($(".deck.treasure"), boardState.Players[2].TreasuresCount, function () { });
+    rightPlayer.getCards($(".deck.door"), boardState.Players[2].DoorsCount, function () { });
 }
 
 function dropAction(event, ui)
@@ -175,8 +180,6 @@ $(document).ready(function ()
     });
 
     $(".deck").click(function () { requestCard(this, $(".player-hand.bottom .stack")); });
-
-    onMatchStart();
 });
 
 jQuery.fn.extend({

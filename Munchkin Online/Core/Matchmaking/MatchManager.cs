@@ -47,7 +47,7 @@ namespace Munchkin_Online.Core.Matchmaking
         {
             Match match = new Match();
             match.Id = Guid.NewGuid();
-
+            Matches.Add(match);
             return match;
         }
 

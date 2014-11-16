@@ -40,6 +40,11 @@ namespace Munchkin_Online.Core
             _isCompleted = false;
         }
 
+        public bool AddToPool(AsyncMessage message)
+        {
+            return Messages.Add(message); 
+        }
+
         public void Push(AsyncMessage message)
         {
             if (IsCompleted)

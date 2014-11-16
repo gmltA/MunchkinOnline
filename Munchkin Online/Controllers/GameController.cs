@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Munchkin_Online.Core.Longpool;
 
 namespace Munchkin_Online.Controllers
 {
@@ -21,6 +22,7 @@ namespace Munchkin_Online.Controllers
                 NotificationManager.Instance.Add("You can't access game field while not in game", NotificationType.Error);
                 return RedirectToAction("Index", "Home");
             }
+            Longpool.Instance.PushMessageToUserDelayed(CurrentUser.Instance.Current.Id, LongpoolBuilder.GetInitMessage(match));
             return View();
         }
 
