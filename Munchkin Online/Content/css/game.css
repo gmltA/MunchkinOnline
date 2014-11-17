@@ -2,7 +2,7 @@ HTML, BODY { height: 100%; margin: 0; padding: 0; }
 
 BODY
 {
-    background: url(/Content/img/game-bg.jpg) no-repeat top center fixed;
+    background: url(/Content/img/game-bg.jpg) no-repeat top center fixed black;
     background-size: 1380px;
     -webkit-perspective: 800;
     perspective: 800px;
