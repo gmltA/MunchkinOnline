@@ -57,7 +57,7 @@ namespace Munchkin_Online.Core.Game
         public void SetRandomStartPlayer()
         {
             Random r = new Random();
-            BoardState.CurrentPlayerId = r.Next(3);
+            BoardState.CurrentPlayerId = Players[r.Next(3)].UserId;
         }
     }
 
