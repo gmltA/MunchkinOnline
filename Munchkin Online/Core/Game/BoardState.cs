@@ -19,7 +19,7 @@ namespace Munchkin_Online.Core.Game
         public List<Card> TreasureDeck { get; set; }
         public List<Card> TreasureTrash { get; set; }
 
-        public int CurrentPlayerId { get; set; }
+        public Guid CurrentPlayerId { get; set; }
         public List<Player> Players { get; set; }
 
         public TurnStep TurnStep { get; set; }

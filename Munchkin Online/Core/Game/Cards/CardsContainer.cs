@@ -18,13 +18,22 @@ namespace Munchkin_Online.Core.Game.Cards
         static CardsContainer()
         {
             Cards = new List<Card>();
-            Cards.Add(InsnantRace("Ogre", null));
-            Cards.Add(InsnantRace("Elf", null));
-            Cards.Add(InsnantRace("Human", null));
-            Cards.Add(InsnantRace("Fu", null));
+            Cards.Add(InstanateRace("Dwarf"));
+            Cards.Add(InstanateRace("Elf"));
+            Cards.Add(InstanateRace("Huffling"));
+            Cards.Add(InstanateRace("Dwarf"));
+            Cards.Add(InstanateRace("Elf"));
+            Cards.Add(InstanateRace("Huffling"));
+
+            Cards.Add(InstanateClass("Warrior"));
+            Cards.Add(InstanateClass("Mage"));
+            Cards.Add(InstanateClass("Thief"));
+            Cards.Add(InstanateClass("Warrior"));
+            Cards.Add(InstanateClass("Mage"));
+            Cards.Add(InstanateClass("Thief"));
         }
 
-        static Card InsnantRace(string name, params Mechanic[] mechanics)
+        static Card InstanateRace(string name, params Mechanic[] mechanics)
         {
             Card a = new Card();
             a.Id = Cards.Count + 1;
@@ -32,6 +41,17 @@ namespace Munchkin_Online.Core.Game.Cards
             a.Type = CardType.Dungeon;
             //a.Mechanics = new List<Mechanic>(mechanics);
             a.Class = CardClass.Race;
+            return a;
+        }
+
+        static Card InstanateClass(string name, params Mechanic[] mechanics)
+        {
+            Card a = new Card();
+            a.Id = Cards.Count + 1;
+            a.Name = name;
+            a.Type = CardType.Dungeon;
+            //a.Mechanics = new List<Mechanic>(mechanics);
+            a.Class = CardClass.Class;
             return a;
         }
     }

@@ -19,6 +19,9 @@ namespace Munchkin_Online.Core.Game
 
         public bool IsConfirmed { get; set; }
 
+        public Race Race { get; set; }
+        public Class Class { get; set; }
+
         public Player()
         {
             Level = 1;
@@ -38,5 +41,21 @@ namespace Munchkin_Online.Core.Game
             UserRepository repo = new UserRepository();
             return repo.Accounts.Where(u => u.Id == this.UserId).FirstOrDefault();
         }
+    }
+
+    public enum Class
+    {
+        No,
+        Warrior,
+        Mage,
+        Thief
+    }
+
+    public enum Race
+    {
+        Human,
+        Dwarf,
+        Elf,
+        Huffling
     }
 }

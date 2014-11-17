@@ -10,7 +10,7 @@ namespace Munchkin_Online.Core.Game
     {
         public const int PLAYERS_COUNT = 4;
 
-        public int CurrentPlayerId { get; set; }
+        public Guid CurrentPlayerId { get; set; }
         public List<PlayerInfo> Players { get; set; }
         public Player Me { get; set; }
 

@@ -36,5 +36,16 @@ namespace Munchkin_Online.Controllers
             return View();
         }
 
+        [HttpPost]
+        public string ProcessAction(ActionInfo i)
+        {
+            Match m = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
+            if (m != null)
+            {
+                return new GameDirector(m).ProcessAction(i);
+            }
+            return "Match has not been found";
+        }
+
     }
 }
