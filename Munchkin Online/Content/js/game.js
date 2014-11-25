@@ -125,6 +125,44 @@ function dropAction(event, ui)
         updateStack($(this));
 }
 
+var tutorialStep = 0;
+var maxTutorialSteps = 4;
+
+function loadTutorialState()
+{
+    tutorialStep = localStorage.getItem("tutorialStep");
+    if (tutorialStep < maxTutorialSteps - 1)
+        tutorialProcessStep(tutorialStep++);
+}
+
+function tutorialProcessStep(step)
+{
+    localStorage.setItem("tutorialStep", step);
+
+    var hintClass;
+    if (step == 0)
+        hintClass = "drag";
+    else if (step == 1)
+        hintClass = "deck_click";
+    else
+        hintClass = "equip";
+
+    if (tutorialStep >= maxTutorialSteps) {
+        $("#hint").fadeOut("fast");
+        $('#blackout').fadeOut("fast");
+    }
+
+    if (hintClass == "equip" && !$(".player-hand.bottom .card-mgr").parent().hasClass("pinned"))
+        $(".player-hand.bottom .card-mgr").parent().addClass("pinned");
+
+    $("#hint").attr("class", "").addClass(hintClass);
+    if ($("#hint").css("display") != "block") {
+        $("#hint").fadeIn("fast");
+        $('#blackout').stop().fadeIn("fast");
+    }
+
+}
+
 $(document).ready(function ()
 {
     $(".stack").each(function (index, elem) { updateStack(elem) });
@@ -148,6 +186,11 @@ $(document).ready(function ()
     
     $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
     $("#blackout").click(closePopup);
+
+    $("#hint").click(function ()
+    {
+        tutorialProcessStep(tutorialStep++);
+    });
     
     $(".card:not(#popup-container)").setDraggable();
 
@@ -180,6 +223,8 @@ $(document).ready(function ()
     });
 
     $(".deck").click(function () { requestCard(this, $(".player-hand.bottom .stack")); });
+
+    loadTutorialState();
 });
 
 jQuery.fn.extend({
