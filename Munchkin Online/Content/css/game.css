@@ -6,6 +6,7 @@ BODY
     background-size: 1380px;
     -webkit-perspective: 800;
     perspective: 800px;
+    overflow: hidden;
 }
 
 .player-hand
@@ -396,4 +397,33 @@ BODY
     display: none;
     transition: none;
     border-radius: 15px;
+    overflow: visible!important;
+}
+
+#hint
+{
+    display: none;
+    height: 100%;
+    left: 0;
+    opacity: 0.8;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9000;
+    transition: all ease 0.2s;
+}
+
+#hint.deck_click
+{
+    background: url(/Content/img/hint-deck.png) no-repeat 0px 160px;
+}
+
+#hint.drag
+{
+    background: url(/Content/img/hint-drag-1.png) bottom center no-repeat, url(/Content/img/hint-drag-2.png) center 204px no-repeat;
+}
+
+#hint.equip
+{
+    background: url(/Content/img/hint-equip.png) calc(50% - 10px) bottom no-repeat;
 }
