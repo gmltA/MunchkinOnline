@@ -128,7 +128,7 @@ function battleMessageHandler(battleMessage)
 function onMatchStart(boardState)
 {
     var bottomPlayer = new Player("bottom");
-    bottomPlayer.getCards($(".deck.treasure"), boardState.Me.Hand.lenght, function () { });
+    bottomPlayer.getCards($(".deck.door"), boardState.Me.Hand.length, function () { });
 
     var topPlayer = new Player("top");
     topPlayer.getCards($(".deck.treasure"), boardState.Players[0].TreasuresCount, function () { });
