@@ -11,15 +11,15 @@ namespace Munchkin_Online.Core.Longpool
     {
         public Guid UserId { get; set; }
         public Card Card { get; set; }
-        public TargetType TargetType { get; set; }
+        public ActionInfo Action { get; set; }
 
 
-        public BattleMessage(Guid UserId, Card Card, TargetType TargetType, object data = null)
+        public BattleMessage(Guid UserId, Card Card, ActionInfo Action, object data = null)
             : base(MessageType.BattleMessage, data)
         {
             this.UserId = UserId;
             this.Card = Card;
-            this.TargetType = TargetType;
+            this.Action = Action;
         }
 
     }

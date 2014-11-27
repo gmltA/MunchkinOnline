@@ -13,10 +13,10 @@ namespace Munchkin_Online.Core.Game
         public const int DOORS_COUNT = 1;
         public const int TREASURES_COUNT = 0;
 
-        public List<Card> DoorDeck { get; set; }
+        public Deck DoorDeck { get; set; }
         public List<Card> DoorTrash { get; set; }
 
-        public List<Card> TreasureDeck { get; set; }
+        public Deck TreasureDeck { get; set; }
         public List<Card> TreasureTrash { get; set; }
 
         public Guid CurrentPlayerId { get; set; }
@@ -28,10 +28,11 @@ namespace Munchkin_Online.Core.Game
         public BoardState(List<Player> players)
         {
             Players = players;
-            DoorDeck = new List<Card>();
+
+            DoorDeck = new Deck();
             DoorTrash = new List<Card>();
-            
-            TreasureDeck = new List<Card>();
+
+            TreasureDeck = new Deck();
             TreasureTrash = new List<Card>();
             Random r = new Random();
 
@@ -70,8 +71,71 @@ namespace Munchkin_Online.Core.Game
                     p.Hand.Add(c);
                     cards.Remove(c);
                 }
-            DoorDeck = cards.Where(x => x.Type == CardType.Dungeon).ToList();
-            TreasureDeck = cards.Where(x => x.Type == CardType.Treasure).ToList();
+            DoorDeck.Cards.AddRange(cards.Where(x => x.Type == CardType.Dungeon));
+            TreasureDeck.Cards.AddRange(cards.Where(x => x.Type == CardType.Treasure));
+        }
+    }
+
+    public class Deck : CardHolder
+    {
+        public List<Card> Cards { get; set; }
+
+        public Deck()
+        {
+            Cards = new List<Card>();
+        }
+
+        public Card GetCardById(int cardId)
+        {
+            return Cards.Where(c => c.Id == cardId).FirstOrDefault();
+        }
+
+        public bool AddCard(int cardId)
+        {
+            if (GetCardById(cardId) != null)
+                return false;
+
+            Card card = CardsContainer.GetCards().Where(c => c.Id == cardId).FirstOrDefault();
+            if (card == null)
+                return false;
+
+            Cards.Add(card);
+            return true;
+        }
+
+        public bool AddCard(Card card)
+        {
+            if (GetCardById(card.Id) != null)
+                return false;
+
+            Cards.Add(card);
+            return true;
+        }
+
+        public bool RemoveCard(int cardId)
+        {
+            Card playerCard = GetCardById(cardId);
+            if (playerCard == null)
+                return false;
+
+            Cards.Remove(playerCard);
+            return true;
+        }
+
+        public bool RemoveCard(Card card)
+        {
+            Card playerCard = GetCardById(card.Id);
+            if (playerCard == null)
+                return false;
+
+            Cards.Remove(playerCard);
+            return true;
+        }
+
+        public Card GetRandomCard()
+        {
+            Random random = new Random();
+            return Cards.ElementAt(random.Next(Cards.Count));
         }
     }
 

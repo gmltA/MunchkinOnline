@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using Munchkin_Online.Models;
 using Munchkin_Online.Core.Database;
+using Munchkin_Online.Core.Game.Cards;
 
 namespace Munchkin_Online.Core.Game
 {
-    public class Player
+    public class Player : CardHolder
     {
         public Guid UserId { get; set; }
 
@@ -40,6 +41,59 @@ namespace Munchkin_Online.Core.Game
         {
             UserRepository repo = new UserRepository();
             return repo.Accounts.Where(u => u.Id == this.UserId).FirstOrDefault();
+        }
+
+        public Card GetCardById(int cardId)
+        {
+            return Hand.Where(c => c.Id == cardId).FirstOrDefault();
+        }
+
+        public bool AddCard(int cardId)
+        {
+            if (GetCardById(cardId) != null)
+                return false;
+
+            Card card = CardsContainer.GetCards().Where(c => c.Id == cardId).FirstOrDefault();
+            if (card == null)
+                return false;
+
+            Hand.Add(card);
+            return true;
+        }
+
+        public bool AddCard(Card card)
+        {
+            if (GetCardById(card.Id) != null)
+                return false;
+
+            Hand.Add(card);
+            return true;
+        }
+
+        public bool RemoveCard(int cardId)
+        {
+            Card playerCard = GetCardById(cardId);
+            if (playerCard == null)
+                return false;
+
+            Hand.Remove(playerCard);
+            return true;
+        }
+
+        public bool RemoveCard(Card card)
+        {
+            Card playerCard = GetCardById(card.Id);
+            if (playerCard == null)
+                return false;
+
+            Hand.Remove(playerCard);
+            return true;
+        }
+
+        public Card GetRandomCard()
+        {
+            Random random = new Random();
+            return Hand.ElementAt(random.Next(Hand.Count));
         }
     }
 

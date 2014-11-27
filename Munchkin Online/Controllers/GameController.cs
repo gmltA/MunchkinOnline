@@ -37,15 +37,16 @@ namespace Munchkin_Online.Controllers
         }
 
         [HttpPost]
-        public string ProcessAction(ActionInfo i)
+        public string ProcessAction(ActionInfo actionInfo)
         {
             Match m = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
+            actionInfo.Invoker = m.Players.Where(p => p.UserId == CurrentUser.Instance.Current.Id).FirstOrDefault();
+
             if (m != null)
             {
-                return new GameDirector(m).ProcessAction(i);
+                return new GameDirector(m).ProcessAction(actionInfo);
             }
             return "Match has not been found";
         }
-
     }
 }

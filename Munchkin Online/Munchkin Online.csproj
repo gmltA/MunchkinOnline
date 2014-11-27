@@ -192,6 +192,7 @@
     <Compile Include="Core\Database\MainContext.cs" />
     <Compile Include="Core\Game\ActionInfo.cs" />
     <Compile Include="Core\Game\BoardStateInfo.cs" />
+    <Compile Include="Core\Game\CardHolder.cs" />
     <Compile Include="Core\Game\Cards\CardsContainer.cs" />
     <Compile Include="Core\Game\GameDirector.cs" />
     <Compile Include="Core\Game\LongpoolBuilder.cs" />

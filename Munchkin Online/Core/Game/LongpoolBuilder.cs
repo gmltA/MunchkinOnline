@@ -10,7 +10,7 @@ namespace Munchkin_Online.Core.Game
     {
         public static AsyncMessage GetInitMessage(Match match)
         { 
-            return new AsyncMessage(MessageType.BattleMessage, new { Board = new BoardStateInfo(match.BoardState) });
+            return new AsyncMessage(MessageType.InitialGameState, new { Board = new BoardStateInfo(match.BoardState) });
         }
 
     }

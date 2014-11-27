@@ -123,6 +123,7 @@ function requestCard(deck, target, callback)
 
 function battleMessageHandler(battleMessage)
 {
+    console.log(battleMessage.Action);
 }
 
 function onMatchStart(boardState)
@@ -141,18 +142,31 @@ function onMatchStart(boardState)
     rightPlayer.getCards($(".deck.door"), boardState.Players[2].DoorsCount, function () { });
 }
 
+function commitAction()
+{
+    var o = { SourceEntry: 0, TargetEntry: 3, CardId: 0 };
+    $.ajax({
+        type: "POST",
+        url: '/Game/ProcessAction',
+        data: o,
+        cache: false,
+        success: function (response)
+        {
+
+        }
+    });
+}
+
 function dropAction(event, ui)
 {
     var droppedCard = ui.draggable;
-    var stackParent = undefined;
-    if ($(droppedCard).parent().hasClass("stack"))
-        stackParent = $(droppedCard).parent();
+    var sourceObject = $(droppedCard).parent();
 
     $(droppedCard).attr("style", "");
     $(this).append(droppedCard);
 
-    if (stackParent != undefined)
-        updateStack(stackParent);
+    if ($(sourceObject).hasClass("stack"))
+        updateStack(sourceObject);
 
     if ($(this).hasClass("stack"))
         updateStack($(this));
@@ -255,7 +269,8 @@ $(document).ready(function ()
         addClasses: false
     });
 
-    $(".deck").click(function () { requestCard(this, $(".player-hand.bottom .stack")); });
+    //todo: consider commitAction result
+    $(".deck").click(function () { commitAction(); requestCard(this, $(".player-hand.bottom .stack")); });
 
     loadTutorialState();
 });

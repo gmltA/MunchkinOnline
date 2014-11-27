@@ -5,6 +5,7 @@ using System.Web;
 using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
+using Munchkin_Online.Core.Game.Cards;
 
 namespace Munchkin_Online.Core.Game
 {
@@ -27,26 +28,24 @@ namespace Munchkin_Online.Core.Game
                 result = ACTION_ERROR;
 
             Player player = match.BoardState.Players.First(x => x.UserId == CurrentUser.Instance.Current.Id);
-            Card card = player.Hand.First(x => x.Id == info.CardId);
-            switch (info.TargetType)
+            if (info.SourceEntry == ActionEntryType.Deck)
             {
-                case TargetType.MyClass: 
-                    result = SetClass(player, card); 
-                    break;
-                case TargetType.MyRace:
-                    result = SetRace(player, card);
-                    break;
-                default: 
-                    result = ACTION_ERROR;
-                    break;
+                Card card = info.Source.GetRandomCard();
+
+                info.Source = match.BoardState.DoorDeck;
+                info.Source.RemoveCard(card);
+
+                info.Target = info.Invoker;
+                info.Target.AddCard(card);
+
+                Longpool.Longpool.Instance.PushMessageToUser(player.UserId, new BattleMessage(player.UserId, card, info));
             }
-            if (result != ACTION_ERROR)
+            /*if (result != ACTION_ERROR)
             {
-                player.Hand.Remove(card);
                 foreach (var p in match.BoardState.Players)
                     Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info.TargetType));
-            }
-            return ACTION_ERROR;
+            }*/
+            return ACTION_DONE;
         }
 
         public string SetClass(Player player, Card card)

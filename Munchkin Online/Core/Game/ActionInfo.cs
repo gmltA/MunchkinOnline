@@ -7,18 +7,25 @@ namespace Munchkin_Online.Core.Game
 {
     public class ActionInfo
     {
-        public int CardId { get; set; }
-        
-        public int TargetId { get; set; }
+        public Player Invoker { get; set; }
 
-        public TargetType TargetType { get; set; }
+        public int CardId { get; set; }
+
+        public ActionEntryType SourceEntry { get; set; }
+        public CardHolder Source { get; set; }
+
+        public ActionEntryType TargetEntry { get; set; }
+        public CardHolder Target { get; set; }
     }
 
-    public enum TargetType
+    public enum ActionEntryType
     {
-        MyClass,
-        MyRace,
-        BoardCard,
-        HandCard
+        Deck,
+        Slot,
+        Card,
+        Hand,
+        Trash,
+        Field,
+        Player
     }
 }
