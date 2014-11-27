@@ -3,6 +3,11 @@ function Player(position)
     this.fieldPosition = position;
 }
 
+Player.prototype.getCardMgr = function ()
+{
+    return $("." + this.fieldPosition + " .card-mgr");
+}
+
 Player.prototype.getStack = function ()
 {
     return $(".player-hand." + this.fieldPosition + " .stack");
@@ -32,12 +37,21 @@ Player.prototype.getRandomCard = function ()
     return this.getStack().children().eq(Math.floor(Math.random() * cardCount));
 }
 
-Player.prototype.makeMove = function ()
+Player.prototype.equipCard = function (cardClass, slot)
+{
+    var card = this.getRandomCard();
+    card.moveTo(this.getCardMgr().find("." + slot), function ()
+    {
+        flipCard(card, cardClass);
+    });
+}
+
+Player.prototype.makeMove = function (cardClass)
 {
     var card = this.getRandomCard();
     card.moveTo($(".table"), function ()
     {
-        card.addClass("flipped");
+        flipCard(card, cardClass);
     });
 };
 
@@ -52,6 +66,7 @@ function updateStack(stack)
             $(elem).css("margin-right", margin);
     });
 }
+
 function cardHover(card, stack, cardIndex)
 {
     var cardCount = $(stack).children().length;
@@ -77,19 +92,37 @@ function setPopupCardBG(card)
     $("#popup-container").css("background-position", bgPos);
 }
 
-function requestCard(deck, stack, callback)
+function flipCard(card, cardClass)
+{
+    setTimeout(function ()
+    {
+        if (typeof cardClass != "undefined")
+            $(card).addClass(cardClass);
+
+        $(card).addClass("flipped");
+    }, 20);
+}
+
+function requestCard(deck, target, callback)
 {
     var deckClass = "door";
     if ($(deck).hasClass("treasure"))
         deckClass = "treasure";
 
-    $(deck).append("<div class='card " + deckClass + "'><figure class='back'></figure><figure class='face'></figure></div>").children(".card").moveTo(stack, function ()
+    var card = $(deck).append("<div class='card " + deckClass + "'><figure class='back'></figure><figure class='face'></figure></div>").children(".card");
+
+    card.moveTo(target, function ()
     {
-        updateStack(stack);
+        if ($(target).hasClass("stack"))
+            updateStack(target);
 
         if (typeof callback == "function")
-            callback();
+            callback(card);
     }).setDraggable();
+}
+
+function battleMessageHandler(battleMessage)
+{
 }
 
 function onMatchStart(boardState)
@@ -241,18 +274,23 @@ jQuery.fn.extend({
             $(this).appendTo($("body"));
             $(this).css({ "position": "fixed", "top": offset.top, "left": offset.left, "transition": "none" }).animate(
                 {
-                    "top": target.offset().top, "left": target.offset().left
+                    "top": target.moveTargetOffset($(this)).top, "left": target.moveTargetOffset($(this)).left
                 }, 600, "easeOutCubic", function ()
                 {
                     $(this).attr("style", "");
                     target.append($(this));
 
-                    //todo: transition-related delay. fix it!
-                    if (typeof callback == "function")
-                        setTimeout(callback, 10);
+                    callback($(this));
                 }
             );
         });
+    },
+    moveTargetOffset: function(movable)
+    {
+            if ($(this).css("text-align") == "center")
+                return { top: $(this).offset().top, left: $(this).offset().left + $(this).width() / 2 - $(movable).width() / 2}
+            else
+                return $(this).offset();
     },
     setDraggable: function()
     {

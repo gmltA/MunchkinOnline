@@ -14,7 +14,7 @@ namespace Munchkin_Online.Core.Longpool
         public TargetType TargetType { get; set; }
 
 
-        public BattleMessage(Guid UserId, Card Card, TargetType TargetType, object data = null )
+        public BattleMessage(Guid UserId, Card Card, TargetType TargetType, object data = null)
             : base(MessageType.BattleMessage, data)
         {
             this.UserId = UserId;
