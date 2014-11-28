@@ -20,9 +20,9 @@ namespace Munchkin_Online.Core.Game
         {
             UserId = p.UserId;
             Level = p.Level;
-            Board = p.Board;
-            DoorsCount = p.Hand.Where(x=>x.Type == CardType.Dungeon).Count();
-            TreasuresCount = p.Hand.Where(x => x.Type == CardType.Treasure).Count();
+            Board = p.Board.Cards;
+            DoorsCount = p.Hand.Cards.Where(x=>x.Type == CardType.Dungeon).Count();
+            TreasuresCount = p.Hand.Cards.Where(x => x.Type == CardType.Treasure).Count();
         }
     }
 }

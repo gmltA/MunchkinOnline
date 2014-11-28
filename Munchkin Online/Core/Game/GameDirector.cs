@@ -62,7 +62,7 @@ namespace Munchkin_Online.Core.Game
             if(player.Class == c)
                 return ACTION_ERROR;
             player.Class = c;
-            player.Board.Add(card);
+            player.Board.Cards.Add(card);
             return ACTION_DONE;
         }
 
@@ -80,7 +80,7 @@ namespace Munchkin_Online.Core.Game
             if (player.Race == c)
                 return ACTION_ERROR;
             player.Race = c;
-            player.Board.Add(card);
+            player.Board.Cards.Add(card);
             return ACTION_DONE;
         }
 

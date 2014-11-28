@@ -8,15 +8,15 @@ using Munchkin_Online.Core.Game.Cards;
 
 namespace Munchkin_Online.Core.Game
 {
-    public class Player : CardHolder
+    public class Player
     {
         public Guid UserId { get; set; }
 
         public int Level { get; set; }
         public int GamesPlayed { get; set; }
 
-        public List<Card> Hand { get; set; }
-        public List<Card> Board { get; set; }
+        public CardHolder Hand { get; set; }
+        public CardHolder Board { get; set; }
 
         public bool IsConfirmed { get; set; }
 
@@ -26,8 +26,8 @@ namespace Munchkin_Online.Core.Game
         public Player()
         {
             Level = 1;
-            Hand = new List<Card>();
-            Board = new List<Card>();
+            Hand = new CardHolder();
+            Board = new CardHolder();
         }
 
         public Player(User user) : this()
@@ -41,59 +41,6 @@ namespace Munchkin_Online.Core.Game
         {
             UserRepository repo = new UserRepository();
             return repo.Accounts.Where(u => u.Id == this.UserId).FirstOrDefault();
-        }
-
-        public Card GetCardById(int cardId)
-        {
-            return Hand.Where(c => c.Id == cardId).FirstOrDefault();
-        }
-
-        public bool AddCard(int cardId)
-        {
-            if (GetCardById(cardId) != null)
-                return false;
-
-            Card card = CardsContainer.GetCards().Where(c => c.Id == cardId).FirstOrDefault();
-            if (card == null)
-                return false;
-
-            Hand.Add(card);
-            return true;
-        }
-
-        public bool AddCard(Card card)
-        {
-            if (GetCardById(card.Id) != null)
-                return false;
-
-            Hand.Add(card);
-            return true;
-        }
-
-        public bool RemoveCard(int cardId)
-        {
-            Card playerCard = GetCardById(cardId);
-            if (playerCard == null)
-                return false;
-
-            Hand.Remove(playerCard);
-            return true;
-        }
-
-        public bool RemoveCard(Card card)
-        {
-            Card playerCard = GetCardById(card.Id);
-            if (playerCard == null)
-                return false;
-
-            Hand.Remove(playerCard);
-            return true;
-        }
-
-        public Card GetRandomCard()
-        {
-            Random random = new Random();
-            return Hand.ElementAt(random.Next(Hand.Count));
         }
     }
 
