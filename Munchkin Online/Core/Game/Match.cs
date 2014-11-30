@@ -58,6 +58,7 @@ namespace Munchkin_Online.Core.Game
         {
             Random r = new Random();
             BoardState.CurrentPlayerId = Players[r.Next(3)].UserId;
+            BoardState.TurnStep = TurnStep.Inital;
         }
     }
 

@@ -24,11 +24,39 @@ namespace Munchkin_Online.Core.Game
         public string ProcessAction(ActionInfo info)
         {
             // todo: handle action result
-            string result;
+            string result = ACTION_ERROR;
             if (match.BoardState.CurrentPlayerId != CurrentUser.Instance.Current.Id)
                 result = ACTION_ERROR;
 
             Player player = match.BoardState.Players.First(x => x.UserId == CurrentUser.Instance.Current.Id);
+
+            Card card = null;
+            Object data = null;
+            if (info.Type == ActionType.MoveCard)
+            {
+                ProcessMoveCardAction(info, out card);
+
+                result = ACTION_DONE;
+            }
+            else if (info.Type == ActionType.FinishTurn)
+            {
+                match.BoardState.StepFinished();
+                data = match.BoardState.CurrentPlayerId;
+
+                result = ACTION_DONE;
+            }
+
+            if (result != ACTION_ERROR)
+            {
+                foreach (var p in match.BoardState.Players)
+                    if (info.Type == ActionType.FinishTurn || p.UserId != player.UserId)
+                        Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info, data));
+            }
+            return ACTION_DONE;
+        }
+
+        bool ProcessMoveCardAction(ActionInfo info, out Card outCard)
+        {
             Card card = null;
             if (info.TargetEntry == ActionEntryType.Hand && info.SourceEntry == ActionEntryType.Deck)
             {
@@ -61,20 +89,17 @@ namespace Munchkin_Online.Core.Game
                 card = info.Source.GetCardById(info.CardId);
 
                 if (!info.Invoker.TryEquip(card))
-                    return ACTION_ERROR;
+                {
+                    outCard = null;
+                    return false;
+                }
             }
 
             info.Source.RemoveCard(card);
             info.Target.AddCard(card);
-            result = ACTION_DONE;
 
-            if (result != ACTION_ERROR)
-            {
-                foreach (var p in match.BoardState.Players)
-                    if (p.UserId != player.UserId)
-                        Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info));
-            }
-            return ACTION_DONE;
+            outCard = card;
+            return true;
         }
     }
 }

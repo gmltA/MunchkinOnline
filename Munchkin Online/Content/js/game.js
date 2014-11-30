@@ -85,6 +85,7 @@ Game.prototype.addCardsToField = function (cards)
     {
         self.addCardToField(new Card(element));
     });
+    $(".table").children().each(function (index, element) { $(element).addClass("flipped") })
 }
 
 Game.prototype.addCardToField = function (card)
@@ -103,6 +104,31 @@ Game.prototype.syncCards = function ()
     this.me.syncCardsWithSrc();
 }
 
+Game.prototype.processTurnStep = function (message)
+{
+    for (var i in this.players) {
+        if (message.Data == this.players[i].srcData.UserId)
+            this.players[i].unfreeze();
+        else
+            this.players[i].freeze();
+    }
+
+    if (message.Data == this.getMe().srcData.UserId) {
+        this.me.unfreeze();
+        $(".deck").removeClass("disabled");
+
+        showPopup(true, $("#turn-step"));
+        setTimeout(function ()
+        {
+            closePopup(true, $("#turn-step"));
+        }, 2000);
+    }
+    else {
+        this.me.freeze();
+        $(".deck").addClass("disabled");
+    }
+}
+
 var game;
 
 function Card(srcCardData)
@@ -111,12 +137,17 @@ function Card(srcCardData)
     this.id = cardId;
     this.type = srcCardData.Type;
     this.class = srcCardData.Class;
+    this.flipped = false;
+    if (typeof srcCardData.CSSClass != "undefined")
+        this.CSSClass = srcCardData.CSSClass;
+    else
+        this.CSSClass = "";
 }
 
 Card.prototype.getHTML = function ()
 {
     var type = this.type == 0 ? "door" : "treasure";
-    return "<div class='card " + type + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
+    return "<div class='card " + type + " " + this.CSSClass + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
 }
 
 function Player(position, srcPlayerData, isMe)
@@ -141,7 +172,7 @@ Player.prototype.getStack = function ()
     return $(".player-hand." + this.fieldPosition + " .stack");
 }
 
-Player.prototype.syncStack = function ()
+Player.prototype.syncCardMgr = function ()
 {
     var cards = this.srcData.Board;
     if (this.isMe)
@@ -158,8 +189,12 @@ Player.prototype.syncStack = function ()
         delete cards[i];
     }
 
-    if (this.isMe)
-        this.getCardMgr().find(".card").each(function (index, element) { $(element).setDraggable() });
+    var self = this;
+    this.getCardMgr().find(".card").each(function (index, element)
+    {
+        $(element).addClass("flipped");
+        if (self.isMe) $(element).setDraggable();
+    });
 }
 
 Player.prototype.getCardsFromDeck = function (deck, counter, callback)
@@ -187,13 +222,13 @@ Player.prototype.syncCardsWithSrc = function ()
         {
             self.addCardToStack(new Card(element));
         });
-        this.getStack().children().each(function (index, element) { $(element).setDraggable() });
+        this.getStack().children().each(function (index, element) { $(element).addClass("flipped").setDraggable() });
     }
     else {
         this.getCardsFromDeck($(".deck.treasure"), this.srcData.TreasuresCount);
         this.getCardsFromDeck($(".deck.door"), this.srcData.DoorsCount);
     }
-    this.syncStack();
+    this.syncCardMgr();
 }
 
 Player.prototype.getRandomCard = function ()
@@ -236,6 +271,30 @@ Player.prototype.makeMove = function (cardClass)
     });
     return card;
 };
+
+Player.prototype.freeze = function ()
+{
+    this.getStack().addClass("disabled").children().each(function (index, element)
+    {
+        $(element).setDraggable(false);
+    });
+    this.getCardMgr().addClass("disabled").find(".card").each(function (index, element)
+    {
+        $(element).setDraggable(false);
+    });
+}
+
+Player.prototype.unfreeze = function ()
+{
+    this.getStack().removeClass("disabled").children().each(function (index, element)
+    {
+        $(element).setDraggable();
+    });
+    this.getCardMgr().removeClass("disabled").find(".card").each(function (index, element)
+    {
+        $(element).setDraggable();
+    });
+}
 
 Player.prototype.addCardToStack = function (card)
 {
@@ -317,20 +376,27 @@ function battleMessageHandler(battleMessage)
     var actionInvoker = game.getPlayerByUserId(battleMessage.UserId);
 
     var actionInfo = battleMessage.Action;
-    var card = battleMessage.Card;
-    if (actionInfo.SourceEntry == 0 && actionInfo.TargetEntry == 3) {
-        var deckClass = actionInfo.SourceParam == 0 ? "door" : "treasure";
-        actionInvoker.getCardsFromDeck($(".deck." + deckClass), 1);
+    // MoveCard
+    if (actionInfo.Type == 0) {
+        var card = battleMessage.Card;
+        if (actionInfo.SourceEntry == 0 && actionInfo.TargetEntry == 3) {
+            var deckClass = actionInfo.SourceParam == 0 ? "door" : "treasure";
+            actionInvoker.getCardsFromDeck($(".deck." + deckClass), 1);
+        }
+        else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 1) {
+            actionInvoker.equipCard(card.CSSClass, slotClass.getValue(battleMessage.Card.Class)).attr("data-card-id", battleMessage.Card.Id);
+        }
+        else if (actionInfo.SourceEntry == 1 && actionInfo.TargetEntry == 3) {
+            var card = actionInvoker.getCardMgr().find("[data-card-id='" + battleMessage.Card.Id + "']");
+            actionInvoker.unequipCard(card).attr("data-card-id", 0);
+        }
+        else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 5) {
+            actionInvoker.makeMove(card.CSSClass).attr("data-card-id", battleMessage.Card.Id);
+        }
     }
-    else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 1) {
-        actionInvoker.equipCard(card.CSSClass, slotClass.getValue(battleMessage.Card.Class)).attr("data-card-id", battleMessage.Card.Id);
-    }
-    else if (actionInfo.SourceEntry == 1 && actionInfo.TargetEntry == 3) {
-        var card = actionInvoker.getCardMgr().find("[data-card-id='" + battleMessage.Card.Id + "']");
-        actionInvoker.unequipCard(card).attr("data-card-id", 0);
-    }
-    else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 5) {
-        actionInvoker.makeMove(card.CSSClass).attr("data-card-id", battleMessage.Card.Id);
+    else if (actionInfo.Type == 1)  // FinishTurn
+    {
+        game.processTurnStep(battleMessage);
     }
 }
 
@@ -340,6 +406,8 @@ function onMatchStart(boardState)
 
     game.syncCards();
     updateStack(game.getMe().getStack());
+
+    game.processTurnStep({ Data: boardState.CurrentPlayerId });
 }
 
 function revertAction(actionInfo, source)
@@ -392,7 +460,7 @@ function dropAction(event, ui)
     else if ($(this).hasClass("stack"))
         targetEntry = 3;
 
-    commitAction({ SourceEntry: sourceEntry, TargetEntry: targetEntry, CardId: $(droppedCard).data("card-id") }, sourceObject);
+    commitAction({ Type: 0, SourceEntry: sourceEntry, TargetEntry: targetEntry, CardId: $(droppedCard).data("card-id") }, sourceObject);
     $(droppedCard).attr("style", "");
     $(this).append(droppedCard);
 
@@ -460,12 +528,12 @@ $(document).ready(function ()
         {
             $("#popup-container").attr("class", "").addClass($(this).attr("class"));
             setPopupCardBG(this);
-            showPopup();
+            showPopup(true);
         }
     }, ".card");
 
     $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
-    $("#blackout").click(closePopup);
+    $("#blackout").click(closePopup(false));
 
     $("#hint").click(function ()
     {
@@ -505,13 +573,16 @@ $(document).ready(function ()
     //todo: consider commitAction result
     $(".deck").click(function ()
     {
+        if ($(this).hasClass("disabled"))
+            return;
+
         var deckClass = 0;
         if ($(this).hasClass("treasure"))
             deckClass = 1;
 
         //todo: return card object and assign card-id to newly created object
         var self = this;
-        commitAction({ SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 }, $(this), function ()
+        commitAction({ Type: 0, SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 }, $(this), function ()
         {
             requestCard(self, $(".player-hand.bottom .stack"));
         })
@@ -552,23 +623,28 @@ jQuery.fn.extend({
         else
             return $(this).offset();
     },
-    setDraggable: function ()
+    setDraggable: function (draggable)
     {
         return this.each(function ()
         {
-            $(this).draggable({
-                start: function ()
-                {
-                    $(this).css("transition", "none");
-                },
-                stop: function ()
-                {
-                    $(this).attr("style", "");
-                },
-                revert: "invalid",
-                containment: "window",
-                addClasses: false
-            });
+            if (draggable == false)
+                $(this).draggable({ disabled: true, addClasses: false });
+            else {
+                $(this).draggable({ disabled: false, addClasses: false });
+                $(this).draggable({
+                    start: function ()
+                    {
+                        $(this).css("transition", "none");
+                    },
+                    stop: function ()
+                    {
+                        $(this).attr("style", "");
+                    },
+                    revert: "invalid",
+                    containment: "window",
+                    addClasses: false
+                });
+            }
         });
     }
 });

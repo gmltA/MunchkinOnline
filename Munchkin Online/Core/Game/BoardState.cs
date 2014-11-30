@@ -78,6 +78,28 @@ namespace Munchkin_Online.Core.Game
             DoorDeck.Cards.AddRange(cards.Where(x => x.Type == CardType.Dungeon));
             TreasureDeck.Cards.AddRange(cards.Where(x => x.Type == CardType.Treasure));
         }
+
+        public void StepFinished()
+        {
+            /* ToDo: real algorythm for 4 ppl game
+            int currentPlayerIndex = Players.FindIndex(0, p => p.UserId == CurrentPlayerId);
+            if (currentPlayerIndex + 1 > PLAYERS_COUNT)
+                currentPlayerIndex = 0;
+            else
+                currentPlayerIndex++;
+            CurrentPlayerId = Players.ElementAt(currentPlayerIndex).UserId;
+            */
+            int currentPlayerIndex = Players.FindIndex(0, p => p.UserId == CurrentPlayerId);
+            do
+            {
+                if (Players.Count > currentPlayerIndex + 1)
+                    currentPlayerIndex++;
+                else
+                    currentPlayerIndex = 0;
+            }
+            while (Players.ElementAt(currentPlayerIndex).UserId.ToString("D") == "00000000-0000-0000-0000-000000000000");
+            CurrentPlayerId = Players.ElementAt(currentPlayerIndex).UserId;
+        }
     }
 
     public enum TurnStep
