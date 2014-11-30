@@ -8,10 +8,6 @@ namespace Munchkin_Online.Models
 {
     public class Card : ITarget
     {
-        const string BasePath = "/Content/img/cards/";
-
-        const string Ext = ".png";
-
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -38,7 +34,7 @@ namespace Munchkin_Online.Models
 
         public int Levels { get; set; }
 
-        public string Path { get { return BasePath + Name + Ext; } }
+        public string CSSClass { get; set; }
 
         public virtual ICollection<IMechanic> Mechanics { get; set; }
 
@@ -56,10 +52,14 @@ namespace Munchkin_Online.Models
         Monster,
         Spell,
         Class,
+        ClassCombo,
         Race,
+        RaceCombo,
         Headgear,
         Footgear,
-        Armor
+        Armor,
+        WeaponOneHand,
+        WeaponTwoHanded
     }
     
 }

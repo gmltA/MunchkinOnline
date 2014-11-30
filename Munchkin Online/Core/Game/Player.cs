@@ -43,6 +43,34 @@ namespace Munchkin_Online.Core.Game
             UserRepository repo = new UserRepository();
             return repo.Accounts.Where(u => u.Id == this.UserId).FirstOrDefault();
         }
+
+        internal bool TryEquip(Card card)
+        {
+            if (card == null)
+                return false;
+
+            if (card.Class == CardClass.Class || card.Class == CardClass.Race)
+            {
+                int cardCount = Board.Cards.Count(c => c.Class == card.Class) + 1;
+                int maxCards = 1;
+
+                var combo = CardClass.ClassCombo;
+                if (card.Class == CardClass.Race)
+                    combo = CardClass.RaceCombo;
+
+                if (Board.Cards.Count(c => c.Class == combo) > 0)
+                    maxCards = 2;
+
+                if (cardCount > maxCards)
+                    return false;
+            }
+            else if (card.Class == CardClass.ClassCombo || card.Class == CardClass.RaceCombo)
+            {
+                if (Board.Cards.Count(c => c.Class == card.Class) > 0)
+                    return false;
+            }
+            return true;
+        }
     }
 
     public enum Class

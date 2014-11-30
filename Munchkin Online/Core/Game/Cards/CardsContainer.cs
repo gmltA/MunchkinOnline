@@ -43,7 +43,8 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Type = CardType.Treasure;
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
-            card.Class = CardClass.Race;
+            card.Class = CardClass.ClassCombo;
+            card.CSSClass = "plutonium-dragon";
             return card;
         }
 
@@ -56,6 +57,7 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.Class;
+            card.CSSClass = "plutonium-dragon";
             return card;
         }
     }

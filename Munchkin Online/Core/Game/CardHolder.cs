@@ -36,6 +36,9 @@ namespace Munchkin_Online.Core.Game
 
         public bool AddCard(Card card)
         {
+            if (card == null)
+                return false;
+
             if (GetCardById(card.Id) != null)
                 return false;
 
@@ -55,6 +58,9 @@ namespace Munchkin_Online.Core.Game
 
         public bool RemoveCard(Card card)
         {
+            if (card == null)
+                return false;
+
             Card playerCard = GetCardById(card.Id);
             if (playerCard == null)
                 return false;

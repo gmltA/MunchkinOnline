@@ -289,6 +289,12 @@ BODY
     background-position: top right;
 }
 
+.card.plutonium-dragon .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
 .card.flipped
 {
     transform: rotateY(180deg);

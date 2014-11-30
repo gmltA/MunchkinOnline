@@ -10,6 +10,7 @@ namespace Munchkin_Online.Core.Longpool
     public class BattleMessage : AsyncMessage
     {
         public Guid UserId { get; set; }
+        public int RelativeId { get; set; }
         public Card Card { get; set; }
         public ActionInfo Action { get; set; }
 
