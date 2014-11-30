@@ -36,26 +36,27 @@ namespace Munchkin_Online.Core.Game.Cards
 
         static Card InstanateRace(string name)
         {
-            Card a = new Card();
-            a.Id = Cards.Count + 1;
-            a.Name = name;
-            a.Type = CardType.Dungeon;
-            a.Mechanics = new List<IMechanic>();
-            a.Mechanics.Add(new SetRaceMechanic());
-            a.Class = CardClass.Race;
-            return a;
+            Card card = new Card();
+            card.Id = Cards.Count + 1;
+            card.Name = name;
+            //todo: treasure -> dungeoun
+            card.Type = CardType.Treasure;
+            card.Mechanics = new List<IMechanic>();
+            card.Mechanics.Add(new SetRaceMechanic());
+            card.Class = CardClass.Race;
+            return card;
         }
 
         static Card InstanateClass(string name)
         {
-            Card a = new Card();
-            a.Id = Cards.Count + 1;
-            a.Name = name;
-            a.Type = CardType.Dungeon;
-            a.Mechanics = new List<IMechanic>();
-            a.Mechanics.Add(new SetRaceMechanic());
-            a.Class = CardClass.Class;
-            return a;
+            Card card = new Card();
+            card.Id = Cards.Count + 1;
+            card.Name = name;
+            card.Type = CardType.Dungeon;
+            card.Mechanics = new List<IMechanic>();
+            card.Mechanics.Add(new SetRaceMechanic());
+            card.Class = CardClass.Class;
+            return card;
         }
     }
 }

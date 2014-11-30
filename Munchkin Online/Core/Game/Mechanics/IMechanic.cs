@@ -10,7 +10,6 @@ namespace Munchkin_Online.Core.Game.Mechanics
         public const string ACTION_DONE = "OK";
         public const string ACTION_ERROR = "ERROR";
 
-        public string Execute(BoardState state, ITarget target);
-
+        public abstract string Execute(BoardState state, Player invoker, ITarget target);
     }
 }

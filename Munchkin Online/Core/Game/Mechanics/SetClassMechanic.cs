@@ -8,9 +8,9 @@ namespace Munchkin_Online.Core.Game.Mechanics
 {
     public class SetClassMechanic : IMechanic
     {
-        public string Execute(BoardState state, Player initiator, ITarget target)
+        public override string Execute(BoardState state, Player invoker, ITarget target)
         {
-            return SetClass(initiator, target as Card);
+            return SetClass(invoker, target as Card);
         }
 
         public string SetClass(Player player, Card card)
@@ -27,7 +27,7 @@ namespace Munchkin_Online.Core.Game.Mechanics
             if (player.Class == c)
                 return ACTION_ERROR;
             player.Class = c;
-            player.Board.Add(card);
+            player.Board.Cards.Add(card);
             return ACTION_DONE;
         }
     }

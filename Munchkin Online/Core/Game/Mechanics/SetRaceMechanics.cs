@@ -8,9 +8,9 @@ namespace Munchkin_Online.Core.Game.Mechanics
 {
     public class SetRaceMechanic : IMechanic
     {
-        public string Execute(BoardState state, Player initiator, ITarget target)
+        public override string Execute(BoardState state, Player invoker, ITarget target)
         {
-            return SetRace(initiator, target as Card);
+            return SetRace(invoker, target as Card);
         }
 
         public string SetRace(Player player, Card card)
@@ -27,7 +27,7 @@ namespace Munchkin_Online.Core.Game.Mechanics
             if (player.Race == c)
                 return ACTION_ERROR;
             player.Race = c;
-            player.Board.Add(card);
+            player.Board.Cards.Add(card);
             return ACTION_DONE;
         }
     }
