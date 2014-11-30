@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Munchkin_Online.Core.Game.Mechanics;
 using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Game.Cards
@@ -33,24 +34,26 @@ namespace Munchkin_Online.Core.Game.Cards
             Cards.Add(InstanateClass("Thief"));
         }
 
-        static Card InstanateRace(string name, params Mechanic[] mechanics)
+        static Card InstanateRace(string name)
         {
             Card a = new Card();
             a.Id = Cards.Count + 1;
             a.Name = name;
             a.Type = CardType.Dungeon;
-            //a.Mechanics = new List<Mechanic>(mechanics);
+            a.Mechanics = new List<IMechanic>();
+            a.Mechanics.Add(new SetRaceMechanic());
             a.Class = CardClass.Race;
             return a;
         }
 
-        static Card InstanateClass(string name, params Mechanic[] mechanics)
+        static Card InstanateClass(string name)
         {
             Card a = new Card();
             a.Id = Cards.Count + 1;
             a.Name = name;
             a.Type = CardType.Dungeon;
-            //a.Mechanics = new List<Mechanic>(mechanics);
+            a.Mechanics = new List<IMechanic>();
+            a.Mechanics.Add(new SetRaceMechanic());
             a.Class = CardClass.Class;
             return a;
         }

@@ -5,10 +5,11 @@ using System.Web;
 using Munchkin_Online.Models;
 using Munchkin_Online.Core.Database;
 using Munchkin_Online.Core.Game.Cards;
+using Munchkin_Online.Core.Game.Mechanics;
 
 namespace Munchkin_Online.Core.Game
 {
-    public class Player : CardHolder
+    public class Player : CardHolder, ITarget
     {
         public Guid UserId { get; set; }
 

@@ -39,7 +39,7 @@ namespace Munchkin_Online.Core.Game
                 info.Target.AddCard(card);
 
                 Longpool.Longpool.Instance.PushMessageToUser(player.UserId, new BattleMessage(player.UserId, card, info));
-            }
+            } 
             /*if (result != ACTION_ERROR)
             {
                 foreach (var p in match.BoardState.Players)
@@ -48,41 +48,9 @@ namespace Munchkin_Online.Core.Game
             return ACTION_DONE;
         }
 
-        public string SetClass(Player player, Card card)
-        {
-            Class c;
-            try
-            {
-                 c = (Class)Enum.Parse(typeof(Class),card.Name);
-            }
-            catch
-            {
-                return ACTION_ERROR;
-            }
-            if(player.Class == c)
-                return ACTION_ERROR;
-            player.Class = c;
-            player.Board.Add(card);
-            return ACTION_DONE;
-        }
+        
 
-        public string SetRace(Player player, Card card)
-        {
-            Race c;
-            try
-            {
-                c = (Race)Enum.Parse(typeof(Race), card.Name);
-            }
-            catch
-            {
-                return ACTION_ERROR;
-            }
-            if (player.Race == c)
-                return ACTION_ERROR;
-            player.Race = c;
-            player.Board.Add(card);
-            return ACTION_DONE;
-        }
+        
 
     }
 }

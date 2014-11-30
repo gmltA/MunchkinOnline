@@ -5,6 +5,10 @@ using System.Web;
 
 namespace Munchkin_Online.Models
 {
+
+    /// <summary>
+    /// Deprecated
+    /// </summary>
     public class Mechanic
     {
         public Guid Id { get; set; }

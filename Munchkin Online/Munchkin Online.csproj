@@ -196,6 +196,10 @@
     <Compile Include="Core\Game\Cards\CardsContainer.cs" />
     <Compile Include="Core\Game\GameDirector.cs" />
     <Compile Include="Core\Game\LongpoolBuilder.cs" />
+    <Compile Include="Core\Game\Mechanics\IMechanic.cs" />
+    <Compile Include="Core\Game\Mechanics\ITarget.cs" />
+    <Compile Include="Core\Game\Mechanics\SetClassMechanic.cs" />
+    <Compile Include="Core\Game\Mechanics\SetRaceMechanics.cs" />
     <Compile Include="Core\Game\PlayerInfo.cs" />
     <Compile Include="Core\LayoutDefines.cs" />
     <Compile Include="Core\Longpool\AsyncMessage.cs" />

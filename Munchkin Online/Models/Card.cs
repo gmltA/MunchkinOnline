@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Munchkin_Online.Core.Game.Mechanics;
 
 namespace Munchkin_Online.Models
 {
-    public class Card
+    public class Card : ITarget
     {
         const string BasePath = "/Content/img/cards/";
 
@@ -39,7 +40,7 @@ namespace Munchkin_Online.Models
 
         public string Path { get { return BasePath + Name + Ext; } }
 
-        public virtual ICollection<Mechanic> Mechanics { get; set; }
+        public virtual ICollection<IMechanic> Mechanics { get; set; }
 
     }
 
