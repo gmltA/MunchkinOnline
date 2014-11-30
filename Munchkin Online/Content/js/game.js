@@ -1,6 +1,104 @@
-function Player(position)
+function RelativePosition()
 {
+    this.relativePosition = [];
+    this.relativePosition["left"] = 0;
+    this.relativePosition["top"] = 1;
+    this.relativePosition["right"] = 2;
+}
+
+RelativePosition.prototype.getIndex = function (position)
+{
+    return this.relativePosition[position];
+}
+
+RelativePosition.prototype.getString = function (index)
+{
+    for (var prop in this.relativePosition) {
+        if (this.relativePosition.hasOwnProperty(prop)) {
+            if (this.relativePosition[prop] === index)
+                return prop;
+        }
+    }
+}
+
+function Game(battleState)
+{
+    this.filedCards = battleState.FieldCards;
+
+    this.relativePosition = new RelativePosition();
+    this.me = new Player("bottom", battleState.Me, true);
+
+    this.players = [];
+    for (var i in battleState.Players) {
+        var index = parseInt(i);
+        this.players[index] = new Player(this.relativePosition.getString(index), battleState.Players[index]);
+    }
+}
+
+Game.prototype.getMe = function ()
+{
+    return this.me;
+}
+
+Game.prototype.getPlayer = function (id)
+{
+    if (typeof id == "number")
+        return this.players[id];
+    else if (typeof id == "string")
+        return this.players[this.relativePosition.getIndex(id)];
+
+    return;
+}
+
+Game.prototype.addCardsToField = function (cards)
+{
+    var self = this;
+    cards.forEach(function (element, index, array)
+    {
+        self.addCardToField(new Card(element.Type == 0 ? "door" : "treasure"));
+    });
+}
+
+Game.prototype.addCardToField = function (card)
+{
+    $(".table").append(card.getHTML());
+}
+
+// Match front-end cards with back-end data
+Game.prototype.syncCards = function ()
+{
+    this.addCardsToField(this.filedCards);
+
+    for (var i in this.players)
+        this.players[i].syncCardsWithSrc();
+
+    this.me.syncCardsWithSrc();
+}
+
+var game;
+
+function Card(cardType, cardId)
+{
+    cardId = cardId | 0;
+    this.id = cardId;
+    this.type = cardType;
+}
+
+Card.prototype.getHTML = function ()
+{
+    return "<div class='card " + this.type + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
+}
+
+function Player(position, srcPlayerData, isMe)
+{
+    this.isMe = isMe | false;
+    this.srcData = srcPlayerData;
     this.fieldPosition = position;
+}
+
+Player.prototype.getSrcData = function ()
+{
+    return this.srcData;
 }
 
 Player.prototype.getCardMgr = function ()
@@ -13,21 +111,36 @@ Player.prototype.getStack = function ()
     return $(".player-hand." + this.fieldPosition + " .stack");
 }
 
-Player.prototype.getCards = function (deck, counter, callback)
+Player.prototype.getCardsFromDeck = function (deck, counter, callback)
 {
-    if (counter > 0)
-    {
+    if (counter > 0) {
         var self = this;
         requestCard(deck, this.getStack(), function ()
         {
             counter--;
-            self.getCards(deck, counter, callback);
+            self.getCardsFromDeck(deck, counter, callback);
         });
     }
-    else
-    {
+    else {
         if (typeof callback == "function")
             callback();
+    }
+}
+
+//todo: impelement isAnimated parameter
+Player.prototype.syncCardsWithSrc = function ()
+{
+    if (this.isMe) {
+        var self = this;
+        this.srcData.Hand.Cards.forEach(function (element, index, array)
+        {
+            self.addCardToStack(new Card(element.Type == 0 ? "door" : "treasure", element.Id));
+        });
+        this.getStack().children().each(function (index, element) { $(element).setDraggable() });
+    }
+    else {
+        this.getCardsFromDeck($(".deck.treasure"), this.srcData.TreasuresCount);
+        this.getCardsFromDeck($(".deck.door"), this.srcData.DoorsCount);
     }
 }
 
@@ -55,14 +168,20 @@ Player.prototype.makeMove = function (cardClass)
     });
 };
 
+Player.prototype.addCardToStack = function (card)
+{
+    this.getStack().append(card.getHTML());
+}
+
 function updateStack(stack)
 {
     var cardCount = $(stack).children().length;
     var stackWidth = $(stack).width();
     var cardWidth = $(stack).children().first().width();
-    var margin = -1*(cardWidth - (stackWidth - cardWidth)/(cardCount - 1));
-    $(stack).children(".card").each(function(index, elem) {
-        if (index != cardCount-1)
+    var margin = -1 * (cardWidth - (stackWidth - cardWidth) / (cardCount - 1));
+    $(stack).children(".card").each(function (index, elem)
+    {
+        if (index != cardCount - 1)
             $(elem).css("margin-right", margin);
     });
 }
@@ -72,12 +191,13 @@ function cardHover(card, stack, cardIndex)
     var cardCount = $(stack).children().length;
     if (cardIndex == cardCount - 1 || cardCount < 4)
         return;
-        
+
     var stackWidth = $(stack).width();
     var cardWidth = $(stack).children().first().width();
-    var margin = -1*(cardWidth - (stackWidth - cardWidth*2)/(cardCount - 2));
-    $(stack).children(".card").each(function(index, elem) {
-        if (index != cardCount-1 && index != cardIndex)
+    var margin = -1 * (cardWidth - (stackWidth - cardWidth * 2) / (cardCount - 2));
+    $(stack).children(".card").each(function (index, elem)
+    {
+        if (index != cardCount - 1 && index != cardIndex)
             $(elem).css("margin-right", margin);
         else if (index == cardIndex)
             $(elem).css("margin-right", 0);
@@ -109,7 +229,7 @@ function requestCard(deck, target, callback)
     if ($(deck).hasClass("treasure"))
         deckClass = "treasure";
 
-    var card = $(deck).append("<div class='card " + deckClass + "'><figure class='back'></figure><figure class='face'></figure></div>").children(".card");
+    var card = $(deck).append(new Card(deckClass).getHTML()).children(".card");
 
     card.moveTo(target, function ()
     {
@@ -128,27 +248,18 @@ function battleMessageHandler(battleMessage)
 
 function onMatchStart(boardState)
 {
-    var bottomPlayer = new Player("bottom");
-    bottomPlayer.getCards($(".deck.door"), boardState.Me.Hand.length, function () { });
+    game = new Game(boardState);
 
-    var topPlayer = new Player("top");
-    topPlayer.getCards($(".deck.treasure"), boardState.Players[0].TreasuresCount, function () { });
-    topPlayer.getCards($(".deck.door"), boardState.Players[0].DoorsCount, function () { });
-    var leftPlayer = new Player("left");
-    leftPlayer.getCards($(".deck.treasure"), boardState.Players[1].TreasuresCount, function () { });
-    leftPlayer.getCards($(".deck.door"), boardState.Players[1].DoorsCount, function () { });
-    var rightPlayer = new Player("right");
-    rightPlayer.getCards($(".deck.treasure"), boardState.Players[2].TreasuresCount, function () { });
-    rightPlayer.getCards($(".deck.door"), boardState.Players[2].DoorsCount, function () { });
+    game.syncCards();
+    updateStack(game.getMe().getStack());
 }
 
-function commitAction()
+function commitAction(actionInfo)
 {
-    var o = { SourceEntry: 0, TargetEntry: 3, CardId: 0 };
     $.ajax({
         type: "POST",
         url: '/Game/ProcessAction',
-        data: o,
+        data: actionInfo,
         cache: false,
         success: function (response)
         {
@@ -162,6 +273,11 @@ function dropAction(event, ui)
     var droppedCard = ui.draggable;
     var sourceObject = $(droppedCard).parent();
 
+    var sourceEntry = 1;
+    if ($(sourceObject).hasClass("stack"))
+        sourceEntry = 3;
+
+    commitAction({ SourceEntry: sourceEntry, TargetEntry: 5, CardId: $(droppedCard).data("card-id") });
     $(droppedCard).attr("style", "");
     $(this).append(droppedCard);
 
@@ -214,10 +330,12 @@ $(document).ready(function ()
 {
     $(".stack").each(function (index, elem) { updateStack(elem) });
     $(".stack").on({
-        mouseenter: function() {
+        mouseenter: function ()
+        {
             cardHover(this, $(this).parent(), $(this).parent().children().index(this));
         },
-        mouseleave: function() {
+        mouseleave: function ()
+        {
             updateStack($(this).parent());
         }
     }, ".card");
@@ -230,7 +348,7 @@ $(document).ready(function ()
             showPopup();
         }
     }, ".card");
-    
+
     $(".card-mgr").click(function () { $(this).parent().toggleClass("pinned") });
     $("#blackout").click(closePopup);
 
@@ -238,12 +356,12 @@ $(document).ready(function ()
     {
         tutorialProcessStep(tutorialStep++);
     });
-    
+
     $(".card:not(#popup-container)").setDraggable();
 
     $(".card-mgr:not(.small) .card-slot").droppable({
         drop: dropAction,
-        accept: function(draggable)
+        accept: function (draggable)
         {
             if ($(this).children(".card").length != 0)
                 return false;
@@ -270,7 +388,16 @@ $(document).ready(function ()
     });
 
     //todo: consider commitAction result
-    $(".deck").click(function () { commitAction(); requestCard(this, $(".player-hand.bottom .stack")); });
+    $(".deck").click(function ()
+    {
+        var deckClass = 0;
+        if ($(this).hasClass("treasure"))
+            deckClass = 1;
+
+        //todo: return card object and assign card-id to newly created object
+        commitAction({ SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 });
+        requestCard(this, $(".player-hand.bottom .stack"));
+    });
 
     loadTutorialState();
 });
@@ -300,14 +427,14 @@ jQuery.fn.extend({
             );
         });
     },
-    moveTargetOffset: function(movable)
+    moveTargetOffset: function (movable)
     {
-            if ($(this).css("text-align") == "center")
-                return { top: $(this).offset().top, left: $(this).offset().left + $(this).width() / 2 - $(movable).width() / 2}
-            else
-                return $(this).offset();
+        if ($(this).css("text-align") == "center")
+            return { top: $(this).offset().top, left: $(this).offset().left + $(this).width() / 2 - $(movable).width() / 2 }
+        else
+            return $(this).offset();
     },
-    setDraggable: function()
+    setDraggable: function ()
     {
         return this.each(function ()
         {

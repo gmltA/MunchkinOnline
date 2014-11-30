@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Munchkin_Online.Core.Auth;
+using Munchkin_Online.Models;
 
 namespace Munchkin_Online.Core.Game
 {
@@ -17,6 +18,8 @@ namespace Munchkin_Online.Core.Game
         public TurnStep TurnStep { get; set; }
         public Battle Battle { get; set; }
 
+        public List<Card> FieldCards;
+
         public BoardStateInfo(BoardState b)
         {
             CurrentPlayerId = b.CurrentPlayerId;
@@ -30,6 +33,7 @@ namespace Munchkin_Online.Core.Game
             }
             TurnStep = b.TurnStep;
             Battle = b.Battle;
+            FieldCards = b.Field.Cards;
         }
     }
 }
