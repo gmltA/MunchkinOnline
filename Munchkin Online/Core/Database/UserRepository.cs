@@ -107,7 +107,18 @@ namespace Munchkin_Online.Core.Database
                 d.Dispose();
             GC.SuppressFinalize(this);
         }
-}
+
+        internal List<TopPlayersNode> GetTopPlayers()
+        {
+            return DB.Users
+                .Select<User, TopPlayersNode>( x => new TopPlayersNode
+                                                {
+                                                    Id = x.Id,
+                                                    Username = x.Nickname,
+                                                    Winrate = x.GamesPlayed==0?0:(float)x.GamesWon/x.GamesPlayed
+                                                }).OrderBy(x=>x.Winrate).Take(10).ToList();
+        }
+    }
 
     public class UserFriendData
     {

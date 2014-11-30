@@ -26,5 +26,13 @@ namespace Munchkin_Online.Controllers
             Response.StatusCode = 404;
             return new EmptyResult();
         }
+
+        public ActionResult TopPlayers()
+        {
+            UserRepository repo = new UserRepository();
+            return View(repo.GetTopPlayers());
+        }
     }
+
+    
 }

@@ -228,6 +228,7 @@
     <Compile Include="Models\Mechanic.cs" />
     <Compile Include="Core\Game\Player.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\TopPlayersNode.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="NotificationsHandler.ashx.cs">
       <DependentUpon>NotificationsHandler.ashx</DependentUpon>
@@ -347,6 +348,7 @@
     <Content Include="Views\Lobby\RenderInvite.cshtml" />
     <Content Include="Views\Lobby\SlotContextMenu.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Profile\TopPlayers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

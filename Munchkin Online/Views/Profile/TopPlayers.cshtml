@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "TopPlayers";
+    
+}
+@model List<Munchkin_Online.Models.TopPlayersNode>
+<h2>TopPlayers</h2>
+<table>
+  <tr>
+    <td>Nickname</td>
+    <td>Winrate</td>
+  </tr>
+  @foreach (var n in Model)
+  {
+  <tr>
+      <td><a href="/profile/@n.Id.ToString("N")">@n.Username</a></td>
+      <td>@(n.Winrate + "%")</td>
+  </tr>
+  }
+</table>

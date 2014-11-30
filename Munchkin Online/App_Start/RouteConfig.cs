@@ -13,6 +13,13 @@ namespace Munchkin_Online
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+                "TopPlayers",
+                "Profile/TopPlayers",
+                new { controller = "Profile", action = "TopPlayers" }
+            );
+
             routes.MapRoute(
                 "Profile",
                 "Profile/{profileId}",
