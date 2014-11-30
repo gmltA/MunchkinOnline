@@ -1,37 +1,56 @@
-function RelativePosition()
+function Enum(enumValues)
 {
-    this.relativePosition = [];
-    this.relativePosition["left"] = 0;
-    this.relativePosition["top"] = 1;
-    this.relativePosition["right"] = 2;
+    this.values = enumValues.concat();
 }
 
-RelativePosition.prototype.getIndex = function (position)
+Enum.prototype.getValue = function (index)
 {
-    return this.relativePosition[position];
+    return this.values[index];
 }
 
-RelativePosition.prototype.getString = function (index)
+Enum.prototype.getIndex = function (value)
 {
-    for (var prop in this.relativePosition) {
-        if (this.relativePosition.hasOwnProperty(prop)) {
-            if (this.relativePosition[prop] === index)
+    for (var prop in this.values) {
+        if (this.values.hasOwnProperty(prop)) {
+            if (this.values[prop] === value)
                 return prop;
         }
     }
 }
 
+var slotClass = [];
+slotClass[0] = "item";
+slotClass[1] = "monster";
+slotClass[2] = "spell";
+slotClass[3] = "class";
+slotClass[4] = "class-combo";
+slotClass[5] = "race";
+slotClass[6] = "race-combo";
+slotClass[7] = "head";
+slotClass[8] = "legs";
+slotClass[9] = "body";
+slotClass[10] = "weapon-1h";
+slotClass[11] = "weapon-2h";
+
+var slotClass = new Enum(slotClass);
+
 function Game(battleState)
 {
     this.filedCards = battleState.FieldCards;
 
-    this.relativePosition = new RelativePosition();
+    var rp = [];
+    rp[0] = "left";
+    rp[1] = "top";
+    rp[2] = "right";
+
+    this.relativePosition = new Enum(rp);
+
     this.me = new Player("bottom", battleState.Me, true);
 
     this.players = [];
     for (var i in battleState.Players) {
         var index = parseInt(i);
-        this.players[index] = new Player(this.relativePosition.getString(index), battleState.Players[index]);
+        this.players[index] = new Player(this.relativePosition.getValue(index), battleState.Players[index]);
     }
 }
 
@@ -50,12 +69,21 @@ Game.prototype.getPlayer = function (id)
     return;
 }
 
+Game.prototype.getPlayerByUserId = function (UserId)
+{
+    for (var i in this.players)
+        if (this.players[i].srcData.UserId == UserId)
+            return this.players[i];
+
+    return;
+}
+
 Game.prototype.addCardsToField = function (cards)
 {
     var self = this;
     cards.forEach(function (element, index, array)
     {
-        self.addCardToField(new Card(element.Type == 0 ? "door" : "treasure"));
+        self.addCardToField(new Card(element));
     });
 }
 
@@ -77,16 +105,18 @@ Game.prototype.syncCards = function ()
 
 var game;
 
-function Card(cardType, cardId)
+function Card(srcCardData)
 {
-    cardId = cardId | 0;
+    cardId = srcCardData.Id | 0;
     this.id = cardId;
-    this.type = cardType;
+    this.type = srcCardData.Type;
+    this.class = srcCardData.Class;
 }
 
 Card.prototype.getHTML = function ()
 {
-    return "<div class='card " + this.type + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
+    var type = this.type == 0 ? "door" : "treasure";
+    return "<div class='card " + type + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
 }
 
 function Player(position, srcPlayerData, isMe)
@@ -109,6 +139,27 @@ Player.prototype.getCardMgr = function ()
 Player.prototype.getStack = function ()
 {
     return $(".player-hand." + this.fieldPosition + " .stack");
+}
+
+Player.prototype.syncStack = function ()
+{
+    var cards = this.srcData.Board;
+    if (this.isMe)
+        cards = this.srcData.Board.Cards;
+
+    if (!cards)
+        return;
+
+    cards = cards.slice();
+    var self = this;
+    for (var i in cards) {
+        var card = cards[i];
+        self.getCardMgr().find("[data-accept-class='" + slotClass.getValue(card.Class) + "']:not(:has(.card))").first().append(new Card(card).getHTML());
+        delete cards[i];
+    }
+
+    if (this.isMe)
+        this.getCardMgr().find(".card").each(function (index, element) { $(element).setDraggable() });
 }
 
 Player.prototype.getCardsFromDeck = function (deck, counter, callback)
@@ -134,7 +185,7 @@ Player.prototype.syncCardsWithSrc = function ()
         var self = this;
         this.srcData.Hand.Cards.forEach(function (element, index, array)
         {
-            self.addCardToStack(new Card(element.Type == 0 ? "door" : "treasure", element.Id));
+            self.addCardToStack(new Card(element));
         });
         this.getStack().children().each(function (index, element) { $(element).setDraggable() });
     }
@@ -142,6 +193,7 @@ Player.prototype.syncCardsWithSrc = function ()
         this.getCardsFromDeck($(".deck.treasure"), this.srcData.TreasuresCount);
         this.getCardsFromDeck($(".deck.door"), this.srcData.DoorsCount);
     }
+    this.syncStack();
 }
 
 Player.prototype.getRandomCard = function ()
@@ -150,13 +202,29 @@ Player.prototype.getRandomCard = function ()
     return this.getStack().children().eq(Math.floor(Math.random() * cardCount));
 }
 
+/**
+ * Force functions
+ * Those functions are called by server as a reaction to battle messages
+ */
 Player.prototype.equipCard = function (cardClass, slot)
 {
     var card = this.getRandomCard();
-    card.moveTo(this.getCardMgr().find("." + slot), function ()
+    card.moveTo(this.getCardMgr().find("[data-accept-class='" + slot + "']").first(), function ()
     {
         flipCard(card, cardClass);
     });
+    return card;
+}
+
+Player.prototype.unequipCard = function (card)
+{
+    var self = this;
+    card.moveTo(this.getStack(), function ()
+    {
+        updateStack(self.getStack());
+        flipCard(card);
+    });
+    return card;
 }
 
 Player.prototype.makeMove = function (cardClass)
@@ -166,6 +234,7 @@ Player.prototype.makeMove = function (cardClass)
     {
         flipCard(card, cardClass);
     });
+    return card;
 };
 
 Player.prototype.addCardToStack = function (card)
@@ -219,17 +288,17 @@ function flipCard(card, cardClass)
         if (typeof cardClass != "undefined")
             $(card).addClass(cardClass);
 
-        $(card).addClass("flipped");
+        $(card).toggleClass("flipped");
     }, 20);
 }
 
 function requestCard(deck, target, callback)
 {
-    var deckClass = "door";
+    var deckClass = 0;
     if ($(deck).hasClass("treasure"))
-        deckClass = "treasure";
+        deckClass = 1;
 
-    var card = $(deck).append(new Card(deckClass).getHTML()).children(".card");
+    var card = $(deck).append(new Card({Type : deckClass}).getHTML()).children(".card");
 
     card.moveTo(target, function ()
     {
@@ -243,7 +312,26 @@ function requestCard(deck, target, callback)
 
 function battleMessageHandler(battleMessage)
 {
-    console.log(battleMessage.Action);
+    console.log(battleMessage);
+
+    var actionInvoker = game.getPlayerByUserId(battleMessage.UserId);
+
+    var actionInfo = battleMessage.Action;
+    var card = battleMessage.Card;
+    if (actionInfo.SourceEntry == 0 && actionInfo.TargetEntry == 3) {
+        var deckClass = actionInfo.SourceParam == 0 ? "door" : "treasure";
+        actionInvoker.getCardsFromDeck($(".deck." + deckClass), 1);
+    }
+    else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 1) {
+        actionInvoker.equipCard(card.CSSClass, slotClass.getValue(battleMessage.Card.Class)).attr("data-card-id", battleMessage.Card.Id);
+    }
+    else if (actionInfo.SourceEntry == 1 && actionInfo.TargetEntry == 3) {
+        var card = actionInvoker.getCardMgr().find("[data-card-id='" + battleMessage.Card.Id + "']");
+        actionInvoker.unequipCard(card).attr("data-card-id", 0);
+    }
+    else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 5) {
+        actionInvoker.makeMove(card.CSSClass).attr("data-card-id", battleMessage.Card.Id);
+    }
 }
 
 function onMatchStart(boardState)
@@ -254,7 +342,18 @@ function onMatchStart(boardState)
     updateStack(game.getMe().getStack());
 }
 
-function commitAction(actionInfo)
+function revertAction(actionInfo, source)
+{
+    if (!actionInfo.CardId)
+        return;
+
+    $("[data-card-id='" + actionInfo.CardId + "']").moveTo(source, function (card)
+    {
+        card.appendTo(source);
+    });
+}
+
+function commitAction(actionInfo, source, callback)
 {
     $.ajax({
         type: "POST",
@@ -263,7 +362,12 @@ function commitAction(actionInfo)
         cache: false,
         success: function (response)
         {
-
+            if (response == "ERROR") {
+                revertAction(actionInfo, source);
+            }
+            else
+                if (typeof callback == "function")
+                    callback();
         }
     });
 }
@@ -272,12 +376,23 @@ function dropAction(event, ui)
 {
     var droppedCard = ui.draggable;
     var sourceObject = $(droppedCard).parent();
+    if (sourceObject.get(0) == $(this).get(0))
+        return;
 
-    var sourceEntry = 1;
-    if ($(sourceObject).hasClass("stack"))
+    $(droppedCard).detach();
+    var sourceEntry = 1; // deck
+    if ($(sourceObject).hasClass("card-slot"))
+        targetEntry = 1;
+    else if ($(sourceObject).hasClass("stack"))
         sourceEntry = 3;
 
-    commitAction({ SourceEntry: sourceEntry, TargetEntry: 5, CardId: $(droppedCard).data("card-id") });
+    var targetEntry = 5; // field
+    if ($(this).hasClass("card-slot"))
+        targetEntry = 1;
+    else if ($(this).hasClass("stack"))
+        targetEntry = 3;
+
+    commitAction({ SourceEntry: sourceEntry, TargetEntry: targetEntry, CardId: $(droppedCard).data("card-id") }, sourceObject);
     $(droppedCard).attr("style", "");
     $(this).append(droppedCard);
 
@@ -395,8 +510,11 @@ $(document).ready(function ()
             deckClass = 1;
 
         //todo: return card object and assign card-id to newly created object
-        commitAction({ SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 });
-        requestCard(this, $(".player-hand.bottom .stack"));
+        var self = this;
+        commitAction({ SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 }, $(this), function ()
+        {
+            requestCard(self, $(".player-hand.bottom .stack"));
+        })
     });
 
     loadTutorialState();

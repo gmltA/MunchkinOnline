@@ -10,7 +10,7 @@ namespace Munchkin_Online.Core.Game
     public class BoardState
     {
         public const int PLAYERS_COUNT = 4;
-        public const int DOORS_COUNT = 1;
+        public const int DOORS_COUNT = 0;
         public const int TREASURES_COUNT = 0;
 
         public CardHolder Field { get; set; }
