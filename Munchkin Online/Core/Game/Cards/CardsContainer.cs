@@ -32,6 +32,8 @@ namespace Munchkin_Online.Core.Game.Cards
             Cards.Add(InstanateClass("Warrior"));
             Cards.Add(InstanateClass("Mage"));
             Cards.Add(InstanateClass("Thief"));
+
+            Cards.Add(InstanateSpell("Friendship Potion"));
         }
 
         static Card InstanateRace(string name)
@@ -39,8 +41,7 @@ namespace Munchkin_Online.Core.Game.Cards
             Card card = new Card();
             card.Id = Cards.Count + 1;
             card.Name = name;
-            //todo: treasure -> dungeoun
-            card.Type = CardType.Treasure;
+            card.Type = CardType.Dungeon;
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.ClassCombo;
@@ -56,6 +57,18 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.Class;
+            return card;
+        }
+
+        static Card InstanateSpell(string name)
+        {
+            Card card = new Card();
+            card.Id = Cards.Count + 1;
+            card.Name = name;
+            card.Type = CardType.Treasure;
+            card.Mechanics = new List<IMechanic>();
+            card.Mechanics.Add(new EvadeMonstersMechanic());
+            card.Class = CardClass.Spell;
             return card;
         }
     }

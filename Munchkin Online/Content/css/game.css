@@ -297,7 +297,7 @@ BODY
 .card .face
 {
     transform: rotateY(180deg);
-    background-position: top right;
+    background-size: 300px auto;
 }
 
 
@@ -305,43 +305,57 @@ BODY
 .card.plutonium-dragon .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 0% 0%;
 }
 
 .card.mage .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 68% 0%;
 }
 
 .card.warrior .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 34% 0%;
 }
 
 .card.elf .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 68% 107%;
 }
 
 .card.huffling .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 34% 107%;
 }
 
 .card.thief .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 102% 0%;
 }
 
 .card.dwarf .face
 {
     background: url(/Content/img/card.png);
-    background-size: cover;
+    background-size: 300px auto;
+    background-position: 0% 107%;
+}
+
+.card.friendship-potion .face
+{
+    background: url(/Content/img/card.png);
+    background-size: 300px auto;
+    background-position: 102% 107%;
 }
 
 .card.flipped

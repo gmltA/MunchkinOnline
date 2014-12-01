@@ -54,7 +54,7 @@ namespace Munchkin_Online.Core.Game
                 {
                     if (info.Type == ActionType.FinishTurn || p.UserId != player.UserId)
                         Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info, data));
-                    Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.FaseChanged, match.BoardState.TurnStep);
+                    Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.FaseChanged, match.BoardState.TurnStep));
                 }
             }
             return MakeAnswer(result, AdditionalData);
