@@ -44,7 +44,6 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.ClassCombo;
-            card.CSSClass = "plutonium-dragon";
             return card;
         }
 
@@ -57,7 +56,6 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Mechanics = new List<IMechanic>();
             card.Mechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.Class;
-            card.CSSClass = "plutonium-dragon";
             return card;
         }
     }

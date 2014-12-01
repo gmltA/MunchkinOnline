@@ -300,7 +300,45 @@ BODY
     background-position: top right;
 }
 
+
+
 .card.plutonium-dragon .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.mage .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.warrior .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.elf .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.huffling .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.thief .face
+{
+    background: url(/Content/img/card.png);
+    background-size: cover;
+}
+
+.card.dwarf .face
 {
     background: url(/Content/img/card.png);
     background-size: cover;

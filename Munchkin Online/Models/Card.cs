@@ -34,7 +34,7 @@ namespace Munchkin_Online.Models
 
         public int Levels { get; set; }
 
-        public string CSSClass { get; set; }
+        public string CSSClass { get { return Name.Replace(' ', '-').ToLower(); } }
 
         public virtual ICollection<IMechanic> Mechanics { get; set; }
 
