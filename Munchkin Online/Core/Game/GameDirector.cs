@@ -97,12 +97,8 @@ namespace Munchkin_Online.Core.Game
                 info.Target = match.BoardState.Field;
                 info.Source = info.Invoker.Hand;
                 card = info.Source.GetCardById(info.CardId);
-            }
-            if (info.TargetEntry == ActionEntryType.Hand && info.SourceEntry == ActionEntryType.Slot)
-            {
-                info.Target = info.Invoker.Hand;
-                info.Source = info.Invoker.Board;
-                card = info.Source.GetCardById(info.CardId);
+                foreach (var m in card.Mechanics)
+                    m.Execute(match.BoardState, info.Invoker, card);
             }
             if (info.SourceEntry == ActionEntryType.Hand && info.TargetEntry == ActionEntryType.Slot)
             {
@@ -110,6 +106,9 @@ namespace Munchkin_Online.Core.Game
                 info.Source = info.Invoker.Hand;
 
                 card = info.Source.GetCardById(info.CardId);
+
+                if (card.Class == CardClass.Race || card.Class == CardClass.Class)
+                    card.Mechanics.ElementAt(0).Execute(match.BoardState, info.Invoker, card);
 
                 if (!info.Invoker.TryEquip(card))
                 {

@@ -17,6 +17,9 @@ namespace Munchkin_Online.Core.Game.Mechanics
         {
             state.Field.Cards.Clear();
             state.TurnStep = TurnStep.Ending;
+            foreach (var p in state.Players)
+                if (p.UserId != player.UserId)
+                    Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new Longpool.AsyncMessage(Longpool.MessageType.EndOfTheBattle));
             return ACTION_DONE;
         }
     }
