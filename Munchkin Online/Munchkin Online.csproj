@@ -199,6 +199,7 @@
     <Compile Include="Core\Game\Mechanics\EvadeMonstersMechanic.cs" />
     <Compile Include="Core\Game\Mechanics\IMechanic.cs" />
     <Compile Include="Core\Game\Mechanics\ITarget.cs" />
+    <Compile Include="Core\Game\Mechanics\KillPlayerMechanic.cs" />
     <Compile Include="Core\Game\Mechanics\SetClassMechanic.cs" />
     <Compile Include="Core\Game\Mechanics\SetRaceMechanics.cs" />
     <Compile Include="Core\Game\PlayerInfo.cs" />
