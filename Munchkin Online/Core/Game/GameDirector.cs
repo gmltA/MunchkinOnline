@@ -51,8 +51,11 @@ namespace Munchkin_Online.Core.Game
             if (result != ACTION_ERROR)
             {
                 foreach (var p in match.BoardState.Players)
+                {
                     if (info.Type == ActionType.FinishTurn || p.UserId != player.UserId)
                         Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info, data));
+                    Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.FaseChanged, match.BoardState.TurnStep);
+                }
             }
             return MakeAnswer(result, AdditionalData);
         }
@@ -60,6 +63,22 @@ namespace Munchkin_Online.Core.Game
         bool ProcessMoveCardAction(ActionInfo info, out Card outCard)
         {
             Card card = null;
+            if (info.TargetEntry == ActionEntryType.Field && info.SourceEntry == ActionEntryType.Deck)
+            {
+                if (info.SourceParam == 0)
+                    info.Source = match.BoardState.DoorDeck;
+                else
+                    info.Source = match.BoardState.TreasureDeck;
+
+                card = info.Source.GetRandomCard();
+
+                info.Target = match.BoardState.Field;
+
+                if (card.Class == CardClass.Monster)
+                    match.BoardState.TurnStep = TurnStep.Battle;
+                else
+                    match.BoardState.TurnStep = TurnStep.Waiting;
+            }
             if (info.TargetEntry == ActionEntryType.Hand && info.SourceEntry == ActionEntryType.Deck)
             {
                 if (info.SourceParam == 0)
@@ -70,6 +89,7 @@ namespace Munchkin_Online.Core.Game
                 card = info.Source.GetRandomCard();
 
                 info.Target = info.Invoker.Hand;
+                match.BoardState.TurnStep = TurnStep.Ending;
             }
             if (info.SourceEntry == ActionEntryType.Hand && info.TargetEntry == ActionEntryType.Field)
             {

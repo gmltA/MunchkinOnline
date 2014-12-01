@@ -106,7 +106,7 @@ namespace Munchkin_Online.Core.Game
     {
         Inital,
         Battle,
-        CleaningNychki,
+        Waiting,
         Ending
     }
 }
