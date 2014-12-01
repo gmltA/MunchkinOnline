@@ -6,6 +6,7 @@ using Munchkin_Online.Core.Auth;
 using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
 using Munchkin_Online.Core.Game.Cards;
+using System.Web.Script.Serialization;
 
 namespace Munchkin_Online.Core.Game
 {
@@ -23,8 +24,9 @@ namespace Munchkin_Online.Core.Game
 
         public string ProcessAction(ActionInfo info)
         {
-            // todo: handle action result
             string result = ACTION_ERROR;
+            object AdditionalData = null;
+            // todo: handle action result
             if (match.BoardState.CurrentPlayerId != CurrentUser.Instance.Current.Id)
                 result = ACTION_ERROR;
 
@@ -35,7 +37,7 @@ namespace Munchkin_Online.Core.Game
             if (info.Type == ActionType.MoveCard)
             {
                 ProcessMoveCardAction(info, out card);
-
+                AdditionalData = card;
                 result = ACTION_DONE;
             }
             else if (info.Type == ActionType.FinishTurn)
@@ -52,7 +54,7 @@ namespace Munchkin_Online.Core.Game
                     if (info.Type == ActionType.FinishTurn || p.UserId != player.UserId)
                         Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new BattleMessage(player.UserId, card, info, data));
             }
-            return ACTION_DONE;
+            return MakeAnswer(result, AdditionalData);
         }
 
         bool ProcessMoveCardAction(ActionInfo info, out Card outCard)
@@ -100,6 +102,11 @@ namespace Munchkin_Online.Core.Game
 
             outCard = card;
             return true;
+        }
+
+        public string MakeAnswer(string message, object data)
+        {
+            return new JavaScriptSerializer().Serialize(new { Message = message, Data = data });
         }
     }
 }
