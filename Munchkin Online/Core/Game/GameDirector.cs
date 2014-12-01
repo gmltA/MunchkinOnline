@@ -7,6 +7,7 @@ using Munchkin_Online.Core.Longpool;
 using Munchkin_Online.Models;
 using Munchkin_Online.Core.Game.Cards;
 using System.Web.Script.Serialization;
+using Munchkin_Online.Core.Game.Mechanics;
 
 namespace Munchkin_Online.Core.Game
 {
@@ -36,9 +37,11 @@ namespace Munchkin_Online.Core.Game
             Object data = null;
             if (info.Type == ActionType.MoveCard)
             {
-                ProcessMoveCardAction(info, out card);
-                AdditionalData = card;
-                result = ACTION_DONE;
+                if (ProcessMoveCardAction(info, out card))
+                {
+                    AdditionalData = card;
+                    result = ACTION_DONE;
+                }
             }
             else if (info.Type == ActionType.FinishTurn)
             {
@@ -46,6 +49,23 @@ namespace Munchkin_Online.Core.Game
                 data = match.BoardState.CurrentPlayerId;
 
                 result = ACTION_DONE;
+            }
+            else if (info.Type == ActionType.TryEscape)
+            {
+                //todo: implement proper dice algorythm!
+                var monsters = match.BoardState.Field.Cards.Where(c => c.Class == CardClass.Monster).ToList();
+                if (monsters.Count > 0)
+                {
+                    ((List<IMechanic>)monsters[0].Mechanics)[0].Execute(match.BoardState, info.Invoker, null);
+                    data = new { diceResult = 1, escapeResult = false };
+                    AdditionalData = data;
+                    result = ACTION_DONE;
+                    foreach (var p in match.BoardState.Players)
+                    {
+                        Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.EndOfTheBattle));
+                    }
+                } else
+                    result = ACTION_ERROR;
             }
 
             if (result != ACTION_ERROR)
@@ -107,14 +127,14 @@ namespace Munchkin_Online.Core.Game
 
                 card = info.Source.GetCardById(info.CardId);
 
-                if (card.Class == CardClass.Race || card.Class == CardClass.Class)
-                    card.Mechanics.ElementAt(0).Execute(match.BoardState, info.Invoker, card);
-
                 if (!info.Invoker.TryEquip(card))
                 {
                     outCard = null;
                     return false;
                 }
+
+                if (card.Class == CardClass.Race || card.Class == CardClass.Class)
+                    card.Mechanics.ElementAt(0).Execute(match.BoardState, info.Invoker, card);
             }
 
             if (card != null)

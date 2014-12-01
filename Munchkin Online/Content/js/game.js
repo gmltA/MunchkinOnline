@@ -78,8 +78,8 @@ Game.prototype.syncPhase = function ()
                 if (this.players[i].srcData.Id != this.CurrentPlayerId)
                     this.players[i].freeze();
             break;
-        case 1:
-            $(".deck.door").addClass("disabled");
+        case 2:
+            $(".deck.door").removeClass("disabled");
             $(".deck.treasure").addClass("disabled");
             this.getCurrentPlayer().unfreeze();
             this.getCurrentPlayer().freezeCardMgr();
@@ -192,7 +192,7 @@ function Card(srcCardData)
 Card.prototype.getHTML = function ()
 {
     var type = this.type == 0 ? "door" : "treasure";
-    return "<div class='card " + type + " " + this.CSSClass + "' data-card-id='" + this.id + "'><figure class='back'></figure><figure class='face'></figure></div>";
+    return "<div class='card " + type + " " + this.CSSClass + "' data-card-id='" + this.id + "' data-card-class='" + slotClass.getValue(this.class) + "'><figure class='back'></figure><figure class='face'></figure></div>";
 }
 
 function Player(position, srcPlayerData, isMe)
@@ -335,6 +335,7 @@ Player.prototype.freezeCardMgr = function ()
 
 Player.prototype.freeze = function ()
 {
+    $(".table .button").addClass("disabled");
     this.freezeStack();
     this.freezeCardMgr();
 }
@@ -357,6 +358,7 @@ Player.prototype.unfreezeCardMgr = function ()
 
 Player.prototype.unfreeze = function ()
 {
+    $(".table .button").removeClass("disabled");
     this.unfreezeStack();
     this.unfreezeCardMgr();
 }
@@ -367,12 +369,12 @@ Player.prototype.dead = function ()
     if (this.srcData.UserId == game.getMe().srcData.UserId) {
         $("#freeze-bg").fadeIn("fast");
         $(".deck").addClass("disabled");
-        showPopup(true, $("#wasted"));
-        setTimeout(function ()
-        {
-            closePopup(true, $("#wasted"));
-        }, 2000);
+        showTimedMsg("WASTED!", 2000);
     }
+    this.getStack().children().each(function (index, element)
+    {
+        $(element).moveTo($(".deck.door"), function (card) { $(card).remove() });
+    });
 }
 Player.prototype.revive = function ()
 {
@@ -387,6 +389,16 @@ Player.prototype.revive = function ()
 Player.prototype.addCardToStack = function (card)
 {
     this.getStack().append(card.getHTML());
+}
+
+function showTimedMsg(message, duration)
+{
+    $("#message").html(message);
+    showPopup(true, $("#message"));
+    setTimeout(function ()
+    {
+        closePopup(true, $("#message"));
+    }, duration);
 }
 
 function updateStack(stack)
@@ -492,11 +504,28 @@ function battleMessageHandler(battleMessage)
     {
         game.processTurnStep(battleMessage);
     }
+    else if (actionInfo.Type == 2)  // TryEscape
+    {
+        if (battleMessage.Data.escapeResult == false) {
+            showTimedMsg(actionInvoker.srcData.UserId + " throws " + battleMessage.Data.diceResult + "<br><span>He is dead</span>", 2000);
+            actionInvoker.dead();
+            setTimeout(function () { commitAction({ Type: 1 }); }, 3000);
+        }
+    }
 }
 
 function battlePhaseMessageHandler(phaseMessage)
 {
     game.setBattlePhase(phaseMessage.Data);
+    game.syncPhase();
+}
+
+function endOfTheBattleHandler(stateMessage)
+{
+    $(".table").children().each(function (index, element)
+    {
+        $(element).moveTo($(".deck.door"), function (card) { $(card).remove() });
+    });
 }
 
 function onMatchStart(boardState)
@@ -507,6 +536,7 @@ function onMatchStart(boardState)
     updateStack(game.getMe().getStack());
 
     game.processTurnStep({ Data: boardState.CurrentPlayerId });
+    game.syncPhase();
 }
 
 function revertAction(actionInfo, source)
@@ -530,6 +560,7 @@ function commitAction(actionInfo, source, callback)
         dataType: "json",
         success: function (response)
         {
+            console.log(response);
             if (response.Message == "ERROR") {
                 revertAction(actionInfo, source);
             }
@@ -649,10 +680,6 @@ $(document).ready(function ()
             if ($(this).children(".card").length != 0)
                 return false;
 
-            //todo: remove after WIP stage
-            if (draggable.data("card-class") == undefined)
-                return true;
-
             if ($(this).data("accept-class") != draggable.data("card-class"))
                 return false;
 
@@ -665,9 +692,30 @@ $(document).ready(function ()
 
     $(".stack, .table").droppable({
         drop: dropAction,
+        accept: function (draggable)
+        {
+            if ($(this).parent().hasClass("bottom") || $(this).hasClass("table"))
+                return true;
+
+            return false;
+        },
         hoverClass: "draggable-hover",
         activeClass: "draggable-accept",
         addClasses: false
+    });
+
+    $(".button.finish-turn").click(function ()
+    {
+        commitAction({ Type: 1 });
+    });
+
+    $(".button.escape").click(function ()
+    {
+        commitAction({ Type: 2 }, $(this), function (data)
+        {
+            if (data.escapeResult == false)
+                game.getMe().dead();
+        });
     });
 
     //todo: consider commitAction result

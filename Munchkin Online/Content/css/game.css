@@ -194,7 +194,7 @@ BODY
 
 .card-mgr.small .race-group, .card-mgr.small .class-group
 {
-    width: 84px;
+    width: 88px;
     height: 66px;
 }
 
@@ -205,7 +205,7 @@ BODY
 
 .card-mgr.small .items-group, .card-mgr.small .weapons-group
 {
-    width: 128px;
+    width: 134px;
 }
 
 .card-mgr.small .race-one, .card-mgr.small .race-two, .card-mgr.small .class-one, .card-mgr.small .class-two
@@ -391,6 +391,47 @@ BODY
     margin: auto;
 }
 
+.field .button
+{
+    position: relative;
+    font-family: Munchkin_cyr;
+
+    padding: 5px;
+    border: 1px solid;
+    text-align: center;
+    border-radius: 5px;
+    background: rgb(181, 174, 44);
+    box-shadow: 0 3px 10px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.field .button.disabled, .field .button.disabled:active
+{
+    background: rgb(97, 95, 63);
+    box-shadow: 0 3px 10px;
+    cursor: not-allowed;
+}
+
+.field .button:active
+{
+    box-shadow: 0 0px 10px, inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.field .button.finish-turn
+{
+    top: -138px;
+    left: 519px;
+    width: 150px;
+}
+
+.field .button.escape
+{
+    top: -107px;
+    left: -96px;
+    width: 150px;
+}
+
 .field .player, .field .table
 {
     position: relative;
@@ -507,4 +548,9 @@ BODY
     overflow: visible!important;
     color: white;
     text-shadow: 0 0 25px black, 2px 2px 1px black;
+}
+
+.over-msg .span
+{
+    font-size: 40px;
 }

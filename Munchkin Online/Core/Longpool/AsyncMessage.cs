@@ -51,7 +51,6 @@ namespace Munchkin_Online.Core.Longpool
         InitialGameState,
         BattleMessage,
         PhaseChanged,
-        DiceResult,
         EndOfTheBattle
     }
 }

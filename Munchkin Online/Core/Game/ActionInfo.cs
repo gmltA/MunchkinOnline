@@ -25,7 +25,8 @@ namespace Munchkin_Online.Core.Game
     public enum ActionType
     {
         MoveCard,
-        FinishTurn
+        FinishTurn,
+        TryEscape
     }
 
     public enum ActionEntryType

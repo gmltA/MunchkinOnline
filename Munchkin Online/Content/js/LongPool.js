@@ -66,7 +66,8 @@ LongPool.prototype = {
             case 10: window.location.href = "/Game/"; break;
             case 11: onMatchStart(transport.Data.Board); break;
             case 12: if (typeof battleMessageHandler != "undefined") battleMessageHandler(transport); break;
-            case 13: if (typeof battleMessageHandler != "undefined") battlePhaseMessageHandler(transport); break;
+            case 13: if (typeof battlePhaseMessageHandler != "undefined") battlePhaseMessageHandler(transport); break;
+            case 14: if (typeof endOfTheBattleHandler != "undefined") endOfTheBattleHandler(transport); break;
         }
         this.sendRequest();
     },
