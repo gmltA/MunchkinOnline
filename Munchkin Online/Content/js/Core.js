@@ -176,23 +176,30 @@ function setAuthBarState()
     }
 }
 
-function showPopup()
+function showPopup(puff, popupObject)
 {
+    if (!popupObject)
+        popupObject = $('#popup-container');
+
     $('#blackout').stop().fadeIn("fast");
     $(window).resize();
-    if ($('#popup-container').hasClass("card"))
-        $('#popup-container').stop().show("puff", {}, "fast");
+
+    if (puff)
+        $(popupObject).stop().show("puff", {}, "fast");
     else
-        $('#popup-container').stop().fadeIn("fast");
+        $(popupObject).stop().fadeIn("fast");
 }
 
-function closePopup()
+function closePopup(puff, popupObject)
 {
+    if (!popupObject)
+        popupObject = $('#popup-container');
+
     $('#blackout').stop().fadeOut("fast");
-    if ($('#popup-container').hasClass("card"))
-        $('#popup-container').stop().hide("puff", {}, "fast");
+    if (puff)
+        $(popupObject).stop().hide("puff", {}, "fast");
     else
-        $('#popup-container').stop().fadeOut("fast");
+        $(popupObject).stop().fadeOut("fast");
 }
 
 function renderInvite(inviteId)

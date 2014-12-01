@@ -9,6 +9,8 @@ namespace Munchkin_Online.Core.Game
     {
         public Player Invoker { get; set; }
 
+        public ActionType Type { get; set; }
+
         public int CardId { get; set; }
 
         public ActionEntryType SourceEntry { get; set; }
@@ -18,6 +20,12 @@ namespace Munchkin_Online.Core.Game
         public ActionEntryType TargetEntry { get; set; }
         public int TargetParam { get; set; }
         public CardHolder Target { get; set; }
+    }
+
+    public enum ActionType
+    {
+        MoveCard,
+        FinishTurn
     }
 
     public enum ActionEntryType

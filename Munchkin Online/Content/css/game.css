@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Munchkin_Cyr';
+    src: url(/Content/fonts/Munchkin_Cyr.ttf);
+}
+
 HTML, BODY { height: 100%; margin: 0; padding: 0; }
 
 BODY
@@ -244,7 +249,13 @@ BODY
     cursor: pointer;
 }
 
-.deck:active
+.deck.disabled
+{
+    cursor: default;
+    box-shadow: 0 0 10px, 3px 3px 1px hsl(19, 10%, 8%),6px 6px 0px hsl(19, 10%, 4%), 9px 9px 10px;
+}
+
+.deck:not(.disabled):active
 {
     transition: all 0.2s ease;
     left: 4px;
@@ -315,20 +326,26 @@ BODY
     background-position: top left;
 }
 
-.card.disabled, .card.disalbed:hover
+.disabled .card, .disabled .card:hover
 {
     top: 0px;
     cursor: default;
 }
 
-.card.treasure.disabled .back, .deck.treasure.disabled
+.disabled .card.treasure .back, .deck.treasure.disabled
 {
     background-position: bottom right;
 }
 
-.card.door.disabled .back, .deck.door.disabled
+.disabled .card.door .back, .deck.door.disabled
 {
     background-position: bottom left;
+}
+
+.disabled .card .face
+{
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 .field
@@ -432,4 +449,22 @@ BODY
 #hint.equip
 {
     background: url(/Content/img/hint-equip.png) calc(50% - 10px) bottom no-repeat;
+}
+
+#turn-step
+{
+    font-family: Munchkin_Cyr;
+    font-size: 100px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9001;
+    height: 100%;
+    width: 100%;
+    display: none;
+    transition: none;
+    overflow: visible!important;
+    color: white;
+    text-shadow: 0 0 25px black, 2px 2px 1px black;
 }
