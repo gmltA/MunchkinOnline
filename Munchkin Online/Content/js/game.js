@@ -37,6 +37,8 @@ var slotClass = new Enum(slotClass);
 function Game(battleState)
 {
     this.filedCards = battleState.FieldCards;
+    this.turnStep = battleState.TurnStep;
+    this.CurrentPlayerId = battleState.CurrentPlayerId;
 
     var rp = [];
     rp[0] = "left";
@@ -54,9 +56,48 @@ function Game(battleState)
     }
 }
 
+Game.prototype.getBattlePhase = function ()
+{
+    return this.turnStep;
+}
+
+Game.prototype.setBattlePhase = function(phase)
+{
+    this.turnStep = phase;
+    this.syncPhase();
+}
+
+Game.prototype.syncPhase = function ()
+{
+    switch (this.turnStep) {
+        case 0:
+            $(".deck.door").removeClass("disabled");
+            $(".deck.treasure").addClass("disabled");
+            this.getCurrentPlayer().unfreeze();
+            for (var i in this.players)
+                if (this.players[i].srcData.Id != this.CurrentPlayerId)
+                    this.players[i].freeze();
+            break;
+        case 1:
+            $(".deck.door").addClass("disabled");
+            $(".deck.treasure").addClass("disabled");
+            this.getCurrentPlayer().unfreeze();
+            this.getCurrentPlayer().freezeCardMgr();
+            for (var i in this.players)
+                if (this.players[i].srcData.Id != this.CurrentPlayerId)
+                    this.players[i].freeze();
+            break;
+    }
+}
+
 Game.prototype.getMe = function ()
 {
     return this.me;
+}
+
+Game.prototype.getCurrentPlayer = function ()
+{
+    return this.getPlayerByUserId(this.CurrentPlayerId);
 }
 
 Game.prototype.getPlayer = function (id)
@@ -71,10 +112,12 @@ Game.prototype.getPlayer = function (id)
 
 Game.prototype.getPlayerByUserId = function (UserId)
 {
+    if (UserId == this.me.srcData.UserId)
+        return this.me;
+
     for (var i in this.players)
         if (this.players[i].srcData.UserId == UserId)
             return this.players[i];
-
     return;
 }
 
@@ -112,6 +155,8 @@ Game.prototype.processTurnStep = function (message)
         else
             this.players[i].freeze();
     }
+
+    this.CurrentPlayerId = message.Data;
 
     if (message.Data == this.getMe().srcData.UserId) {
         this.me.unfreeze();
@@ -272,29 +317,72 @@ Player.prototype.makeMove = function (cardClass)
     return card;
 };
 
-Player.prototype.freeze = function ()
+Player.prototype.freezeStack = function ()
 {
     this.getStack().addClass("disabled").children().each(function (index, element)
     {
         $(element).setDraggable(false);
     });
+}
+
+Player.prototype.freezeCardMgr = function ()
+{
     this.getCardMgr().addClass("disabled").find(".card").each(function (index, element)
     {
         $(element).setDraggable(false);
     });
 }
 
-Player.prototype.unfreeze = function ()
+Player.prototype.freeze = function ()
+{
+    this.freezeStack();
+    this.freezeCardMgr();
+}
+
+Player.prototype.unfreezeStack = function ()
 {
     this.getStack().removeClass("disabled").children().each(function (index, element)
     {
         $(element).setDraggable();
     });
+}
+
+Player.prototype.unfreezeCardMgr = function ()
+{
     this.getCardMgr().removeClass("disabled").find(".card").each(function (index, element)
     {
         $(element).setDraggable();
     });
 }
+
+Player.prototype.unfreeze = function ()
+{
+    this.unfreezeStack();
+    this.unfreezeCardMgr();
+}
+
+Player.prototype.dead = function ()
+{
+    this.freeze();
+    if (this.srcData.UserId == game.getMe().srcData.UserId) {
+        $("#freeze-bg").fadeIn("fast");
+        $(".deck").addClass("disabled");
+        showPopup(true, $("#wasted"));
+        setTimeout(function ()
+        {
+            closePopup(true, $("#wasted"));
+        }, 2000);
+    }
+}
+Player.prototype.revive = function ()
+{
+    this.unfreeze();
+    if (this.srcData.UserId == game.getMe().srcData.UserId) {
+        $("#freeze-bg").fadeOut("fast");
+        $(".deck").removeClass("disabled");
+    }
+}
+
 
 Player.prototype.addCardToStack = function (card)
 {
@@ -351,13 +439,16 @@ function flipCard(card, cardClass)
     }, 20);
 }
 
-function requestCard(deck, target, callback)
+function requestCard(deck, target, callback, cardSrc)
 {
     var deckClass = 0;
     if ($(deck).hasClass("treasure"))
         deckClass = 1;
 
-    var card = $(deck).append(new Card({Type : deckClass}).getHTML()).children(".card");
+    if (typeof cardSrc == "undefined")
+        cardSrc = { Type: deckClass };
+
+    var card = $(deck).append(new Card(cardSrc).getHTML()).children(".card");
 
     card.moveTo(target, function ()
     {
@@ -393,11 +484,19 @@ function battleMessageHandler(battleMessage)
         else if (actionInfo.SourceEntry == 3 && actionInfo.TargetEntry == 5) {
             actionInvoker.makeMove(card.CSSClass).attr("data-card-id", battleMessage.Card.Id);
         }
+        else if (actionInfo.SourceEntry == 0 && actionInfo.TargetEntry == 5) {
+            requestCard($(".deck.door"), $(".table"), function (newCard) { $(newCard).addClass("flipped") }, battleMessage.Card);
+        }
     }
     else if (actionInfo.Type == 1)  // FinishTurn
     {
         game.processTurnStep(battleMessage);
     }
+}
+
+function battlePhaseMessageHandler(phaseMessage)
+{
+    game.setBattlePhase(phaseMessage.Data);
 }
 
 function onMatchStart(boardState)
@@ -428,14 +527,15 @@ function commitAction(actionInfo, source, callback)
         url: '/Game/ProcessAction',
         data: actionInfo,
         cache: false,
+        dataType: "json",
         success: function (response)
         {
-            if (response == "ERROR") {
+            if (response.Message == "ERROR") {
                 revertAction(actionInfo, source);
             }
             else
                 if (typeof callback == "function")
-                    callback();
+                    callback(response.Data);
         }
     });
 }
@@ -580,11 +680,22 @@ $(document).ready(function ()
         if ($(this).hasClass("treasure"))
             deckClass = 1;
 
-        //todo: return card object and assign card-id to newly created object
-        var self = this;
-        commitAction({ Type: 0, SourceEntry: 0, SourceParam: deckClass, TargetEntry: 3, CardId: 0 }, $(this), function ()
+        var targetEntry = 3;
+        var target = game.getMe().getStack();
+        // Initial
+        if (game.getBattlePhase() == 0)
         {
-            requestCard(self, $(".player-hand.bottom .stack"));
+            targetEntry = 5;
+            target = $(".table");
+
+            if (deckClass == 1)
+                return;
+        }
+
+        var self = this;
+        commitAction({ Type: 0, SourceEntry: 0, SourceParam: deckClass, TargetEntry: targetEntry, CardId: 0 }, $(this), function (card)
+        {
+            requestCard(self, target, function (newCard) { $(newCard).addClass("flipped") }, card);
         })
     });
 
