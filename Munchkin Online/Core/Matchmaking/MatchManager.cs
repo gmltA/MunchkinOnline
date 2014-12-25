@@ -91,7 +91,7 @@ namespace Munchkin_Online.Core.Matchmaking
             if (lobby == null)
                 return false;
 
-            UserLeaveFromMatch(userToInviteId);
+            UserLeaveFromLobby(userToInviteId);
             return true;
         }
 
@@ -121,7 +121,7 @@ namespace Munchkin_Online.Core.Matchmaking
             MatchInvites.RemoveAll(i => i.InvitingUser.Id == invitinguserId);
         }
 
-        public void UserLeaveFromMatch(Guid userId)
+        public void UserLeaveFromLobby(Guid userId)
         {
             Match match = FindMatchByParticipantID(userId);
             if (match != null)
@@ -169,6 +169,19 @@ namespace Munchkin_Online.Core.Matchmaking
                 return false;
 
             match.Start();
+            return true;
+        }
+
+        public bool UserLeaveFromMatch(Guid userId)
+        {
+            Match match = MatchManager.Instance.FindMatchByParticipantID(userId);
+            if (match == null)
+                return false;
+
+            match.Players.RemoveAll(p => p.UserId == userId);
+            if (match.Players.Where(p => p.UserId != Guid.Empty).ToList().Count == 0)
+                Matches.Remove(match);
+
             return true;
         }
     }

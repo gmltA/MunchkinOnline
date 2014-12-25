@@ -44,8 +44,7 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Id = Cards.Count + 1;
             card.Name = name;
             card.Type = CardType.Dungeon;
-            card.Mechanics = new List<IMechanic>();
-            card.Mechanics.Add(new SetRaceMechanic());
+            card.OnUseMechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.Race;
             return card;
         }
@@ -56,8 +55,7 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Id = Cards.Count + 1;
             card.Name = name;
             card.Type = CardType.Dungeon;
-            card.Mechanics = new List<IMechanic>();
-            card.Mechanics.Add(new SetRaceMechanic());
+            card.OnUseMechanics.Add(new SetRaceMechanic());
             card.Class = CardClass.Class;
             return card;
         }
@@ -68,8 +66,8 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Id = Cards.Count + 1;
             card.Name = name;
             card.Type = CardType.Treasure;
-            card.Mechanics = new List<IMechanic>();
-            card.Mechanics.Add(new EvadeMonstersMechanic());
+            card.OnUseMechanics.Add(new EvadeMonstersMechanic());
+            card.AfterUseMechanics.Add(new RemoveAfterUseMechanic());
             card.Class = CardClass.Spell;
             return card;
         }
@@ -80,8 +78,7 @@ namespace Munchkin_Online.Core.Game.Cards
             card.Id = Cards.Count + 1;
             card.Name = name;
             card.Type = CardType.Dungeon;
-            card.Mechanics = new List<IMechanic>();
-            card.Mechanics.Add(new KillPlayerMechanic());
+            card.OnUseMechanics.Add(new KillPlayerMechanic());
             card.Class = CardClass.Monster;
             return card;
         }

@@ -36,7 +36,7 @@ var slotClass = new Enum(slotClass);
 
 function Game(battleState)
 {
-    this.filedCards = battleState.FieldCards;
+    this.fieldCards = battleState.FieldCards;
     this.turnStep = battleState.TurnStep;
     this.CurrentPlayerId = battleState.CurrentPlayerId;
 
@@ -67,12 +67,28 @@ Game.prototype.setBattlePhase = function(phase)
     this.syncPhase();
 }
 
+Game.prototype.syncTableButtons = function ()
+{
+    if (this.CurrentPlayerId == this.me.srcData.UserId)
+        $(".field .button").removeClass("disabled");
+    else
+        $(".field .button").addClass("disabled");
+}
+
 Game.prototype.syncPhase = function ()
 {
     switch (this.turnStep) {
         case 0:
             $(".deck.door").removeClass("disabled");
             $(".deck.treasure").addClass("disabled");
+            this.getCurrentPlayer().unfreeze();
+            for (var i in this.players)
+                if (this.players[i].srcData.Id != this.CurrentPlayerId)
+                    this.players[i].freeze();
+            break;
+        case 1:
+            $(".deck.door").removeClass("disabled");
+            $(".deck.treasure").removeClass("disabled");
             this.getCurrentPlayer().unfreeze();
             for (var i in this.players)
                 if (this.players[i].srcData.Id != this.CurrentPlayerId)
@@ -88,6 +104,7 @@ Game.prototype.syncPhase = function ()
                     this.players[i].freeze();
             break;
     }
+    this.syncTableButtons();
 }
 
 Game.prototype.getMe = function ()
@@ -139,7 +156,7 @@ Game.prototype.addCardToField = function (card)
 // Match front-end cards with back-end data
 Game.prototype.syncCards = function ()
 {
-    this.addCardsToField(this.filedCards);
+    this.addCardsToField(this.fieldCards);
 
     for (var i in this.players)
         this.players[i].syncCardsWithSrc();
@@ -335,7 +352,6 @@ Player.prototype.freezeCardMgr = function ()
 
 Player.prototype.freeze = function ()
 {
-    $(".table .button").addClass("disabled");
     this.freezeStack();
     this.freezeCardMgr();
 }
@@ -358,7 +374,6 @@ Player.prototype.unfreezeCardMgr = function ()
 
 Player.prototype.unfreeze = function ()
 {
-    $(".table .button").removeClass("disabled");
     this.unfreezeStack();
     this.unfreezeCardMgr();
 }
@@ -522,10 +537,13 @@ function battlePhaseMessageHandler(phaseMessage)
 
 function endOfTheBattleHandler(stateMessage)
 {
-    $(".table").children().each(function (index, element)
+    setTimeout(function ()
     {
-        $(element).moveTo($(".deck.door"), function (card) { $(card).remove() });
-    });
+        $(".table").children().each(function (index, element)
+        {
+            $(element).moveTo($(".deck.door"), function (card) { $(card).remove() });
+        })
+    }, 2000);
 }
 
 function onMatchStart(boardState)
@@ -718,7 +736,6 @@ $(document).ready(function ()
         });
     });
 
-    //todo: consider commitAction result
     $(".deck").click(function ()
     {
         if ($(this).hasClass("disabled"))
@@ -743,6 +760,12 @@ $(document).ready(function ()
         var self = this;
         commitAction({ Type: 0, SourceEntry: 0, SourceParam: deckClass, TargetEntry: targetEntry, CardId: 0 }, $(this), function (card)
         {
+            if (card.Class == 1) // Monster
+                game.turnStep = 1;
+            else
+                game.turnStep = 2;
+            game.syncPhase();
+
             requestCard(self, target, function (newCard) { $(newCard).addClass("flipped") }, card);
         })
     });

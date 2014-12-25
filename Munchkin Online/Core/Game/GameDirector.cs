@@ -29,7 +29,10 @@ namespace Munchkin_Online.Core.Game
             object AdditionalData = null;
             // todo: handle action result
             if (match.BoardState.CurrentPlayerId != CurrentUser.Instance.Current.Id)
+            {
                 result = ACTION_ERROR;
+                return MakeAnswer(result, AdditionalData);
+            }
 
             Player player = match.BoardState.Players.First(x => x.UserId == CurrentUser.Instance.Current.Id);
 
@@ -56,7 +59,7 @@ namespace Munchkin_Online.Core.Game
                 var monsters = match.BoardState.Field.Cards.Where(c => c.Class == CardClass.Monster).ToList();
                 if (monsters.Count > 0)
                 {
-                    ((List<IMechanic>)monsters[0].Mechanics)[0].Execute(match.BoardState, info.Invoker, null);
+                    ((List<IMechanic>)monsters[0].OnUseMechanics)[0].Execute(match.BoardState, info.Invoker, null);
                     data = new { diceResult = 1, escapeResult = false };
                     AdditionalData = data;
                     result = ACTION_DONE;
@@ -64,7 +67,8 @@ namespace Munchkin_Online.Core.Game
                     {
                         Longpool.Longpool.Instance.PushMessageToUser(p.UserId, new AsyncMessage(MessageType.EndOfTheBattle));
                     }
-                } else
+                }
+                else
                     result = ACTION_ERROR;
             }
 
@@ -117,7 +121,7 @@ namespace Munchkin_Online.Core.Game
                 info.Target = match.BoardState.Field;
                 info.Source = info.Invoker.Hand;
                 card = info.Source.GetCardById(info.CardId);
-                foreach (var m in card.Mechanics)
+                foreach (var m in card.OnUseMechanics)
                     m.Execute(match.BoardState, info.Invoker, card);
             }
             if (info.SourceEntry == ActionEntryType.Hand && info.TargetEntry == ActionEntryType.Slot)
@@ -134,13 +138,17 @@ namespace Munchkin_Online.Core.Game
                 }
 
                 if (card.Class == CardClass.Race || card.Class == CardClass.Class)
-                    card.Mechanics.ElementAt(0).Execute(match.BoardState, info.Invoker, card);
+                    card.OnUseMechanics.ElementAt(0).Execute(match.BoardState, info.Invoker, card);
             }
 
             if (card != null)
             {
                 info.Source.RemoveCard(card);
                 info.Target.AddCard(card);
+
+                if (info.TargetEntry == ActionEntryType.Field)
+                    foreach (var m in card.OnUseMechanics)
+                        m.Execute(match.BoardState, info.Invoker, card);
             }
 
             outCard = card;

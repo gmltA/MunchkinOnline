@@ -121,6 +121,11 @@ BODY
     border-radius: 5px;
 }
 
+.card-mgr.small .card .face, .card-mgr.small .card .back
+{
+    border-radius: 5px;
+}
+
 .card-mgr.small .card-slot
 {
     height: 59px;
@@ -292,12 +297,19 @@ BODY
     background: url(/Content/img/card_backs.png);
     background-size: calc(395% + 2px);
     backface-visibility: hidden;
+
+    border-radius: 10px;
 }
 
 .card .face
 {
     background-image: url(/Content/img/card.png);
     transform: rotateY(180deg);
+}
+
+.card .back
+{
+    background-size: 200%;
 }
 
 
@@ -328,7 +340,7 @@ BODY
 
 .card.thief .face
 {
-    background-position: 102% 0%;
+    background-position: 100% 0%;
 }
 
 .card.dwarf .face
@@ -411,6 +423,7 @@ BODY
     background: rgb(97, 95, 63);
     box-shadow: 0 3px 10px;
     cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .field .button:active

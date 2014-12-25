@@ -36,7 +36,11 @@ namespace Munchkin_Online.Core.Game
 
             // todo: define somewhere
             if (Players.Count != 4)
-                throw new NotEnoughPlayersException();
+            {
+                for (int i = Players.Count; i < 4; i++)
+                    Players.Add(new Player());
+                //throw new NotEnoughPlayersException();
+            }
 
             State = State.InGame;
 
@@ -57,7 +61,8 @@ namespace Munchkin_Online.Core.Game
         public void SetRandomStartPlayer()
         {
             Random r = new Random();
-            BoardState.CurrentPlayerId = Players[r.Next(3)].UserId;
+            var actualPlayers = Players.Where(p => p.UserId != Guid.Empty).ToList();
+            BoardState.CurrentPlayerId = actualPlayers[r.Next(actualPlayers.Count-1)].UserId;
             BoardState.TurnStep = TurnStep.Inital;
         }
     }

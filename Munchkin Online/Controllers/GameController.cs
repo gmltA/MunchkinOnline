@@ -48,5 +48,17 @@ namespace Munchkin_Online.Controllers
             }
             return "Match has not been found";
         }
+
+        public ActionResult Leave()
+        {
+            Match m = MatchManager.Instance.FindMatchByParticipantID(CurrentUser.Instance.Current.Id);
+            if (m != null)
+            {
+                MatchManager.Instance.UserLeaveFromMatch(CurrentUser.Instance.Current.Id);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return new EmptyResult();
+        }
     }
 }

@@ -74,8 +74,9 @@ namespace Munchkin_Online.Core.Game
             if (Cards.Count == 0)
                 return null;
 
-            Random random = new Random();
-            return Cards.ElementAt(random.Next(Cards.Count));
+            //Random random = new Random();
+            //return Cards.ElementAt(random.Next(Cards.Count));
+            return Cards[Cards.Count - 1];
         }
     }
 }

@@ -36,7 +36,14 @@ namespace Munchkin_Online.Models
 
         public string CSSClass { get { return Name.Replace(' ', '-').ToLower(); } }
 
-        public virtual ICollection<IMechanic> Mechanics { get; set; }
+        public virtual ICollection<IMechanic> OnUseMechanics { get; set; }
+        public virtual ICollection<IMechanic> AfterUseMechanics { get; set; }
+
+        public Card()
+        {
+            OnUseMechanics = new List<IMechanic>();
+            AfterUseMechanics = new List<IMechanic>();
+        }
 
     }
 

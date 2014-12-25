@@ -43,7 +43,7 @@ namespace Munchkin_Online.Controllers
 
         public ActionResult Leave()
         {
-            MatchManager.Instance.UserLeaveFromMatch(CurrentUser.Instance.Current.Id);
+            MatchManager.Instance.UserLeaveFromLobby(CurrentUser.Instance.Current.Id);
 
             return RedirectToAction("Index", "Home");
         }

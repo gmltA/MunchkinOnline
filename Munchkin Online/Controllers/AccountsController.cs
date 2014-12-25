@@ -27,8 +27,6 @@ namespace Munchkin_Online.Controllers
 
         UserRepository Users = new UserRepository();
 
-        //
-        // GET: /Accounts/
         public ActionResult Index()
         {
             return View();
