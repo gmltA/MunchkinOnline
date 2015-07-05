@@ -1,3 +1,3 @@
 # README #
 
-https://bitbucket.org/250504_shabany/munchkin-online/wiki/Home
+Original Bitbucket project location https://bitbucket.org/250504_shabany/munchkin-online/wiki/Home
